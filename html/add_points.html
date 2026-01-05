@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Point Charge | FACET</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300&family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap');
+        
+        body { 
+            font-family: 'Noto Sans KR', sans-serif; 
+            background-color: #f8f6f4; 
+            word-break: keep-all; 
+        }
+        .font-serif-luxury { font-family: 'Cormorant Garamond', serif; }
+        
+        :root {
+            --accent-color: #A39382;
+            --accent-hover: #1a1a1a;
+            --border-color: #E5E7EB;
+        }
+
+        .input-focus:focus {
+            border-color: var(--accent-color);
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(163, 147, 130, 0.08);
+        }
+
+        .premium-card {
+            background: #ffffff;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+        }
+
+        input[type="checkbox"], input[type="radio"] {
+            accent-color: var(--accent-color);
+        }
+
+        /* 포인트 선택 카드 커스텀 */
+        .point-option:checked + .point-card {
+            border-color: var(--accent-color);
+            background-color: #fcfcfb;
+            box-shadow: 0 4px 15px rgba(163, 147, 130, 0.15);
+        }
+    </style>
+</head>
+<body class="text-[#1a1a1a] pb-20">
+
+    <!-- Header -->
+    <header class="bg-white/90 backdrop-blur-sm sticky top-0 z-50 border-b border-gray-100">
+        <div class="max-w-[1080px] mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="./index.html" class="text-gray-400 hover:text-black transition-colors flex items-center space-x-2 text-sm font-medium">
+                <span>←</span> <span>아카이브로 돌아가기</span>
+            </a>
+            <div class="text-xl font-bold tracking-[0.2em] text-[#A39382] uppercase cursor-pointer">Facet</div>
+            <div class="w-24"></div> <!-- Balance Spacer -->
+        </div>
+    </header>
+
+    <main class="max-w-[1080px] mx-auto px-6 py-10 lg:py-16">
+        
+        <div class="flex flex-col lg:flex-row gap-10">
+            
+            <!-- Left Side: Selection (7 Cols) -->
+            <div class="flex-1 space-y-8">
+                <header>
+                    <h1 class="text-2xl font-bold mb-2">포인트 충전</h1>
+                    <p class="text-gray-400 text-sm font-light">옥션 입찰과 작품 소장을 위한 포인트를 충전하세요.</p>
+                </header>
+
+                <!-- Current Balance Display -->
+                <section class="premium-card p-8 bg-gradient-to-br from-[#1a1a1a] to-[#333333] text-white">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <p class="text-[10px] uppercase tracking-widest text-gray-400 mb-2 font-bold">Current Balance</p>
+                            <p class="text-3xl font-serif-luxury italic tracking-wider">1,250,000 P</p>
+                        </div>
+                        <div class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-xl bg-white/5">
+                            💎
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Step 01: Amount Selection -->
+                <section class="premium-card p-8">
+                    <h2 class="text-sm font-bold uppercase tracking-widest text-gray-400 mb-8 border-b border-gray-50 pb-4">01. 충전 금액 선택</h2>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        <!-- Option 1 -->
+                        <label class="relative cursor-pointer">
+                            <input type="radio" name="point_amount" value="10000" class="hidden point-option" checked>
+                            <div class="point-card p-6 border border-gray-100 rounded-2xl transition-all text-center">
+                                <p class="text-sm font-medium text-gray-400 mb-1">10,000 P</p>
+                                <p class="text-lg font-bold">₩ 10,000</p>
+                            </div>
+                        </label>
+                        <!-- Option 2 -->
+                        <label class="relative cursor-pointer">
+                            <input type="radio" name="point_amount" value="50000" class="hidden point-option">
+                            <div class="point-card p-6 border border-gray-100 rounded-2xl transition-all text-center">
+                                <p class="text-sm font-medium text-gray-400 mb-1">50,000 P</p>
+                                <p class="text-lg font-bold">₩ 50,000</p>
+                            </div>
+                        </label>
+                        <!-- Option 3 (Best Value) -->
+                        <label class="relative cursor-pointer">
+                            <input type="radio" name="point_amount" value="100000" class="hidden point-option">
+                            <div class="point-card p-6 border border-gray-100 rounded-2xl transition-all text-center relative overflow-hidden">
+                                <div class="absolute top-0 right-0 bg-[#A39382] text-white text-[8px] px-2 py-0.5 font-bold uppercase tracking-tighter">Best</div>
+                                <p class="text-sm font-medium text-gray-400 mb-1">100,000 P</p>
+                                <p class="text-lg font-bold">₩ 100,000</p>
+                            </div>
+                        </label>
+                        <!-- Option 4 -->
+                        <label class="relative cursor-pointer">
+                            <input type="radio" name="point_amount" value="500000" class="hidden point-option">
+                            <div class="point-card p-6 border border-gray-100 rounded-2xl transition-all text-center">
+                                <p class="text-sm font-medium text-gray-400 mb-1">500,000 P</p>
+                                <p class="text-lg font-bold">₩ 500,000</p>
+                            </div>
+                        </label>
+                        <!-- Option 5 -->
+                        <label class="relative cursor-pointer">
+                            <input type="radio" name="point_amount" value="1000000" class="hidden point-option">
+                            <div class="point-card p-6 border border-gray-100 rounded-2xl transition-all text-center">
+                                <p class="text-sm font-medium text-gray-400 mb-1">1,000,000 P</p>
+                                <p class="text-lg font-bold">₩ 1,000,000</p>
+                            </div>
+                        </label>
+                        <!-- Custom Input -->
+                        <div class="flex flex-col">
+                            <input type="number" placeholder="직접 입력" class="h-full p-4 bg-gray-50 border border-transparent rounded-2xl text-center text-sm font-bold input-focus transition-all">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Step 02: Payment Method -->
+                <section class="premium-card p-8">
+                    <h2 class="text-sm font-bold uppercase tracking-widest text-gray-400 mb-8 border-b border-gray-50 pb-4">02. 결제 수단</h2>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                        <label class="cursor-pointer">
+                            <input type="radio" name="payment" class="hidden peer" checked>
+                            <div class="p-4 border border-gray-100 rounded-xl text-center text-[11px] font-bold peer-checked:border-[#A39382] peer-checked:bg-[#fcfcfb] peer-checked:text-[#A39382] transition-all uppercase tracking-wider">Credit Card</div>
+                        </label>
+                        <label class="cursor-pointer">
+                            <input type="radio" name="payment" class="hidden peer">
+                            <div class="p-4 border border-gray-100 rounded-xl text-center text-[11px] font-bold peer-checked:border-[#A39382] peer-checked:bg-[#fcfcfb] peer-checked:text-[#A39382] transition-all uppercase tracking-wider">Naver Pay</div>
+                        </label>
+                        <label class="cursor-pointer">
+                            <input type="radio" name="payment" class="hidden peer">
+                            <div class="p-4 border border-gray-100 rounded-xl text-center text-[11px] font-bold peer-checked:border-[#A39382] peer-checked:bg-[#fcfcfb] peer-checked:text-[#A39382] transition-all uppercase tracking-wider">Kakao Pay</div>
+                        </label>
+                        <label class="cursor-pointer">
+                            <input type="radio" name="payment" class="hidden peer">
+                            <div class="p-4 border border-gray-100 rounded-xl text-center text-[11px] font-bold peer-checked:border-[#A39382] peer-checked:bg-[#fcfcfb] peer-checked:text-[#A39382] transition-all uppercase tracking-wider">Bank Transfer</div>
+                        </label>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Right Side: Sticky Summary Box (5 Cols) -->
+            <div class="lg:w-96">
+                <div class="lg:sticky lg:top-24 space-y-6">
+                    <div class="premium-card p-8 border border-[#A39382]/10">
+                        <h3 class="text-lg font-bold mb-8">충전 요약</h3>
+                        
+                        <div class="space-y-4 text-sm mb-8 pb-8 border-b border-gray-100">
+                            <div class="flex justify-between text-gray-500">
+                                <span>선택한 포인트</span>
+                                <span class="font-medium text-[#1a1a1a]">10,000 P</span>
+                            </div>
+                            <div class="flex justify-between text-gray-500">
+                                <span>결제 금액</span>
+                                <span class="font-medium text-[#1a1a1a]">₩ 10,000</span>
+                            </div>
+                            <div class="flex justify-between text-gray-400 text-[11px] italic">
+                                <span>* 부가세(VAT) 포함</span>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between items-baseline mb-10">
+                            <span class="text-sm font-bold">총 결제 금액</span>
+                            <span class="text-3xl font-bold text-[#A39382]">₩ 10,000</span>
+                        </div>
+
+                        <!-- Action Button -->
+                        <button class="w-full py-5 bg-[#1a1a1a] text-white font-bold text-xs tracking-[0.3em] uppercase rounded-xl hover:bg-[#333333] transition-all shadow-xl shadow-black/10">
+                            Charge Point
+                        </button>
+                        
+                        <p class="text-[10px] text-center text-gray-400 mt-8 leading-relaxed font-light">
+                            포인트는 즉시 충전되며 아카이브 내<br>모든 경매 및 구매에 사용할 수 있습니다.
+                        </p>
+                    </div>
+
+                    <!-- Guidelines -->
+                    <div class="p-7 bg-white rounded-3xl border border-gray-100">
+                        <h4 class="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-4">Inquiry & Policy</h4>
+                        <ul class="text-[11px] text-gray-500 space-y-2 leading-relaxed font-light">
+                            <li>• 충전 후 사용하지 않은 포인트는 7일 이내 환불 가능합니다.</li>
+                            <li>• 포인트 유효기간은 충전일로부터 5년입니다.</li>
+                            <li>• 법인카드의 경우 결제 한도가 제한될 수 있습니다.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center py-10 opacity-20">
+        <div class="text-xl font-bold tracking-[0.3em] text-[#A39382] uppercase mb-2">Facet</div>
+        <p class="text-[10px] uppercase tracking-widest">Premium Jewelry Auction Point Service</p>
+    </footer>
+
+</body>
+</html>

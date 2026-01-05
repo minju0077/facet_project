@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FundingSea | 프리미엄 주얼리 펀딩 & 경매</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300&family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap');
+        
+        body { font-family: 'Noto Sans KR', sans-serif; word-break: keep-all; }
+        .font-serif-luxury { font-family: 'Cormorant Garamond', serif; }
+        
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .banner-gradient {
+            background: linear-gradient(to right, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 60%);
+        }
+
+        /* 슬라이드 전환 애니메이션 */
+        .fade-in {
+            animation: fadeIn 0.8s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0.3; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body class="bg-white text-[#1a1a1a]">
+
+    <header class="border-b border-gray-100 bg-white/95 backdrop-blur-sm sticky top-0 z-50 pt-4 pb-2"> <div class="max-w-[1440px] mx-auto px-4 md:px-10 h-16 flex justify-between items-center">
+            <div class="flex items-center space-x-10">
+                <div class="text-2xl font-bold tracking-[0.2em] text-[#A39382] uppercase cursor-pointer">Facet</div>
+                <nav class="hidden lg:flex space-x-8 text-[14px] font-medium text-gray-500">
+                    <a href="#" class="text-black border-b-2 border-black pb-1">경매</a>
+                    <a href="#" class="hover:text-black transition-colors">펀딩</a>
+                    <a href="#" class="hover:text-black transition-colors">이벤트</a>
+                </nav>
+            </div>
+
+            <div class="flex-1 max-w-md mx-8 hidden md:block">
+                <div class="relative group">
+                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">🔍</span>
+                    <input type="text" placeholder="어떤 보석을 찾으시나요?" 
+                           class="w-full bg-gray-50 border border-gray-100 rounded-full py-2 pl-10 pr-4 text-sm focus:outline-none focus:border-[#A39382] transition-all">
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-4">
+                <button class="hidden sm:block text-sm text-gray-500 hover:text-black">로그인</button>
+                <button class="hidden sm:block text-sm text-gray-500 hover:text-black">회원가입</button>
+            </div>
+        </div>
+    </header>
+
+    <section class="max-w-[1440px] mx-auto px-4 md:px-10 py-6 grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <div class="lg:col-span-9 relative group h-[400px] md:h-[550px] overflow-hidden rounded-md shadow-sm">
+            <div id="hero-slider" class="relative w-full h-full">
+                <img id="slider-img" src="https://images.unsplash.com/photo-1515562141207-7a18b5ce7142?auto=format&fit=crop&w=1500&q=80" 
+                     class="w-full h-full object-cover fade-in" alt="Main Jewelry">
+                
+                <div class="absolute inset-0 banner-gradient"></div>
+                
+                <div class="absolute bottom-10 left-10 text-white max-w-lg fade-in" id="slider-content">
+                    <h2 id="slider-title" class="text-3xl md:text-5xl font-light font-serif-luxury leading-tight italic mb-4">Eternal Radiance</h2>
+                    <p id="slider-desc" class="text-sm font-light text-gray-200 leading-loose mb-6 opacity-90">역사적 가치를 지닌 빈티지 주얼리부터, 현대적 마스터피스까지 당신만의 빛을 찾으세요.</p>
+                    <div class="flex space-x-2">
+                        <span class="px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-[10px] uppercase tracking-widest">Ongoing</span>
+                        <span class="px-3 py-1 bg-[#A39382] rounded-full text-[10px] uppercase tracking-widest">Exclusive</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="absolute bottom-6 right-10 flex items-center space-x-4 text-white text-[10px] tracking-widest z-10">
+                <span id="slider-counter">01 / 05</span>
+                <div class="flex space-x-1">
+                    <button id="prev-btn" class="w-8 h-8 flex items-center justify-center bg-black/20 hover:bg-black/40 rounded-full transition-colors">←</button>
+                    <button id="next-btn" class="w-8 h-8 flex items-center justify-center bg-black/20 hover:bg-black/40 rounded-full transition-colors">→</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="lg:col-span-3 flex flex-col">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-lg font-bold">실시간 랭킹</h3>
+                <span class="text-[10px] text-gray-400">Live Ranking</span>
+            </div>
+            
+            <div class="flex-1 flex flex-col justify-between space-y-4">
+                <a href="#" class="flex items-center space-x-3 group">
+                    <span class="text-xl font-bold italic text-[#A39382] w-6">1</span>
+                    <div class="flex-1">
+                        <p class="text-[13px] font-medium group-hover:underline line-clamp-1">티파니 빈티지 다이아몬드 링</p>
+                        <p class="text-[11px] text-[#A39382] font-bold">1,400% 달성</p>
+                    </div>
+                    <div class="w-12 h-12 rounded bg-gray-100 overflow-hidden shrink-0">
+                        <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=100&q=80" class="w-full h-full object-cover" alt="Ring">
+                    </div>
+                </a>
+                </div>
+        </div>
+    </section>
+
+    <script>
+        const slides = [
+            {
+                img: "https://images.unsplash.com/photo-1515562141207-7a18b5ce7142?auto=format&fit=crop&w=1500&q=80",
+                title: "Eternal Radiance",
+                desc: "역사적 가치를 지닌 빈티지 주얼리부터, 현대적 마스터피스까지 당신만의 빛을 찾으세요."
+            },
+            {
+                img: "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&w=1500&q=80",
+                title: "The Golden Hour",
+                desc: "시간의 흐름조차 예술이 되는 24K 골드 빈티지 워치 컬렉션. 단 하나뿐인 클래식을 소유하세요."
+            }
+            // ... 나머지 슬라이드 동일
+        ];
+
+        let currentSlide = 0;
+        const totalSlides = slides.length;
+        const sliderImg = document.getElementById('slider-img');
+        const sliderTitle = document.getElementById('slider-title');
+        const sliderDesc = document.getElementById('slider-desc');
+        const sliderCounter = document.getElementById('slider-counter');
+
+        function updateSlider(index) {
+            sliderImg.classList.remove('fade-in');
+            sliderTitle.parentElement.classList.remove('fade-in');
+            setTimeout(() => {
+                const slide = slides[index];
+                sliderImg.src = slide.img;
+                sliderTitle.innerText = slide.title;
+                sliderDesc.innerText = slide.desc;
+                sliderCounter.innerText = `0${index + 1} / 0${totalSlides}`;
+                sliderImg.classList.add('fade-in');
+                sliderTitle.parentElement.classList.add('fade-in');
+            }, 10);
+        }
+
+        document.getElementById('next-btn').addEventListener('click', () => {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateSlider(currentSlide);
+        });
+
+        document.getElementById('prev-btn').addEventListener('click', () => {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateSlider(currentSlide);
+        });
+
+        setInterval(() => {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateSlider(currentSlide);
+        }, 5000);
+    </script>
+</body>
+</html>

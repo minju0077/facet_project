@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>경매 상품 상세 페이지 | FACET</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        /* 폰트: Noto Sans KR + Cinzel(로고용) */
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+        :root {
+            --accent-color: #A39382; 
+            --accent-hover: #8E7F70;
+            --bg-light: #ffffff;
+            --text-main: #1a1a1a;
+            --border-color: #eeeeee;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #ffffff;
+            color: #1a1a1a;
+            margin: 0;
+            word-break: keep-all;
+        }
+
+        .luxury-font { font-family: 'Cinzel', serif; }
+        .accent-text { color: var(--accent-color); }
+        .accent-bg { background: var(--accent-color); }
+
+        /* ✅ mypage.html에서 가져온 원형 아이콘 버튼 스타일 */
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(163, 147, 130, 0.35);
+            background: #fff;
+            color: var(--accent-color);
+            border-radius: 9999px;
+            transition: all .25s ease;
+        }
+        .icon-btn:hover {
+            background: var(--accent-color);
+            color: #fff;
+            border-color: var(--accent-color);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 22px rgba(163, 147, 130, 0.22);
+        }
+
+        /* 네비게이션 링크 스타일 */
+        .nav-link {
+            color: #9ca3af; /* gray-400 */
+            transition: all 0.25s ease;
+        }
+        .nav-link:hover { color: var(--text-main); }
+        .nav-active { color: var(--text-main); border-bottom: 2px solid var(--accent-color); padding-bottom: 4px; }
+
+        /* 입찰 버튼 */
+        .bid-button {
+            transition: all 0.3s ease;
+            background-color: transparent;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+        }
+        .bid-button:hover {
+            background-color: var(--accent-color);
+            color: #fff;
+            box-shadow: 0 0 15px rgba(163, 147, 130, 0.4);
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-thumb { background: var(--accent-color); border-radius: 3px; }
+    </style>
+</head>
+<body>
+
+    <header class="border-b border-gray-100 py-6 px-10 flex justify-between items-center bg-white/90 backdrop-blur-md sticky top-0 z-50">
+        <a href="./index02.html">
+            <div class="luxury-font text-2xl font-bold tracking-[0.3em] accent-text uppercase cursor-pointer">Facet</div>
+        </a>
+        
+        <nav class="hidden md:flex space-x-10 text-[11px] uppercase tracking-[0.2em] font-medium">
+            <a href="./funding_list.html" class="nav-link">Shop</a>
+            <a href="#" class="nav-active">Auction</a>
+            <a href="#" class="nav-link">Collections</a>
+            <a href="#" class="nav-link">About</a>
+        </nav>
+
+        <div class="flex items-center gap-3">
+            <a href="#" class="icon-btn" aria-label="Search">
+                <i class="fa-solid fa-magnifying-glass text-[15px]"></i>
+            </a>
+            <a href="./mypage.html" class="icon-btn" aria-label="My Page">
+                <i class="fa-regular fa-user text-[15px]"></i>
+            </a>
+        </div>
+    </header>
+
+    <script>
+        function startCountdown() {
+            let hours = 2, minutes = 14, seconds = 55;
+            const display = document.getElementById('countdown');
+            setInterval(() => {
+                seconds--;
+                if (seconds < 0) { seconds = 59; minutes--; }
+                if (minutes < 0) { minutes = 59; hours--; }
+                if (hours < 0) return;
+                display.innerText = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }, 1000);
+        }
+        window.onload = startCountdown;
+    </script>
+</body>
+</html>

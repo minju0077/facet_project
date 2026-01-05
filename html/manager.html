@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FundingSea Admin | 관리자 패널</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap');
+
+        :root {
+            --accent-color: #A39382; 
+            --accent-hover: #8E7F70;
+            --bg-light: #fbfbfb;
+            --text-main: #1a1a1a;
+            --text-muted: #666666; /* 가독성을 위해 기존보다 짙게 변경 */
+            --sidebar-width: 260px;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            margin: 0;
+            display: flex;
+            line-height: 1.6;
+        }
+
+        .accent-text { color: var(--accent-color); }
+        .accent-bg { background-color: var(--accent-color); }
+        
+        .sidebar {
+            width: var(--sidebar-width);
+            height: 100vh;
+            background-color: #fff;
+            border-right: 1px solid #eeeeee;
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 100;
+        }
+
+        .main-content {
+            margin-left: var(--sidebar-width);
+            width: calc(100% - var(--sidebar-width));
+            min-height: 100vh;
+        }
+
+        .nav-item {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border-left: 4px solid transparent;
+        }
+
+        .nav-item.active {
+            background-color: #f9f8f7;
+            border-left: 4px solid var(--accent-color);
+            color: var(--accent-color);
+            font-weight: 700;
+        }
+
+        .nav-item:hover:not(.active) {
+            background-color: #fafafa;
+            padding-left: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            border: 1px solid #eeeeee;
+            padding: 1.75rem;
+            transition: transform 0.3s ease;
+        }
+
+        table { width: 100%; border-collapse: collapse; }
+        th { 
+            text-transform: uppercase; 
+            font-size: 12px; /* 상향 */
+            letter-spacing: 0.05em; 
+            color: #777; /* 대비 강화 */
+            border-bottom: 2px solid #f0f0f0;
+            padding: 18px 12px;
+            text-align: left;
+        }
+        td { padding: 20px 12px; border-bottom: 1px solid #f7f7f7; font-size: 14px; } /* 상향 */
+
+        .btn-sm {
+            padding: 8px 16px; /* 크기 확대 */
+            font-size: 12px; /* 상향 */
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            transition: all 0.2s;
+        }
+
+        .status-badge {
+            padding: 5px 10px;
+            font-size: 11px; /* 상향 */
+            font-weight: 800;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 350px; /* 높이 약간 확대 */
+            width: 100%;
+        }
+
+        /* 보조 텍스트 캡션 스타일 강화 */
+        .caption-text {
+            font-size: 12px;
+            color: var(--text-muted);
+            letter-spacing: 0.025em;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar flex flex-col shadow-sm">
+        <div class="p-8 border-b border-gray-50">
+            <a href="./index02.html">
+                <div class="text-2xl font-bold tracking-[0.1em] accent-text uppercase">Facet</div>
+            </a>
+            
+            <p class="caption-text font-medium mt-1 uppercase tracking-widest">Admin Console</p>
+        </div>
+        
+        <nav class="flex-1 py-6">
+            <div class="px-8 text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Main Dashboard</div>
+            <div class="nav-item active px-8 py-4 text-[15px] flex items-center space-x-3">
+                <span class="text-lg">📊</span> <span>통계 개요</span>
+            </div>
+
+            <div class="mt-8 px-8 text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Management</div>
+            <div class="nav-item px-8 py-4 text-[15px] flex items-center space-x-3">
+                <span class="text-lg">💎</span> <span>경매 상품 관리</span>
+            </div>
+            <div class="nav-item px-8 py-4 text-[15px] flex items-center space-x-3">
+                <span class="text-lg">👤</span> <span>사용자 관리</span>
+            </div>
+            <div class="nav-item px-8 py-4 text-[15px] flex items-center space-x-3">
+                <span class="text-lg">⚖️</span> <span>입찰/낙찰 관리</span>
+            </div>
+            <div class="nav-item px-8 py-4 text-[15px] flex items-center space-x-3">
+                <span class="text-lg">💬</span> <span>문의/신고 처리</span>
+            </div>
+        </nav>
+
+        <div class="p-8 border-t border-gray-50">
+            <div class="flex items-center space-x-4">
+                <div class="w-10 h-10 rounded-full accent-bg flex items-center justify-center text-white text-sm font-bold shadow-md">A</div>
+                <div>
+                    <p class="text-sm font-bold">Admin_Sea</p>
+                    <p class="text-xs text-gray-500 font-medium">최고 관리자</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Bar -->
+        <header class="bg-white border-b border-gray-100 py-6 px-12 flex justify-between items-center sticky top-0 z-10">
+            <h2 class="text-xl font-medium tracking-tight">Dashboard Overview</h2>
+            <div class="flex items-center space-x-10">
+                <div class="text-xs font-bold text-gray-500 uppercase tracking-widest">2026.01.02 FRI 16:45</div>
+                <button class="relative hover:opacity-70 transition-opacity">
+                    <span class="text-2xl">🔔</span>
+                    <span class="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full border-2 border-white"></span>
+                </button>
+            </div>
+        </header>
+
+        <div class="p-12 space-y-12">
+            
+            <!-- Stat Cards -->
+            <section class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="stat-card">
+                    <p class="caption-text uppercase font-bold mb-3">실시간 활성 경매</p>
+                    <div class="flex justify-between items-end">
+                        <p class="text-4xl font-light">128</p>
+                        <span class="text-sm text-green-600 font-bold mb-1">↑ 12%</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <p class="caption-text uppercase font-bold mb-3">오늘의 총 입찰액</p>
+                    <div class="flex justify-between items-end">
+                        <p class="text-4xl font-light tracking-tighter">₩ 42.5M</p>
+                        <span class="text-sm text-green-600 font-bold mb-1">↑ 5.4%</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <p class="caption-text uppercase font-bold mb-3">승인 대기 상품</p>
+                    <div class="flex justify-between items-end">
+                        <p class="text-4xl font-light accent-text">14</p>
+                        <span class="text-xs text-gray-400 font-bold mb-1 italic">Action Req.</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <p class="caption-text uppercase font-bold mb-3">미처리 문의</p>
+                    <div class="flex justify-between items-end">
+                        <p class="text-4xl font-light text-red-500">7</p>
+                        <span class="text-sm text-red-400 font-bold mb-1">New</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Chart Section -->
+            <section class="bg-white border border-gray-100 p-10">
+                <div class="flex justify-between items-start mb-10">
+                    <div>
+                        <h3 class="text-2xl font-light mb-2 italic">Auction Performance</h3>
+                        <p class="text-sm text-gray-500 font-medium uppercase tracking-widest">주간 낙찰가 및 입찰 거래 추이</p>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <span class="flex items-center text-xs text-gray-600 font-bold uppercase tracking-widest">
+                            <span class="w-3 h-3 accent-bg rounded-full mr-2"></span> 낙찰 총액
+                        </span>
+                        <select class="text-xs font-bold border border-gray-200 bg-white px-4 py-2 uppercase tracking-widest outline-none cursor-pointer hover:border-accent-color transition-colors">
+                            <option>Last 7 Days</option>
+                            <option>Last 30 Days</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="performanceChart"></canvas>
+                </div>
+            </section>
+
+            <!-- Product Management (Items Table) -->
+            <section class="bg-white border border-gray-100 p-10">
+                <div class="flex justify-between items-center mb-10">
+                    <div>
+                        <h3 class="text-2xl font-light mb-2">경매 상품 관리</h3>
+                        <p class="text-sm text-gray-500 font-medium italic uppercase tracking-wider">Product Approval & Status Control</p>
+                    </div>
+                    <div class="flex space-x-4">
+                        <button class="btn-sm border border-gray-200 text-gray-600 font-bold hover:bg-gray-50">Filter</button>
+                        <button class="btn-sm accent-bg text-white px-8 shadow-sm">전체 노출</button>
+                    </div>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>상품명</th>
+                                <th>판매자</th>
+                                <th>상태</th>
+                                <th>현재가</th>
+                                <th>종료시점</th>
+                                <th>관리</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-gray-700">
+                            <tr>
+                                <td class="font-bold text-black">Midnight Sapphire Ring</td>
+                                <td class="font-medium">Jewel_Master</td>
+                                <td><span class="status-badge bg-blue-50 text-blue-600">경매중</span></td>
+                                <td class="accent-text font-bold text-base">₩ 4,250,000</td>
+                                <td class="text-gray-500">02:14:55 남음</td>
+                                <td class="space-x-2">
+                                    <button class="btn-sm border border-gray-200 hover:bg-gray-50 font-bold">수정</button>
+                                    <button class="btn-sm border border-red-100 text-red-500 hover:bg-red-50 font-bold">강제종료</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-black">Antique Gold Brooch 1920s</td>
+                                <td class="font-medium">Vintage_Love</td>
+                                <td><span class="status-badge bg-orange-50 text-orange-600">승인대기</span></td>
+                                <td class="text-gray-400 font-bold">₩ 1,200,000</td>
+                                <td class="text-gray-400 font-medium">-</td>
+                                <td class="space-x-2">
+                                    <button class="btn-sm accent-bg text-white border border-transparent shadow-sm">승인</button>
+                                    <button class="btn-sm border border-gray-200 text-gray-500 font-bold">반려</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-black">Emerald Masterpiece Vase</td>
+                                <td class="font-medium">Gallery_K</td>
+                                <td><span class="status-badge bg-gray-100 text-gray-500">숨김</span></td>
+                                <td class="font-bold text-base">₩ 18,000,000</td>
+                                <td class="text-gray-400">-</td>
+                                <td class="space-x-2">
+                                    <button class="btn-sm border border-gray-200 hover:bg-gray-50 font-bold">노출</button>
+                                    <button class="btn-sm border border-gray-200 hover:bg-gray-50 font-bold">삭제</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 pb-12">
+                <!-- User & Bid Monitoring -->
+                <section class="bg-white border border-gray-100 p-10">
+                    <h3 class="text-xl font-light mb-8 italic">Monitoring</h3>
+                    <div class="space-y-6">
+                        <div class="p-5 bg-red-50/50 border-l-4 border-red-400 flex justify-between items-center shadow-sm">
+                            <div>
+                                <p class="font-bold text-red-600 text-[13px] mb-1">급격한 가격 상승 감지</p>
+                                <p class="text-sm text-gray-600">Silver Ornament (ID: #4920) - 1분 내 15회 입찰</p>
+                            </div>
+                            <button class="btn-sm bg-white border border-red-200 text-red-500 shadow-sm hover:bg-red-50">조사하기</button>
+                        </div>
+                        <div class="p-5 bg-orange-50/50 border-l-4 border-orange-400 flex justify-between items-center shadow-sm">
+                            <div>
+                                <p class="font-bold text-orange-700 text-[13px] mb-1">결제 기한 임박</p>
+                                <p class="text-sm text-gray-600">낙찰자 user_id_02 - 결제 만료 1시간 전</p>
+                            </div>
+                            <button class="btn-sm bg-white border border-orange-200 text-orange-700 shadow-sm hover:bg-orange-50">독촉발송</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Q&A Status -->
+                <section class="bg-white border border-gray-100 p-10">
+                    <h3 class="text-xl font-light mb-8 italic">Inquiry & Report</h3>
+                    <div class="space-y-8">
+                        <div class="flex items-start space-x-5">
+                            <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-sm font-bold">Q</div>
+                            <div class="flex-1">
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-sm font-bold text-black">배송 기간 문의</span>
+                                    <span class="text-xs text-gray-500 font-medium uppercase tracking-tighter">10 mins ago</span>
+                                </div>
+                                <p class="text-[13px] text-gray-600 leading-relaxed">해외 배송인데 관세 포함된 금액인가요? 상세한 정보를 원합니다.</p>
+                            </div>
+                            <button class="btn-sm accent-text border border-accent hover:bg-accent-color hover:text-white">답변</button>
+                        </div>
+                        <div class="flex items-start space-x-5">
+                            <div class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center text-sm text-red-500 font-bold">R</div>
+                            <div class="flex-1">
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-sm font-bold text-red-600">허위 매물 신고</span>
+                                    <span class="text-xs text-gray-500 font-medium uppercase tracking-tighter">2 hours ago</span>
+                                </div>
+                                <p class="text-[13px] text-gray-600 leading-relaxed">실제 보증서 이미지와 상품이 다른 것 같습니다. 확인 부탁드려요.</p>
+                            </div>
+                            <button class="btn-sm text-red-500 border border-red-200 hover:bg-red-50">조사</button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+        </div>
+
+        <footer class="py-12 text-center border-t border-gray-100 bg-white">
+            <p class="text-xs text-gray-400 font-bold uppercase tracking-[0.4em]">FundingSea Admin System v1.0.2</p>
+        </footer>
+    </main>
+
+    <script>
+        // Chart.js initialization
+        const ctx = document.getElementById('performanceChart').getContext('2d');
+        
+        const gradient = ctx.createLinearGradient(0, 0, 0, 350);
+        gradient.addColorStop(0, 'rgba(163, 147, 130, 0.3)');
+        gradient.addColorStop(1, 'rgba(163, 147, 130, 0.0)');
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'],
+                datasets: [{
+                    label: '낙찰 총액 (KRW)',
+                    data: [25000000, 32000000, 28000000, 45000000, 42000000, 68000000, 75000000],
+                    borderColor: '#A39382',
+                    borderWidth: 3,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: '#A39382',
+                    pointBorderWidth: 3,
+                    pointRadius: 5,
+                    pointHoverRadius: 8,
+                    fill: true,
+                    backgroundColor: gradient,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: '#fff',
+                        titleColor: '#1a1a1a',
+                        titleFont: { size: 13, weight: 'bold' },
+                        bodyColor: '#A39382',
+                        bodyFont: { size: 15, weight: 'bold' },
+                        borderColor: '#ddd',
+                        borderWidth: 1,
+                        padding: 18,
+                        displayColors: false,
+                        cornerRadius: 8,
+                        callbacks: {
+                            label: function(context) {
+                                return '₩ ' + context.parsed.y.toLocaleString();
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: '#f3f3f3', drawBorder: false },
+                        ticks: {
+                            color: '#888',
+                            font: { size: 11, weight: 'bold' },
+                            padding: 10,
+                            callback: function(value) {
+                                return (value / 1000000) + 'M';
+                            }
+                        }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: {
+                            color: '#888',
+                            font: { size: 12, weight: 'bold' },
+                            padding: 10
+                        }
+                    }
+                }
+            }
+        });
+
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelector('.nav-item.active').classList.remove('active');
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
