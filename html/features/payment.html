@@ -531,42 +531,6 @@
 </head>
 
 <body>
-    <header class="border-b border-gray-100 bg-white/95 backdrop-blur-sm sticky top-0 z-50">
-        <div class="max-w-[1440px] mx-auto px-4 md:px-10 h-20 flex justify-between items-center">
-            
-            <div class="flex items-center space-x-12">
-                <a href="./main_auction.html" class="flex items-center">
-                    <div class="luxury-font text-2xl font-bold tracking-[0.3em] text-[#A39382] uppercase cursor-pointer leading-none mt-1">Facet</div>
-                </a>
-                
-                <nav class="hidden lg:flex items-center space-x-8 text-[14px] font-medium text-gray-500">
-                    <a href="./main_auction.html" class="text-black border-b-2 border-black py-1">경매</a>
-                    <a href="./main_funding.html" class="hover:text-black transition-colors py-1">펀딩</a>
-                </nav>
-            </div>
-
-            <div class="flex-1 max-w-md mx-8 hidden md:block">
-                <div class="relative w-full flex items-center">
-                    <span class="absolute left-4 text-gray-400 text-xs">🔍</span>
-                    <input type="text" placeholder="어떤 보석을 찾으시나요?" 
-                           class="w-full bg-gray-50 border border-gray-100 rounded-full py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:border-[#A39382] transition-all placeholder:text-gray-300">
-                </div>
-            </div>
-
-            <div class="flex items-center">
-                <a href="./mypage.html" class="icon-btn" aria-label="My Page">
-                    <i class="fa-regular fa-user text-[15px]"></i>
-                </a>
-                
-                <button class="lg:hidden ml-4 text-gray-600 flex items-center">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path d="M4 6h16M4 12h16m-7 6h7" stroke-width="1.5" stroke-linecap="round"/>
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </header>
-
     <div class="container">
         <div class="page-header">
             <h1>프로젝트 후원하기</h1>
@@ -605,71 +569,6 @@
                                 <span style="font-weight: 600;">원</span>
                             </div>
                         </div>
-                    </div>
-                </section>
-
-                <!-- 쿠폰 및 서포터 정보 -->
-                <section>
-                    <h2 class="section-title">쿠폰 / 포인트 사용</h2>
-                    <div class="form-group">
-                        <label class="form-label">쿠폰 사용</label>
-                        <div class="flex-row">
-                            <input type="text" class="form-input" placeholder="사용 가능한 쿠폰 0장" readonly>
-                            <button class="apply-btn">쿠폰조회</button>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">포인트 사용</label>
-                        <div class="flex-row">
-                            <input type="number" class="form-input" placeholder="0">
-                            <button class="apply-btn">모두사용</button>
-                        </div>
-                        <p style="font-size: 12px; color: var(--text-sub); margin-top: 8px;">보유 포인트 1,500P (1,000P 이상 사용
-                            가능)</p>
-                    </div>
-
-                    <h2 class="section-title" style="margin-top: 40px;">서포터클럽 올인원 금액 선택</h2>
-                    <div class="radio-group">
-                        <label class="radio-item">
-                            <input type="radio" name="club_amount" value="0" checked>
-                            <span style="font-size: 14px;">선택 안 함</span>
-                        </label>
-                        <label class="radio-item">
-                            <input type="radio" name="club_amount" value="1000">
-                            <div style="display: flex; flex-direction: column;">
-                                <span style="font-size: 14px; font-weight: 600;">브론즈 서포터 - 1,000원</span>
-                                <span style="font-size: 12px; color: var(--text-sub);">월 1,000원으로 프로젝트의 지속적인 성장을
-                                    응원합니다.</span>
-                            </div>
-                        </label>
-                        <label class="radio-item">
-                            <input type="radio" name="club_amount" value="5000">
-                            <div style="display: flex; flex-direction: column;">
-                                <span style="font-size: 14px; font-weight: 600;">실버 서포터 - 5,000원</span>
-                                <span style="font-size: 12px; color: var(--text-sub);">월 5,000원으로 창작자의 다음 활동을
-                                    지지합니다.</span>
-                            </div>
-                        </label>
-                    </div>
-
-                    <h2 class="section-title" style="margin-top: 40px;">서포터 정보</h2>
-                    <div class="form-group">
-                        <label class="form-label">이름</label>
-                        <input type="text" class="form-input" value="홍길동" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">이메일</label>
-                        <input type="email" class="form-input" value="supporter@example.com" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">휴대폰 번호</label>
-                        <input type="tel" class="form-input" value="010-1234-5678" readonly>
-                    </div>
-                    <div class="agreement">
-                        <label style="display: flex; gap: 8px; cursor: pointer;">
-                            <input type="checkbox">
-                            <span style="font-weight: 500;">(필수) 프로젝트 진행에 대한 새소식 및 결제 관련 안내를 받습니다.</span>
-                        </label>
                     </div>
                 </section>
 
@@ -782,9 +681,6 @@
             </aside>
         </div>
     </div>
-
-    
-
     <script>
         // 최근 배송지 데이터 예시
         const RECENT_SHIPPING = {
