@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,26 +8,38 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300&family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap');
 
         body {
             font-family: 'Noto Sans KR', sans-serif;
             background-color: #ffffff;
             color: #1a1a1a;
             margin: 0;
+            word-break: keep-all;
         }
+        .font-serif-luxury { font-family: 'Cormorant Garamond', serif; }
+        .luxury-font { font-family: 'Cinzel', serif; }
 
         /* 지정해주신 색상으로 변경 */
         :root {
-            --accent-color: #A39382; 
+            --accent-color: #A39382;
             --accent-hover: #8E7F70;
             --bg-light: #ffffff;
             --text-main: #1a1a1a;
             --border-color: #eeeeee;
         }
 
-        .accent-text { color: var(--accent-color); }
-        .accent-bg { background-color: var(--accent-color); }
-        .border-accent { border-color: var(--accent-color); }
+        .accent-text {
+            color: var(--accent-color);
+        }
+
+        .accent-bg {
+            background-color: var(--accent-color);
+        }
+
+        .border-accent {
+            border-color: var(--accent-color);
+        }
 
         /* 커스텀 버튼 스타일 */
         .bid-button {
@@ -51,64 +64,91 @@
         ::-webkit-scrollbar {
             width: 6px;
         }
+
         ::-webkit-scrollbar-track {
             background: #f8f8f8;
         }
+
         ::-webkit-scrollbar-thumb {
             background: var(--accent-color);
             border-radius: 3px;
         }
     </style>
 </head>
+
 <body>
 
-    <header class="border-b border-gray-100 py-6 px-10 flex justify-between items-center bg-white/80 backdrop-blur-md sticky top-0 z-50">
-        <a href="./index02.html">
-            <div class="text-2xl font-bold tracking-widest accent-text ">Facet</div>
-        </a>
-        <nav class="hidden md:flex space-x-8 text-sm uppercase tracking-wider font-medium text-gray-600">
-            <a href="./funding_list.html" class="hover:text-black transition-colors">Shop</a>
-            <a href="#" class="accent-text border-b border-accent pb-1">Auction</a>
-            <a href="#" class="hover:text-black transition-colors">Collections</a>
-            <a href="#" class="hover:text-black transition-colors">About</a>
-        </nav>
-        <div class="flex items-center space-x-6 text-xl text-gray-700">
-            <button class="hover:text-black transition-colors">🔍</button>
-            <button class="hover:text-black transition-colors">👤</button>
-            <button class="hover:text-black relative transition-colors">
-                🛒
-                <span class="absolute -top-2 -right-2 accent-bg text-[10px] text-white rounded-full w-4 h-4 flex items-center justify-center font-bold">2</span>
-            </button>
+    <header class="border-b border-gray-100 bg-white/95 backdrop-blur-sm sticky top-0 z-50">
+        <div class="max-w-[1440px] mx-auto px-4 md:px-10 h-20 flex justify-between items-center">
+
+            <div class="flex items-center space-x-12">
+                <a href="./index.html" class="flex items-center">
+                    <div
+                        class="luxury-font text-2xl font-bold tracking-[0.3em] text-[#A39382] uppercase cursor-pointer leading-none mt-[2px]">
+                        Facet</div>
+                </a>
+                <nav class="hidden lg:flex items-center space-x-8 text-[14px] font-medium text-gray-500">
+                    <a href="#" class="text-black border-b-2 border-black py-1">경매</a>
+                    <a href="#" class="hover:text-black transition-colors py-1">펀딩</a>
+                </nav>
+            </div>
+
+            <div class="flex-1 max-w-md mx-8 hidden md:block">
+                <div class="relative flex items-center">
+                    <span class="absolute left-4 text-gray-400 text-xs">🔍</span>
+                    <input type="text" placeholder="어떤 보석을 찾으시나요?"
+                        class="w-full bg-gray-50 border border-gray-100 rounded-full py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:border-[#A39382] transition-all placeholder:text-gray-300">
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-6">
+                <button
+                    class="hidden sm:block text-sm text-gray-500 hover:text-black transition-colors font-medium">로그인</button>
+                <div class="w-[1px] h-3 bg-gray-200 hidden sm:block"></div> <button
+                    class="hidden sm:block text-sm text-gray-500 hover:text-black transition-colors font-medium">회원가입</button>
+            </div>
         </div>
     </header>
 
     <main class="max-w-7xl mx-auto py-12 px-6 lg:px-10">
-        
+
         <nav class="text-[10px] text-gray-400 mb-8 uppercase tracking-[0.2em]">
             Home / Auction / Ring / <span class="text-gray-600">Midnight Sapphire Ring</span>
         </nav>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
-            
+
             <div class="space-y-6">
                 <div class="bg-gray-50 rounded-sm overflow-hidden border border-gray-100 group">
-                    <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" 
-                         alt="Main Product" 
-                         class="w-full h-auto object-cover group-hover:scale-[1.02] transition duration-700">
+                    <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80"
+                        alt="Main Product"
+                        class="w-full h-auto object-cover group-hover:scale-[1.02] transition duration-700">
                 </div>
                 <div class="grid grid-cols-4 gap-4">
-                    <div class="border border-accent p-1 bg-white"><img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=300&q=80" class="w-full grayscale hover:grayscale-0 transition cursor-pointer"></div>
-                    <div class="border border-gray-100 p-1 bg-white"><img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=300&q=80" class="w-full grayscale hover:grayscale-0 transition cursor-pointer"></div>
-                    <div class="border border-gray-100 p-1 bg-white"><img src="https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=300&q=80" class="w-full grayscale hover:grayscale-0 transition cursor-pointer"></div>
-                    <div class="border border-gray-100 p-1 bg-white"><img src="https://images.unsplash.com/photo-1515562141207-7a18b5ce7142?auto=format&fit=crop&w=300&q=80" class="w-full grayscale hover:grayscale-0 transition cursor-pointer"></div>
+                    <div class="border border-accent p-1 bg-white"><img
+                            src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=300&q=80"
+                            class="w-full grayscale hover:grayscale-0 transition cursor-pointer"></div>
+                    <div class="border border-gray-100 p-1 bg-white"><img
+                            src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=300&q=80"
+                            class="w-full grayscale hover:grayscale-0 transition cursor-pointer"></div>
+                    <div class="border border-gray-100 p-1 bg-white"><img
+                            src="https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=300&q=80"
+                            class="w-full grayscale hover:grayscale-0 transition cursor-pointer"></div>
+                    <div class="border border-gray-100 p-1 bg-white"><img
+                            src="https://images.unsplash.com/photo-1515562141207-7a18b5ce7142?auto=format&fit=crop&w=300&q=80"
+                            class="w-full grayscale hover:grayscale-0 transition cursor-pointer"></div>
                 </div>
             </div>
 
             <div class="flex flex-col">
                 <div class="mb-4">
-                    <span class="inline-block px-3 py-1 bg-[#F5F2F0] accent-text text-[10px] font-bold rounded-full mb-3 tracking-widest uppercase">Live Auction</span>
-                    <h1 class="text-4xl font-light tracking-tight mb-3 text-gray-900">Midnight Sapphire Emerald Ring</h1>
-                    <p class="text-gray-500 text-sm leading-relaxed font-light">이 상품은 깊은 바다의 색을 닮은 사파이어와 정교한 에메랄드 컷이 조화를 이루는 마스터피스입니다. 장인의 고도화된 기술로 세공된 단 하나의 작품입니다.</p>
+                    <span
+                        class="inline-block px-3 py-1 bg-[#F5F2F0] accent-text text-[10px] font-bold rounded-full mb-3 tracking-widest uppercase">Live
+                        Auction</span>
+                    <h1 class="text-4xl font-light tracking-tight mb-3 text-gray-900">Midnight Sapphire Emerald Ring
+                    </h1>
+                    <p class="text-gray-500 text-sm leading-relaxed font-light">이 상품은 깊은 바다의 색을 닮은 사파이어와 정교한 에메랄드 컷이 조화를
+                        이루는 마스터피스입니다. 장인의 고도화된 기술로 세공된 단 하나의 작품입니다.</p>
                 </div>
 
                 <div class="bg-white p-8 border border-gray-100 rounded-sm mb-8 space-y-6 shadow-sm">
@@ -144,9 +184,8 @@
 
                     <div class="pt-6">
                         <div class="flex items-center space-x-2 mb-4">
-                            <input type="number" 
-                                   placeholder="입찰 금액을 입력하세요" 
-                                   class="flex-1 bg-white border border-gray-200 px-4 py-3 text-gray-800 focus:outline-none focus:border-[#A39382] transition-all placeholder:text-gray-300">
+                            <input type="number" placeholder="입찰 금액을 입력하세요"
+                                class="flex-1 bg-white border border-gray-200 px-4 py-3 text-gray-800 focus:outline-none focus:border-[#A39382] transition-all placeholder:text-gray-300">
                             <span class="text-gray-400 text-xs font-bold tracking-widest">KRW</span>
                         </div>
                         <button class="w-full py-4 bid-button font-bold text-xs tracking-[0.3em] uppercase">
@@ -156,49 +195,74 @@
                 </div>
 
                 <div class="flex border-b border-gray-100 mb-6">
-                    <button class="px-6 py-3 text-[11px] font-bold tab-active uppercase tracking-[0.2em]">Detail</button>
-                    <button class="px-6 py-3 text-[11px] font-medium text-gray-400 hover:text-gray-600 uppercase tracking-[0.2em] transition-colors">History</button>
-                    <button class="px-6 py-3 text-[11px] font-medium text-gray-400 hover:text-gray-600 uppercase tracking-[0.2em] transition-colors">Shipping</button>
+                    <button
+                        class="px-6 py-3 text-[11px] font-bold tab-active uppercase tracking-[0.2em]">Detail</button>
+                    <button
+                        class="px-6 py-3 text-[11px] font-medium text-gray-400 hover:text-gray-600 uppercase tracking-[0.2em] transition-colors">History</button>
+                    <button
+                        class="px-6 py-3 text-[11px] font-medium text-gray-400 hover:text-gray-600 uppercase tracking-[0.2em] transition-colors">Shipping</button>
                 </div>
-                
+
                 <div class="text-sm text-gray-500 leading-relaxed space-y-3 font-light">
-                    <p class="flex items-center"><span class="w-1.5 h-1.5 accent-bg rounded-full mr-3"></span>원산지: 프랑스 남부 핸드메이드</p>
-                    <p class="flex items-center"><span class="w-1.5 h-1.5 accent-bg rounded-full mr-3"></span>소재: 18K White Gold, Natural Sapphire 2.5ct</p>
-                    <p class="flex items-center"><span class="w-1.5 h-1.5 accent-bg rounded-full mr-3"></span>사이즈: 12호 (사이즈 조절 가능)</p>
+                    <p class="flex items-center"><span class="w-1.5 h-1.5 accent-bg rounded-full mr-3"></span>원산지: 프랑스
+                        남부 핸드메이드</p>
+                    <p class="flex items-center"><span class="w-1.5 h-1.5 accent-bg rounded-full mr-3"></span>소재: 18K
+                        White Gold, Natural Sapphire 2.5ct</p>
+                    <p class="flex items-center"><span class="w-1.5 h-1.5 accent-bg rounded-full mr-3"></span>사이즈: 12호
+                        (사이즈 조절 가능)</p>
                 </div>
             </div>
         </div>
 
         <section class="mt-32">
-            <h2 class="text-xl font-light mb-12 tracking-[0.4em] text-center uppercase text-gray-800">Related Artifacts</h2>
+            <h2 class="text-xl font-light mb-12 tracking-[0.4em] text-center uppercase text-gray-800">Related Artifacts
+            </h2>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
                 <div class="group cursor-pointer">
                     <div class="aspect-square bg-gray-50 mb-4 overflow-hidden border border-gray-100 relative">
-                        <img src="https://images.unsplash.com/photo-1598560917505-59a3ad559071?auto=format&fit=crop&w=400&q=80" alt="Related" class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition duration-700">
-                        <div class="absolute top-0 right-0 accent-bg px-3 py-1 text-[9px] text-white font-bold tracking-widest uppercase">Upcoming</div>
+                        <img src="https://images.unsplash.com/photo-1598560917505-59a3ad559071?auto=format&fit=crop&w=400&q=80"
+                            alt="Related"
+                            class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition duration-700">
+                        <div
+                            class="absolute top-0 right-0 accent-bg px-3 py-1 text-[9px] text-white font-bold tracking-widest uppercase">
+                            Upcoming</div>
                     </div>
-                    <h3 class="text-[10px] uppercase tracking-widest text-gray-400 mb-1 group-hover:text-black transition-colors">Silver Ornament</h3>
+                    <h3
+                        class="text-[10px] uppercase tracking-widest text-gray-400 mb-1 group-hover:text-black transition-colors">
+                        Silver Ornament</h3>
                     <p class="text-sm font-bold text-gray-800">₩ 890,000</p>
                 </div>
                 <div class="group cursor-pointer">
                     <div class="aspect-square bg-gray-50 mb-4 overflow-hidden border border-gray-100">
-                        <img src="https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&w=400&q=80" alt="Related" class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition duration-700">
+                        <img src="https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&w=400&q=80"
+                            alt="Related"
+                            class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition duration-700">
                     </div>
-                    <h3 class="text-[10px] uppercase tracking-widest text-gray-400 mb-1 group-hover:text-black transition-colors">Hand-blown Vase</h3>
+                    <h3
+                        class="text-[10px] uppercase tracking-widest text-gray-400 mb-1 group-hover:text-black transition-colors">
+                        Hand-blown Vase</h3>
                     <p class="text-sm font-bold text-gray-800">₩ 2,100,000</p>
                 </div>
                 <div class="group cursor-pointer">
                     <div class="aspect-square bg-gray-50 mb-4 overflow-hidden border border-gray-100">
-                        <img src="https://images.unsplash.com/photo-1573408302382-70bd05f54627?auto=format&fit=crop&w=400&q=80" alt="Related" class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition duration-700">
+                        <img src="https://images.unsplash.com/photo-1573408302382-70bd05f54627?auto=format&fit=crop&w=400&q=80"
+                            alt="Related"
+                            class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition duration-700">
                     </div>
-                    <h3 class="text-[10px] uppercase tracking-widest text-gray-400 mb-1 group-hover:text-black transition-colors">Vintage Brooch</h3>
+                    <h3
+                        class="text-[10px] uppercase tracking-widest text-gray-400 mb-1 group-hover:text-black transition-colors">
+                        Vintage Brooch</h3>
                     <p class="text-sm font-bold text-gray-800">₩ 1,250,000</p>
                 </div>
                 <div class="group cursor-pointer">
                     <div class="aspect-square bg-gray-50 mb-4 overflow-hidden border border-gray-100">
-                        <img src="https://images.unsplash.com/photo-1589128777073-263566ae5e4d?auto=format&fit=crop&w=400&q=80" alt="Related" class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition duration-700">
+                        <img src="https://images.unsplash.com/photo-1589128777073-263566ae5e4d?auto=format&fit=crop&w=400&q=80"
+                            alt="Related"
+                            class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition duration-700">
                     </div>
-                    <h3 class="text-[10px] uppercase tracking-widest text-gray-400 mb-1 group-hover:text-black transition-colors">Ceramic Set</h3>
+                    <h3
+                        class="text-[10px] uppercase tracking-widest text-gray-400 mb-1 group-hover:text-black transition-colors">
+                        Ceramic Set</h3>
                     <p class="text-sm font-bold text-gray-800">₩ 540,000</p>
                 </div>
             </div>
@@ -260,4 +324,5 @@
         window.onload = startCountdown;
     </script>
 </body>
+
 </html>
