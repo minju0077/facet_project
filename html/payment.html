@@ -35,58 +35,29 @@
             background-color: var(--bg-light);
             line-height: 1.6;
         }
-
-        /* Header Style */
-        .site-header {
-            width: 100%;
-            height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 40px;
-            border-bottom: 1px solid var(--border-color);
-            position: sticky;
-            top: 0;
-            background: white;
-            z-index: 1000;
-        }
-
-        .header-logo {
-            font-size: 24px;
-            font-weight: 800;
-            letter-spacing: 1px;
-            cursor: pointer;
-            text-transform: uppercase;
-            color: var(--text-main);
-        }
-
-        .header-nav {
-            display: flex;
-            gap: 40px;
-        }
-
-        .nav-link {
-            text-decoration: none;
-            color: var(--text-main);
-            font-size: 15px;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-
-        .nav-link:hover {
-            color: var(--accent-color);
-        }
-
-        .header-icons {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-        }
+        
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300&family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap');
+        
+        body { font-family: 'Noto Sans KR', sans-serif; word-break: keep-all; }
+        .luxury-font { font-family: 'Cinzel', serif; }
 
         .icon-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
+            width: 40px; /* 정렬을 위해 조금 더 정원형으로 보정 */
+            height: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(163, 147, 130, 0.3);
+            background: #fff;
+            color: #A39382;
+            border-radius: 9999px;
+            transition: all .25s ease;
+        }
+        .icon-btn:hover {
+            background: #A39382;
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(163, 147, 130, 0.2);
         }
 
         /* Main Container */
@@ -560,28 +531,39 @@
 </head>
 
 <body>
+    <header class="border-b border-gray-100 bg-white/95 backdrop-blur-sm sticky top-0 z-50">
+        <div class="max-w-[1440px] mx-auto px-4 md:px-10 h-20 flex justify-between items-center">
+            
+            <div class="flex items-center space-x-12">
+                <a href="./main_auction.html" class="flex items-center">
+                    <div class="luxury-font text-2xl font-bold tracking-[0.3em] text-[#A39382] uppercase cursor-pointer leading-none mt-1">Facet</div>
+                </a>
+                
+                <nav class="hidden lg:flex items-center space-x-8 text-[14px] font-medium text-gray-500">
+                    <a href="./main_auction.html" class="text-black border-b-2 border-black py-1">경매</a>
+                    <a href="./main_funding.html" class="hover:text-black transition-colors py-1">펀딩</a>
+                </nav>
+            </div>
 
-    <header class="site-header">
-        <div class="header-logo">Facet</div>
-        <nav class="header-nav">
-            <a href="#" class="nav-link">SHOP</a>
-            <a href="#" class="nav-link">AUCTION</a>
-            <a href="#" class="nav-link">SUPPORT</a>
-            <a href="#" class="nav-link">MY</a>
-        </nav>
-        <div class="flex-items-center header-icons">
-            <a href="#" class="icon-btn" aria-label="Search">
-                <i class="fa-solid fa-magnifying-glass" style="font-size: 15px;"></i>
-            </a>
+            <div class="flex-1 max-w-md mx-8 hidden md:block">
+                <div class="relative w-full flex items-center">
+                    <span class="absolute left-4 text-gray-400 text-xs">🔍</span>
+                    <input type="text" placeholder="어떤 보석을 찾으시나요?" 
+                           class="w-full bg-gray-50 border border-gray-100 rounded-full py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:border-[#A39382] transition-all placeholder:text-gray-300">
+                </div>
+            </div>
 
-            <a href="#" class="icon-btn" aria-label="My page">
-                <i class="fa-regular fa-user" style="font-size: 15px;"></i>
-            </a>
-
-            <a href="#" class="icon-btn" aria-label="Cart">
-                <i class="fa-solid fa-bag-shopping" style="font-size: 15px;"></i>
-                <span class="icon-badge">2</span>
-            </a>
+            <div class="flex items-center">
+                <a href="./mypage.html" class="icon-btn" aria-label="My Page">
+                    <i class="fa-regular fa-user text-[15px]"></i>
+                </a>
+                
+                <button class="lg:hidden ml-4 text-gray-600 flex items-center">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path d="M4 6h16M4 12h16m-7 6h7" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                </button>
+            </div>
         </div>
     </header>
 
@@ -800,6 +782,8 @@
             </aside>
         </div>
     </div>
+
+    
 
     <script>
         // 최근 배송지 데이터 예시

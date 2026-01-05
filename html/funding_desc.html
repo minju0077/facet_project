@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,64 +8,107 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300&family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap');
-
-    :root{
-      --accent-color:#A39382;
-      --accent-hover:#8E7F70;
-      --bg-light:#ffffff;
-      --text-main:#1a1a1a;
-      --border-color:#eeeeee;
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300&family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap');
+        
+    :root {
+      --accent-color: #A39382;
+      --accent-hover: #8E7F70;
+      --bg-light: #ffffff;
+      --text-main: #1a1a1a;
+      --border-color: #eeeeee;
     }
 
-    body { font-family: 'Noto Sans KR', sans-serif; background: var(--bg-light); color: var(--text-main); margin: 0; word-break: keep-all; }
-    .font-serif-luxury { font-family: 'Cormorant Garamond', serif; }
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background: var(--bg-light);
+      color: var(--text-main);
+      margin: 0;
+      word-break: keep-all;
+    }
 
-    .accent-text { color: var(--accent-color); }
-    .accent-bg { background-color: var(--accent-color); }
-    .border-accent { border-color: var(--accent-color); }
+    .font-serif-luxury {
+      font-family: 'Cormorant Garamond', serif;
+    }
+    .luxury-font { font-family: 'Cinzel', serif; }
 
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .accent-text {
+      color: var(--accent-color);
+    }
+
+    .accent-bg {
+      background-color: var(--accent-color);
+    }
+
+    .border-accent {
+      border-color: var(--accent-color);
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
 
     .banner-gradient {
-      background: linear-gradient(to right, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.0) 62%);
+      background: linear-gradient(to right, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0.0) 62%);
     }
 
-    .tab-active{
+    .tab-active {
       border-bottom: 2px solid var(--accent-color);
       color: var(--accent-color);
     }
 
-    .primary-btn{
+    .primary-btn {
       background: var(--accent-color);
       color: #fff;
       transition: all .2s ease;
     }
-    .primary-btn:hover{ opacity:.92; }
 
-    .ghost-btn{
+    .primary-btn:hover {
+      opacity: .92;
+    }
+
+    .ghost-btn {
       border: 1px solid var(--border-color);
       transition: all .2s ease;
     }
-    .ghost-btn:hover{ border-color: var(--accent-color); color: var(--accent-color); }
 
-    .reward-card{
+    .ghost-btn:hover {
+      border-color: var(--accent-color);
+      color: var(--accent-color);
+    }
+
+    .reward-card {
       border: 1px solid #f1f1f1;
       transition: all .2s ease;
     }
-    .reward-card:hover{
+
+    .reward-card:hover {
       border-color: var(--accent-color);
-      box-shadow: 0 10px 30px rgba(0,0,0,.06);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .06);
       transform: translateY(-2px);
     }
-    .reward-selected{
+
+    .reward-selected {
       border-color: var(--accent-color) !important;
-      box-shadow: 0 12px 35px rgba(163,147,130,.18) !important;
+      box-shadow: 0 12px 35px rgba(163, 147, 130, .18) !important;
     }
 
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: #f8f8f8; }
-    ::-webkit-scrollbar-thumb { background: var(--accent-color); border-radius: 3px; }
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #f8f8f8;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--accent-color);
+      border-radius: 3px;
+    }
   </style>
 </head>
 
@@ -72,28 +116,34 @@
 
   <!-- Header (홈과 동일 톤) -->
   <header class="border-b border-gray-100 bg-white/95 backdrop-blur-sm sticky top-0 z-50">
-    <div class="max-w-[1440px] mx-auto px-4 md:px-10 h-16 flex justify-between items-center">
-      <div class="flex items-center space-x-10">
-        <div class="text-2xl font-bold tracking-[0.2em] text-[#A39382] uppercase cursor-pointer">Facet</div>
-        <nav class="hidden lg:flex space-x-8 text-[14px] font-medium text-gray-500">
-          <a href="#" class="hover:text-black transition-colors">경매</a>
-          <a href="#" class="text-black border-b-2 border-black pb-1">펀딩</a>
-          <a href="#" class="hover:text-black transition-colors">이벤트</a>
+    <div class="max-w-[1440px] mx-auto px-4 md:px-10 h-20 flex justify-between items-center">
+
+      <div class="flex items-center space-x-12">
+        <a href="./main_auction.html" class="flex items-center">
+          <div
+            class="luxury-font text-2xl font-bold tracking-[0.3em] text-[#A39382] uppercase cursor-pointer leading-none mt-[2px]">
+            Facet</div>
+        </a>
+        <nav class="hidden lg:flex items-center space-x-8 text-[14px] font-medium text-gray-500">
+          <a href="./main_auction.html" class="hover:text-black transition-colors py-1">경매</a>
+          <a href="./main_funding.html" class="text-black border-b-2 border-black py-1">펀딩</a>
         </nav>
       </div>
 
       <div class="flex-1 max-w-md mx-8 hidden md:block">
-        <div class="relative group">
-          <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">🔍</span>
-          <input type="text" placeholder="수공예 주얼리 프로젝트를 찾아보세요"
-                 class="w-full bg-gray-50 border border-gray-100 rounded-full py-2 pl-10 pr-4 text-sm focus:outline-none focus:border-[#A39382] transition-all">
+        <div class="relative flex items-center">
+          <span class="absolute left-4 text-gray-400 text-xs">🔍</span>
+          <input type="text" placeholder="어떤 보석을 찾으시나요?"
+            class="w-full bg-gray-50 border border-gray-100 rounded-full py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:border-[#A39382] transition-all placeholder:text-gray-300">
         </div>
       </div>
 
-      <div class="flex items-center space-x-4">
-        <button class="hidden sm:block text-sm text-gray-500 hover:text-black">로그인</button>
-        <button class="hidden sm:block text-sm text-gray-500 hover:text-black">회원가입</button>
-        <button class="px-5 py-2 bg-[#A39382] text-white text-[11px] font-bold tracking-widest uppercase hover:opacity-90 transition-all rounded-sm">Project Start</button>
+      <div class="flex items-center space-x-6">
+        <button class="hidden sm:block text-sm text-gray-500 hover:text-black transition-colors font-medium"><a
+            href="./login.html">로그인</a></button>
+        <div class="w-[1px] h-3 bg-gray-200 hidden sm:block"></div> <button
+          class="hidden sm:block text-sm text-gray-500 hover:text-black transition-colors font-medium"><a
+            href="./signup.html">회원가입</a></button>
       </div>
     </div>
   </header>
@@ -107,18 +157,17 @@
 
     <!-- Cover -->
     <section class="relative overflow-hidden rounded-md border border-gray-100 shadow-sm h-[260px] md:h-[340px] mb-10">
-      <img
-        src="https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&w=1800&q=80"
-        alt="Funding Cover"
-        class="w-full h-full object-cover"
-      />
+      <img src="https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&w=1800&q=80"
+        alt="Funding Cover" class="w-full h-full object-cover" />
       <div class="absolute inset-0 banner-gradient"></div>
 
       <div class="absolute left-6 md:left-10 bottom-8 md:bottom-10 text-white max-w-2xl">
         <div class="flex items-center space-x-2 mb-4">
-          <span class="px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-[10px] uppercase tracking-widest">Handmade</span>
+          <span
+            class="px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-[10px] uppercase tracking-widest">Handmade</span>
           <span class="px-3 py-1 bg-[#A39382] rounded-full text-[10px] uppercase tracking-widest">Funding</span>
-          <span class="px-3 py-1 bg-black/35 backdrop-blur-md rounded-full text-[10px] uppercase tracking-widest" id="status-badge">Ongoing</span>
+          <span class="px-3 py-1 bg-black/35 backdrop-blur-md rounded-full text-[10px] uppercase tracking-widest"
+            id="status-badge">Ongoing</span>
         </div>
         <h1 class="text-3xl md:text-5xl font-light font-serif-luxury italic leading-tight">
           Celestial Rose Earring
@@ -139,49 +188,52 @@
           <div class="border border-gray-100 bg-gray-50 rounded-md overflow-hidden">
             <div class="aspect-square w-full">
               <img id="main-img"
-                   src="https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&w=1400&q=80"
-                   class="w-full h-full object-cover"
-                   alt="Main">
+                src="https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&w=1400&q=80"
+                class="w-full h-full object-cover" alt="Main">
             </div>
           </div>
 
           <div class="mt-4 flex items-center gap-3 overflow-x-auto no-scrollbar pb-2">
-            <button class="thumb shrink-0 border border-[#A39382] rounded-md overflow-hidden w-24 aspect-square bg-white"
-                    data-src="https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&w=1400&q=80">
+            <button
+              class="thumb shrink-0 border border-[#A39382] rounded-md overflow-hidden w-24 aspect-square bg-white"
+              data-src="https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&w=1400&q=80">
               <img src="https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&w=240&q=80"
-                   class="w-full h-full object-cover"
-                   alt="Thumb 1">
+                class="w-full h-full object-cover" alt="Thumb 1">
             </button>
 
             <button class="thumb shrink-0 border border-gray-100 rounded-md overflow-hidden w-24 aspect-square bg-white"
-                    data-src="https://images.unsplash.com/photo-1515562141207-7a18b5ce7142?auto=format&fit=crop&w=1400&q=80">
+              data-src="https://images.unsplash.com/photo-1515562141207-7a18b5ce7142?auto=format&fit=crop&w=1400&q=80">
               <img src="https://images.unsplash.com/photo-1515562141207-7a18b5ce7142?auto=format&fit=crop&w=240&q=80"
-                   class="w-full h-full object-cover"
-                   alt="Thumb 2">
+                class="w-full h-full object-cover" alt="Thumb 2">
             </button>
 
             <button class="thumb shrink-0 border border-gray-100 rounded-md overflow-hidden w-24 aspect-square bg-white"
-                    data-src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=1400&q=80">
+              data-src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=1400&q=80">
               <img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=240&q=80"
-                   class="w-full h-full object-cover"
-                   alt="Thumb 3">
+                class="w-full h-full object-cover" alt="Thumb 3">
             </button>
 
             <button class="thumb shrink-0 border border-gray-100 rounded-md overflow-hidden w-24 aspect-square bg-white"
-                    data-src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=1400&q=80">
+              data-src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=1400&q=80">
               <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=240&q=80"
-                   class="w-full h-full object-cover"
-                   alt="Thumb 4">
+                class="w-full h-full object-cover" alt="Thumb 4">
             </button>
           </div>
         </section>
 
         <!-- Tabs -->
         <div class="flex border-b border-gray-100 mb-6">
-          <button class="tab px-6 py-3 text-[11px] font-bold tab-active uppercase tracking-[0.2em]" data-tab="story">Story</button>
-          <button class="tab px-6 py-3 text-[11px] font-medium text-gray-400 hover:text-gray-600 uppercase tracking-[0.2em] transition-colors" data-tab="maker">Maker</button>
-          <button class="tab px-6 py-3 text-[11px] font-medium text-gray-400 hover:text-gray-600 uppercase tracking-[0.2em] transition-colors" data-tab="process">Process</button>
-          <button class="tab px-6 py-3 text-[11px] font-medium text-gray-400 hover:text-gray-600 uppercase tracking-[0.2em] transition-colors" data-tab="shipping">Shipping</button>
+          <button class="tab px-6 py-3 text-[11px] font-bold tab-active uppercase tracking-[0.2em]"
+            data-tab="story">Story</button>
+          <button
+            class="tab px-6 py-3 text-[11px] font-medium text-gray-400 hover:text-gray-600 uppercase tracking-[0.2em] transition-colors"
+            data-tab="maker">Maker</button>
+          <button
+            class="tab px-6 py-3 text-[11px] font-medium text-gray-400 hover:text-gray-600 uppercase tracking-[0.2em] transition-colors"
+            data-tab="process">Process</button>
+          <button
+            class="tab px-6 py-3 text-[11px] font-medium text-gray-400 hover:text-gray-600 uppercase tracking-[0.2em] transition-colors"
+            data-tab="shipping">Shipping</button>
         </div>
 
         <!-- Tab Contents -->
@@ -247,7 +299,8 @@
                 <p class="text-[10px] text-gray-400 uppercase tracking-[0.2em] mb-2">Maker</p>
                 <h2 class="text-2xl font-light text-gray-900">Atelier Park</h2>
               </div>
-              <button class="px-5 py-2 text-[11px] font-bold tracking-widest uppercase ghost-btn rounded-sm">Follow</button>
+              <button
+                class="px-5 py-2 text-[11px] font-bold tracking-widest uppercase ghost-btn rounded-sm">Follow</button>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -281,26 +334,35 @@
 
             <div class="space-y-4">
               <div class="flex items-start space-x-4">
-                <div class="w-8 h-8 rounded-full accent-bg text-white flex items-center justify-center text-sm font-bold">1</div>
+                <div
+                  class="w-8 h-8 rounded-full accent-bg text-white flex items-center justify-center text-sm font-bold">1
+                </div>
                 <div>
                   <p class="text-sm font-medium text-gray-900">디자인 확정 & 재료 선별</p>
-                  <p class="text-sm text-gray-600 font-light leading-relaxed mt-1">원석 결/색감을 기준으로 페어링하고, 금속 도금 옵션에 맞춰 공정을 확정합니다.</p>
+                  <p class="text-sm text-gray-600 font-light leading-relaxed mt-1">원석 결/색감을 기준으로 페어링하고, 금속 도금 옵션에 맞춰 공정을
+                    확정합니다.</p>
                 </div>
               </div>
 
               <div class="flex items-start space-x-4">
-                <div class="w-8 h-8 rounded-full accent-bg text-white flex items-center justify-center text-sm font-bold">2</div>
+                <div
+                  class="w-8 h-8 rounded-full accent-bg text-white flex items-center justify-center text-sm font-bold">2
+                </div>
                 <div>
                   <p class="text-sm font-medium text-gray-900">세공(수작업)</p>
-                  <p class="text-sm text-gray-600 font-light leading-relaxed mt-1">절삭/연마/세팅을 여러 차례 반복해 광택과 내구성을 확보합니다.</p>
+                  <p class="text-sm text-gray-600 font-light leading-relaxed mt-1">절삭/연마/세팅을 여러 차례 반복해 광택과 내구성을 확보합니다.
+                  </p>
                 </div>
               </div>
 
               <div class="flex items-start space-x-4">
-                <div class="w-8 h-8 rounded-full accent-bg text-white flex items-center justify-center text-sm font-bold">3</div>
+                <div
+                  class="w-8 h-8 rounded-full accent-bg text-white flex items-center justify-center text-sm font-bold">3
+                </div>
                 <div>
                   <p class="text-sm font-medium text-gray-900">검수 & 패키징</p>
-                  <p class="text-sm text-gray-600 font-light leading-relaxed mt-1">마감 품질/도금 균일도/스크래치 여부를 점검하고 안전 포장 후 발송합니다.</p>
+                  <p class="text-sm text-gray-600 font-light leading-relaxed mt-1">마감 품질/도금 균일도/스크래치 여부를 점검하고 안전 포장 후
+                    발송합니다.</p>
                 </div>
               </div>
             </div>
@@ -379,8 +441,10 @@
           </div>
 
           <div class="flex space-x-2 pt-1">
-            <button class="flex-1 py-3 text-[11px] font-bold tracking-widest uppercase ghost-btn rounded-sm">❤️ 위시리스트</button>
-            <button class="flex-1 py-3 text-[11px] font-bold tracking-widest uppercase ghost-btn rounded-sm">🔗 공유</button>
+            <button class="flex-1 py-3 text-[11px] font-bold tracking-widest uppercase ghost-btn rounded-sm">❤️
+              위시리스트</button>
+            <button class="flex-1 py-3 text-[11px] font-bold tracking-widest uppercase ghost-btn rounded-sm">🔗
+              공유</button>
           </div>
 
           <div class="pt-2">
@@ -388,7 +452,9 @@
             <p class="text-sm text-gray-700 font-light" id="selected-reward-text">리워드를 선택해주세요.</p>
           </div>
 
-          <button id="support-btn" class="w-full py-4 primary-btn font-bold text-xs tracking-[0.3em] uppercase rounded-sm disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+          <button id="support-btn"
+            class="w-full py-4 primary-btn font-bold text-xs tracking-[0.3em] uppercase rounded-sm disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled>
             Support this Project
           </button>
 
@@ -405,7 +471,8 @@
 
           <div class="space-y-4 max-h-[420px] overflow-auto pr-1 no-scrollbar">
 
-            <button class="reward reward-card w-full text-left rounded-md p-5" data-title="서포터 패키지" data-price="₩ 29,000" data-left="무제한">
+            <button class="reward reward-card w-full text-left rounded-md p-5" data-title="서포터 패키지"
+              data-price="₩ 29,000" data-left="무제한">
               <div class="flex items-start justify-between">
                 <div>
                   <p class="text-[10px] uppercase tracking-[0.2em] text-gray-400 mb-2">Option 01</p>
@@ -421,7 +488,8 @@
               </div>
             </button>
 
-            <button class="reward reward-card w-full text-left rounded-md p-5" data-title="실버 귀걸이(925)" data-price="₩ 149,000" data-left="23개 남음">
+            <button class="reward reward-card w-full text-left rounded-md p-5" data-title="실버 귀걸이(925)"
+              data-price="₩ 149,000" data-left="23개 남음">
               <div class="flex items-start justify-between">
                 <div>
                   <p class="text-[10px] uppercase tracking-[0.2em] text-gray-400 mb-2">Option 02</p>
@@ -430,7 +498,8 @@
                     수공예 세공 + 기본 패키지(보관 파우치 포함) / 도금 미포함
                   </p>
                   <div class="flex space-x-2 mt-3">
-                    <span class="px-2 py-1 bg-gray-50 border border-gray-100 rounded-full text-[10px] text-gray-500">핸드메이드</span>
+                    <span
+                      class="px-2 py-1 bg-gray-50 border border-gray-100 rounded-full text-[10px] text-gray-500">핸드메이드</span>
                     <span class="px-2 py-1 bg-[#F5F2F0] rounded-full text-[10px] accent-text font-medium">추천</span>
                   </div>
                 </div>
@@ -441,7 +510,8 @@
               </div>
             </button>
 
-            <button class="reward reward-card w-full text-left rounded-md p-5" data-title="14K 골드 도금 귀걸이" data-price="₩ 189,000" data-left="12개 남음">
+            <button class="reward reward-card w-full text-left rounded-md p-5" data-title="14K 골드 도금 귀걸이"
+              data-price="₩ 189,000" data-left="12개 남음">
               <div class="flex items-start justify-between">
                 <div>
                   <p class="text-[10px] uppercase tracking-[0.2em] text-gray-400 mb-2">Option 03</p>
@@ -457,7 +527,8 @@
               </div>
             </button>
 
-            <button class="reward reward-card w-full text-left rounded-md p-5" data-title="커스텀 이니셜 각인" data-price="₩ 39,000" data-left="무제한">
+            <button class="reward reward-card w-full text-left rounded-md p-5" data-title="커스텀 이니셜 각인"
+              data-price="₩ 39,000" data-left="무제한">
               <div class="flex items-start justify-between">
                 <div>
                   <p class="text-[10px] uppercase tracking-[0.2em] text-gray-400 mb-2">Add-on</p>
@@ -481,7 +552,7 @@
               <div class="flex items-center space-x-2">
                 <button id="qty-minus" class="w-9 h-9 ghost-btn rounded-sm flex items-center justify-center">−</button>
                 <input id="qty" type="number" min="1" value="1"
-                       class="w-14 text-center border border-gray-100 rounded-sm py-2 focus:outline-none focus:border-[#A39382]">
+                  class="w-14 text-center border border-gray-100 rounded-sm py-2 focus:outline-none focus:border-[#A39382]">
                 <button id="qty-plus" class="w-9 h-9 ghost-btn rounded-sm flex items-center justify-center">+</button>
               </div>
             </div>
@@ -491,7 +562,9 @@
               <p class="text-lg font-bold accent-text" id="total">₩ 0</p>
             </div>
 
-            <button id="support-btn-2" class="w-full py-4 primary-btn font-bold text-xs tracking-[0.3em] uppercase rounded-sm disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+            <button id="support-btn-2"
+              class="w-full py-4 primary-btn font-bold text-xs tracking-[0.3em] uppercase rounded-sm disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled>
               Support Now
             </button>
 
@@ -515,39 +588,44 @@
         <div class="group cursor-pointer">
           <div class="aspect-video overflow-hidden bg-gray-100 mb-4 relative rounded-md">
             <img src="https://images.unsplash.com/photo-1515562141207-7a18b5ce7142?auto=format&fit=crop&w=800&q=80"
-                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Related">
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Related">
             <div class="absolute top-3 left-3">
-              <span class="bg-[#A39382] text-white px-2 py-0.5 text-[10px] font-bold rounded-sm uppercase">Handmade</span>
+              <span
+                class="bg-[#A39382] text-white px-2 py-0.5 text-[10px] font-bold rounded-sm uppercase">Handmade</span>
             </div>
           </div>
-          <h3 class="text-md font-bold leading-snug group-hover:text-[#A39382] transition-colors line-clamp-2">Eternal Radiance — 빈티지 무드 링</h3>
+          <h3 class="text-md font-bold leading-snug group-hover:text-[#A39382] transition-colors line-clamp-2">Eternal
+            Radiance — 빈티지 무드 링</h3>
           <p class="text-[12px] text-gray-400 mt-2">아틀리에 레인 | 61% 달성</p>
         </div>
 
         <div class="group cursor-pointer">
           <div class="aspect-video overflow-hidden bg-gray-100 mb-4 relative rounded-md">
             <img src="https://images.unsplash.com/photo-1599643478518-a744c517b203?auto=format&fit=crop&w=800&q=80"
-                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Related">
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Related">
           </div>
-          <h3 class="text-md font-bold leading-snug group-hover:text-[#A39382] transition-colors line-clamp-2">Pure Pearl — 담수 진주 미니 세트</h3>
+          <h3 class="text-md font-bold leading-snug group-hover:text-[#A39382] transition-colors line-clamp-2">Pure
+            Pearl — 담수 진주 미니 세트</h3>
           <p class="text-[12px] text-gray-400 mt-2">White Ocean | 103% 달성</p>
         </div>
 
         <div class="group cursor-pointer">
           <div class="aspect-video overflow-hidden bg-gray-100 mb-4 relative rounded-md">
             <img src="https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&w=800&q=80"
-                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Related">
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Related">
           </div>
-          <h3 class="text-md font-bold leading-snug group-hover:text-[#A39382] transition-colors line-clamp-2">Golden Hour — 수작업 워치 스트랩</h3>
+          <h3 class="text-md font-bold leading-snug group-hover:text-[#A39382] transition-colors line-clamp-2">Golden
+            Hour — 수작업 워치 스트랩</h3>
           <p class="text-[12px] text-gray-400 mt-2">Vintage Hunter | 24% 달성</p>
         </div>
 
         <div class="group cursor-pointer">
           <div class="aspect-video overflow-hidden bg-gray-100 mb-4 relative rounded-md">
             <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=800&q=80"
-                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Related">
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Related">
           </div>
-          <h3 class="text-md font-bold leading-snug group-hover:text-[#A39382] transition-colors line-clamp-2">Royal Forest — 원석 커스텀 펜던트</h3>
+          <h3 class="text-md font-bold leading-snug group-hover:text-[#A39382] transition-colors line-clamp-2">Royal
+            Forest — 원석 커스텀 펜던트</h3>
           <p class="text-[12px] text-gray-400 mt-2">Stone Lab | 77% 달성</p>
         </div>
       </div>
@@ -645,13 +723,13 @@
     let selectedPrice = 0;
     let selectedTitle = "";
 
-    function parseKRW(str){
-      return Number(String(str).replace(/[^0-9]/g,'') || 0);
+    function parseKRW(str) {
+      return Number(String(str).replace(/[^0-9]/g, '') || 0);
     }
-    function formatKRW(num){
+    function formatKRW(num) {
       return "₩ " + Number(num).toLocaleString('ko-KR');
     }
-    function updateTotal(){
+    function updateTotal() {
       const qty = Math.max(1, Number(qtyInput.value || 1));
       qtyInput.value = qty;
       totalEl.innerText = formatKRW(selectedPrice * qty);
@@ -684,8 +762,8 @@
     qtyInput.addEventListener('input', updateTotal);
 
     // Demo action
-    function handleSupport(){
-      if(!selectedTitle) return;
+    function handleSupport() {
+      if (!selectedTitle) return;
       const qty = Math.max(1, Number(qtyInput.value || 1));
       alert(`후원하기(데모)\n\n리워드: ${selectedTitle}\n수량: ${qty}\n결제금액: ${formatKRW(selectedPrice * qty)}\n\n※ 실제 결제/주문 로직은 백엔드 연동 필요`);
     }
@@ -703,11 +781,12 @@
       if (hours < 0) { hours = 23; days--; }
       if (days < 0) return;
 
-      const h = String(hours).padStart(2,'0');
-      const m = String(minutes).padStart(2,'0');
-      const s = String(seconds).padStart(2,'0');
-      display.innerText = `${String(days).padStart(2,'0')}일 ${h}:${m}:${s}`;
+      const h = String(hours).padStart(2, '0');
+      const m = String(minutes).padStart(2, '0');
+      const s = String(seconds).padStart(2, '0');
+      display.innerText = `${String(days).padStart(2, '0')}일 ${h}:${m}:${s}`;
     }, 1000);
   </script>
 </body>
+
 </html>
