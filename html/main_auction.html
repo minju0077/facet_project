@@ -7,12 +7,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300&family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap');
-        /* Cinzel(로고용) 및 Noto Sans KR 폰트 추가 */
-        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300&family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap');
         
         body { font-family: 'Noto Sans KR', sans-serif; word-break: keep-all; }
         .font-serif-luxury { font-family: 'Cormorant Garamond', serif; }
-        .luxury-font { font-family: 'Cinzel', serif; }
         
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -32,36 +29,39 @@
     </style>
 </head>
 <body class="bg-white text-[#1a1a1a]">
+
+    <!-- 와디즈 스타일 Header -->
     <header class="border-b border-gray-100 bg-white/95 backdrop-blur-sm sticky top-0 z-50">
-        <div class="max-w-[1440px] mx-auto px-4 md:px-10 h-20 flex justify-between items-center">
-            
-            <div class="flex items-center space-x-12">
-                <a href="./index.html" class="flex items-center">
-                    <div class="luxury-font text-2xl font-bold tracking-[0.3em] text-[#A39382] uppercase cursor-pointer leading-none mt-[2px]">Facet</div>
-                </a>
-                <nav class="hidden lg:flex items-center space-x-8 text-[14px] font-medium text-gray-500">
-                    <a href="#" class="text-black border-b-2 border-black py-1">경매</a>
-                    <a href="#" class="hover:text-black transition-colors py-1">펀딩</a>
+        <div class="max-w-[1440px] mx-auto px-4 md:px-10 h-16 flex justify-between items-center">
+            <div class="flex items-center space-x-10">
+                <div class="text-2xl font-bold tracking-[0.2em] text-[#A39382] uppercase cursor-pointer">Facet</div>
+                <nav class="hidden lg:flex space-x-8 text-[14px] font-medium text-gray-500">
+                    <a href="#" class="text-black border-b-2 border-black pb-1">경매</a>
+                    <a href="#" class="hover:text-black transition-colors">펀딩</a>
+                    <a href="#" class="hover:text-black transition-colors">이벤트</a>
                 </nav>
             </div>
 
             <div class="flex-1 max-w-md mx-8 hidden md:block">
-                <div class="relative flex items-center">
-                    <span class="absolute left-4 text-gray-400 text-xs">🔍</span>
+                <div class="relative group">
+                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">🔍</span>
                     <input type="text" placeholder="어떤 보석을 찾으시나요?" 
-                           class="w-full bg-gray-50 border border-gray-100 rounded-full py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:border-[#A39382] transition-all placeholder:text-gray-300">
+                           class="w-full bg-gray-50 border border-gray-100 rounded-full py-2 pl-10 pr-4 text-sm focus:outline-none focus:border-[#A39382] transition-all">
                 </div>
             </div>
 
-            <div class="flex items-center space-x-6">
-                <button class="hidden sm:block text-sm text-gray-500 hover:text-black transition-colors font-medium">로그인</button>
-                <div class="w-[1px] h-3 bg-gray-200 hidden sm:block"></div> <button class="hidden sm:block text-sm text-gray-500 hover:text-black transition-colors font-medium">회원가입</button>
+            <div class="flex items-center space-x-4">
+                <button class="hidden sm:block text-sm text-gray-500 hover:text-black">로그인</button>
+                <button class="hidden sm:block text-sm text-gray-500 hover:text-black">회원가입</button>
+                <button class="px-5 py-2 bg-[#A39382] text-white text-[11px] font-bold tracking-widest uppercase hover:opacity-90 transition-all rounded-sm">Project Start</button>
             </div>
         </div>
     </header>
 
-    <section class="max-w-[1440px] mx-auto px-4 md:px-10 py-6 grid grid-cols-1 lg:grid-cols-12 gap-8">
+    <!-- Hero & Ranking Section -->
+    <section class="max-w-[1440px] mx-auto px-4 md:px-10 py-6 grid grid-cols-1 lg:grid-cols-12 gap-8 border-b border-gray-50 pb-12">
         
+        <!-- [좌측] 메인 비주얼 슬라이더 -->
         <div class="lg:col-span-9 relative group h-[400px] md:h-[550px] overflow-hidden rounded-md shadow-sm">
             <div id="hero-slider" class="relative w-full h-full">
                 <img id="slider-img" src="https://images.unsplash.com/photo-1515562141207-7a18b5ce7142?auto=format&fit=crop&w=1500&q=80" 
@@ -88,6 +88,7 @@
             </div>
         </div>
 
+        <!-- [우측] 실시간 랭킹 -->
         <div class="lg:col-span-3 flex flex-col">
             <div class="flex justify-between items-center mb-6">
                 <h3 class="text-lg font-bold">실시간 랭킹</h3>
@@ -105,11 +106,258 @@
                         <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=100&q=80" class="w-full h-full object-cover" alt="Ring">
                     </div>
                 </a>
-                </div>
+                <a href="#" class="flex items-center space-x-3 group">
+                    <span class="text-xl font-bold italic text-gray-300 w-6">2</span>
+                    <div class="flex-1">
+                        <p class="text-[13px] font-medium group-hover:underline line-clamp-1">18K 골드 클래식 브레이슬릿</p>
+                        <p class="text-[11px] text-[#A39382] font-bold">850% 달성</p>
+                    </div>
+                    <div class="w-12 h-12 rounded bg-gray-100 overflow-hidden shrink-0">
+                        <img src="https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&w=100&q=80" class="w-full h-full object-cover" alt="Bracelet">
+                    </div>
+                </a>
+                <a href="#" class="flex items-center space-x-3 group">
+                    <span class="text-xl font-bold italic text-gray-300 w-6">3</span>
+                    <div class="flex-1">
+                        <p class="text-[13px] font-medium group-hover:underline line-clamp-1">로열 블루 사파이어 펜던트</p>
+                        <p class="text-[11px] text-[#A39382] font-bold">420% 달성</p>
+                    </div>
+                    <div class="w-12 h-12 rounded bg-gray-100 overflow-hidden shrink-0">
+                        <img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=100&q=80" class="w-full h-full object-cover" alt="Pendant">
+                    </div>
+                </a>
+                <a href="#" class="flex items-center space-x-3 group">
+                    <span class="text-xl font-bold italic text-gray-300 w-6">4</span>
+                    <div class="flex-1">
+                        <p class="text-[13px] font-medium group-hover:underline line-clamp-1">천연 핑크 다이아몬드 루스</p>
+                        <p class="text-[11px] text-[#A39382] font-bold">210% 달성</p>
+                    </div>
+                    <div class="w-12 h-12 rounded bg-gray-100 overflow-hidden shrink-0">
+                        <img src="https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&w=100&q=80" class="w-full h-full object-cover" alt="Diamond">
+                    </div>
+                </a>
+                <a href="#" class="flex items-center space-x-3 group">
+                    <span class="text-xl font-bold italic text-gray-300 w-6">5</span>
+                    <div class="flex-1">
+                        <p class="text-[13px] font-medium group-hover:underline line-clamp-1">에메랄드 컷 커프스 링크</p>
+                        <p class="text-[11px] text-[#A39382] font-bold">115% 달성</p>
+                    </div>
+                    <div class="w-12 h-12 rounded bg-gray-100 overflow-hidden shrink-0">
+                        <img src="https://images.unsplash.com/photo-1599643478518-a744c517b203?auto=format&fit=crop&w=100&q=80" class="w-full h-full object-cover" alt="Cuffs">
+                    </div>
+                </a>
+            </div>
+            <button class="w-full mt-6 py-3 bg-gray-50 text-[11px] text-gray-500 rounded-md hover:bg-gray-100 transition">랭킹 전체보기</button>
         </div>
     </section>
 
+    <!-- Categories -->
+    <section class="max-w-[1440px] mx-auto py-10 px-4 md:px-10">
+        <div class="flex items-center justify-between overflow-x-auto no-scrollbar pb-4 border-b border-gray-50 space-x-6 md:space-x-0">
+            <div class="flex flex-col items-center min-w-[80px] cursor-pointer group">
+                <div class="w-16 h-16 rounded-full bg-gray-50 flex items-center justify-center text-2xl group-hover:border-[#A39382] border border-transparent transition-all shadow-sm">💍</div>
+                <span class="text-[11px] mt-3 font-medium text-gray-600">반지</span>
+            </div>
+            <div class="flex flex-col items-center min-w-[80px] cursor-pointer group">
+                <div class="w-16 h-16 rounded-full bg-gray-50 flex items-center justify-center text-2xl group-hover:border-[#A39382] border border-transparent transition-all shadow-sm">✨</div>
+                <span class="text-[11px] mt-3 font-medium text-gray-600">목걸이</span>
+            </div>
+            <div class="flex flex-col items-center min-w-[80px] cursor-pointer group">
+                <div class="w-16 h-16 rounded-full bg-gray-50 flex items-center justify-center text-2xl group-hover:border-[#A39382] border border-transparent transition-all shadow-sm">💎</div>
+                <span class="text-[11px] mt-3 font-medium text-gray-600">귀걸이</span>
+            </div>
+            <div class="flex flex-col items-center min-w-[80px] cursor-pointer group">
+                <div class="w-16 h-16 rounded-full bg-gray-50 flex items-center justify-center text-2xl group-hover:border-[#A39382] border border-transparent transition-all shadow-sm">📿</div>
+                <span class="text-[11px] mt-3 font-medium text-gray-600">팔찌</span>
+            </div>
+            <div class="flex flex-col items-center min-w-[80px] cursor-pointer group">
+                <div class="w-16 h-16 rounded-full bg-gray-50 flex items-center justify-center text-2xl group-hover:border-[#A39382] border border-transparent transition-all shadow-sm">⌚</div>
+                <span class="text-[11px] mt-3 font-medium text-gray-600">시계</span>
+            </div>
+            <div class="flex flex-col items-center min-w-[80px] cursor-pointer group">
+                <div class="w-16 h-16 rounded-full bg-gray-50 flex items-center justify-center text-2xl group-hover:border-[#A39382] border border-transparent transition-all shadow-sm">🔍</div>
+                <span class="text-[11px] mt-3 font-medium text-gray-600">다이아</span>
+            </div>
+            <div class="flex flex-col items-center min-w-[80px] cursor-pointer group">
+                <div class="w-16 h-16 rounded-full bg-gray-50 flex items-center justify-center text-2xl group-hover:border-[#A39382] border border-transparent transition-all shadow-sm">🏺</div>
+                <span class="text-[11px] mt-3 font-medium text-gray-600">빈티지</span>
+            </div>
+            <div class="flex flex-col items-center min-w-[80px] cursor-pointer group">
+                <div class="w-16 h-16 rounded-full bg-gray-50 flex items-center justify-center text-2xl group-hover:border-[#A39382] border border-transparent transition-all shadow-sm">🔮</div>
+                <span class="text-[11px] mt-3 font-medium text-gray-600">원석</span>
+            </div>
+            <div class="flex flex-col items-center min-w-[80px] cursor-pointer group">
+                <div class="w-16 h-16 rounded-full bg-gray-50 flex items-center justify-center text-2xl group-hover:border-[#A39382] border border-transparent transition-all shadow-sm">🛠️</div>
+                <span class="text-[11px] mt-3 font-medium text-gray-600">커스텀</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- 추천 프로젝트 Grid -->
+    <section class="max-w-[1440px] mx-auto py-12 px-4 md:px-10">
+        <div class="flex justify-between items-end mb-8">
+            <h2 class="text-2xl font-bold">인기 프로젝트</h2>
+            <nav class="flex space-x-4 text-sm font-medium text-gray-400">
+                <button class="text-black border-b-2 border-black">전체</button>
+                <button class="hover:text-black">경매중</button>
+                <button class="hover:text-black">펀딩중</button>
+            </nav>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-12">
+            
+            <!-- Project Card 1 -->
+            <div class="group cursor-pointer flex flex-col h-full">
+                <div class="aspect-video overflow-hidden bg-gray-100 mb-4 relative rounded-md">
+                    <img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=800&q=80" 
+                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Jewelry">
+                    <div class="absolute top-3 left-3">
+                        <span class="bg-[#A39382] text-white px-2 py-0.5 text-[10px] font-bold rounded-sm uppercase">Coming Soon</span>
+                    </div>
+                </div>
+                <div class="flex flex-col flex-grow">
+                    <!-- min-h-[48px]를 통해 제목이 1줄이어도 2줄 높이를 차지하게 하여 아래 요소들의 위치를 고정합니다 -->
+                    <h3 class="text-md font-bold leading-snug group-hover:text-[#A39382] transition-colors line-clamp-2 min-h-[48px]">Victoria Sapphire High Jewelry Necklace</h3>
+                    <p class="text-[12px] text-gray-400 mb-4">명품 주얼리 | Facet Collection</p>
+                    
+                    <!-- mt-auto를 통해 게이지바 세트가 항상 하단에 붙도록 합니다 -->
+                    <div class="mt-auto pt-2">
+                        <div class="w-full h-[3px] bg-gray-100 rounded-full overflow-hidden">
+                            <div class="w-[45%] h-full bg-[#A39382]"></div>
+                        </div>
+                        <div class="flex justify-between items-center mt-3">
+                            <div class="flex items-center space-x-2">
+                                <span class="text-red-500 font-bold text-lg">14일 남음</span>
+                                <span class="text-[13px] font-medium text-gray-400 italic">₩ 14,000,000</span>
+                            </div>
+                            <span class="text-[12px] text-gray-400">24명 참여</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project Card 2 -->
+            <div class="group cursor-pointer flex flex-col h-full">
+                <div class="aspect-video overflow-hidden bg-gray-100 mb-4 relative rounded-md">
+                    <img src="https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&w=800&q=80" 
+                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Jewelry">
+                    <div class="absolute top-3 left-3">
+                        <span class="bg-black text-white px-2 py-0.5 text-[10px] font-bold rounded-sm uppercase tracking-wider">Live Now</span>
+                    </div>
+                </div>
+                <div class="flex flex-col flex-grow">
+                    <h3 class="text-md font-bold leading-snug group-hover:text-[#A39382] transition-colors line-clamp-2 min-h-[48px]">Celestial Rose Diamond Earring: 밤하늘의 장미 컬렉션</h3>
+                    <p class="text-[12px] text-gray-400 mb-4">커스텀 주얼리 | Artisan Park</p>
+                    
+                    <div class="mt-auto pt-2">
+                        <div class="w-full h-[3px] bg-gray-100 rounded-full overflow-hidden">
+                            <div class="w-[82%] h-full bg-[#A39382]"></div>
+                        </div>
+                        <div class="flex justify-between items-center mt-3">
+                            <div class="flex items-center space-x-2">
+                                <span class="text-red-500 font-bold text-lg">04:12:05</span>
+                                <span class="text-[13px] font-medium text-gray-400 italic">₩ 8,900,000</span>
+                            </div>
+                            <span class="text-[12px] text-gray-400">52명 참여</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project Card 3 -->
+            <div class="group cursor-pointer flex flex-col h-full">
+                <div class="aspect-video overflow-hidden bg-gray-100 mb-4 relative rounded-md">
+                    <img src="https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&w=800&q=80" 
+                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Watch">
+                </div>
+                <div class="flex flex-col flex-grow">
+                    <h3 class="text-md font-bold leading-snug group-hover:text-[#A39382] transition-colors line-clamp-2 min-h-[48px]">The Golden Hour Watch</h3>
+                    <p class="text-[12px] text-gray-400 mb-4">시계 | Vintage Hunter</p>
+                    
+                    <div class="mt-auto pt-2">
+                        <div class="w-full h-[3px] bg-gray-100 rounded-full overflow-hidden">
+                            <div class="w-[12%] h-full bg-[#A39382]"></div>
+                        </div>
+                        <div class="flex justify-between items-center mt-3">
+                            <div class="flex items-center space-x-2">
+                                <span class="text-red-500 font-bold text-lg">21일 남음</span>
+                                <span class="text-[13px] font-medium text-gray-400 italic">₩ 3,200,000</span>
+                            </div>
+                            <span class="text-[12px] text-gray-400">12명 참여</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project Card 4 -->
+            <div class="group cursor-pointer flex flex-col h-full">
+                <div class="aspect-video overflow-hidden bg-gray-100 mb-4 relative rounded-md">
+                    <img src="https://images.unsplash.com/photo-1599643478518-a744c517b203?auto=format&fit=crop&w=800&q=80" 
+                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Pearl">
+                </div>
+                <div class="flex flex-col flex-grow">
+                    <h3 class="text-md font-bold leading-snug group-hover:text-[#A39382] transition-colors line-clamp-2 min-h-[48px]">순백의 미: 담수 진주 클래식 세트</h3>
+                    <p class="text-[12px] text-gray-400 mb-4">주얼리 세트 | White Ocean</p>
+                    
+                    <div class="mt-auto pt-2">
+                        <div class="w-full h-[3px] bg-gray-100 rounded-full overflow-hidden">
+                            <div class="w-[110%] h-full bg-red-500"></div>
+                        </div>
+                        <div class="flex justify-between items-center mt-3">
+                            <div class="flex items-center space-x-2">
+                                <span class="text-red-500 font-bold text-lg">마감 임박</span>
+                                <span class="text-[13px] font-medium text-gray-400 italic">₩ 5,400,000</span>
+                            </div>
+                            <span class="text-[12px] text-gray-400">89명 참여</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="flex justify-center mt-20">
+            <button class="px-10 py-3 border border-gray-200 text-sm font-medium hover:bg-gray-50 transition rounded-md">프로젝트 더보기</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#FBFBFB] border-t border-gray-100 pt-16 pb-10 px-6 md:px-10 mt-10">
+        <div class="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-10 border-b border-gray-100 pb-16 mb-10">
+            <div class="col-span-1">
+                <div class="text-xl font-bold tracking-widest text-[#A39382] mb-6">FACET</div>
+                <p class="text-xs text-gray-400 leading-relaxed font-light">
+                    프리미엄 주얼리 펀딩 및 경매 플랫폼 FundingSea입니다.<br>
+                    가치 있는 아름다움을 연결합니다.
+                </p>
+            </div>
+            <div>
+                <h4 class="text-[11px] font-bold uppercase tracking-widest mb-6 text-gray-400">Service</h4>
+                <ul class="text-[13px] space-y-3 text-gray-600">
+                    <li><a href="#" class="hover:text-black">경매 가이드</a></li>
+                    <li><a href="#" class="hover:text-black">펀딩 시작하기</a></li>
+                    <li><a href="#" class="hover:text-black">멤버십</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-[11px] font-bold uppercase tracking-widest mb-6 text-gray-400">Support</h4>
+                <ul class="text-[13px] space-y-3 text-gray-600">
+                    <li><a href="#" class="hover:text-black">공지사항</a></li>
+                    <li><a href="#" class="hover:text-black">1:1 문의</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-[11px] font-bold uppercase tracking-widest mb-6 text-gray-400">Contact</h4>
+                <p class="text-lg font-bold text-[#A39382]">1588-0000</p>
+                <p class="text-[11px] text-gray-400 mt-2">평일 09:00 - 18:00</p>
+            </div>
+        </div>
+        <div class="max-w-[1440px] mx-auto text-center text-[10px] text-gray-300 tracking-[0.5em] uppercase">
+            © 2026 FUNDINGSEA. All Rights Reserved.
+        </div>
+    </footer>
+
     <script>
+        // Hero Slider Logic
         const slides = [
             {
                 img: "https://images.unsplash.com/photo-1515562141207-7a18b5ce7142?auto=format&fit=crop&w=1500&q=80",
@@ -120,37 +368,56 @@
                 img: "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&w=1500&q=80",
                 title: "The Golden Hour",
                 desc: "시간의 흐름조차 예술이 되는 24K 골드 빈티지 워치 컬렉션. 단 하나뿐인 클래식을 소유하세요."
+            },
+            {
+                img: "https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&w=1500&q=80",
+                title: "Celestial Rose",
+                desc: "하늘의 별을 수놓은 듯한 섬세한 커팅. 핑크 다이아몬드가 선사하는 로맨틱한 광채를 만나보세요."
+            },
+            {
+                img: "https://images.unsplash.com/photo-1599643478518-a744c517b203?auto=format&fit=crop&w=1500&q=80",
+                title: "Pure Pearl Set",
+                desc: "순백의 우아함을 담은 담수 진주 클래식 세트. 시대를 초월하는 단아한 아름다움의 완성."
+            },
+            {
+                img: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=1500&q=80",
+                title: "Royal Emerald",
+                desc: "깊은 숲의 생명력을 닮은 로열 에메랄드 컷. 대담하면서도 품격 있는 스타일을 제안합니다."
             }
-            // ... 나머지 슬라이드 동일
         ];
 
         let currentSlide = 0;
         const totalSlides = slides.length;
+
         const sliderImg = document.getElementById('slider-img');
         const sliderTitle = document.getElementById('slider-title');
         const sliderDesc = document.getElementById('slider-desc');
         const sliderCounter = document.getElementById('slider-counter');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
 
         function updateSlider(index) {
             sliderImg.classList.remove('fade-in');
             sliderTitle.parentElement.classList.remove('fade-in');
+            
             setTimeout(() => {
                 const slide = slides[index];
                 sliderImg.src = slide.img;
                 sliderTitle.innerText = slide.title;
                 sliderDesc.innerText = slide.desc;
                 sliderCounter.innerText = `0${index + 1} / 0${totalSlides}`;
+                
                 sliderImg.classList.add('fade-in');
                 sliderTitle.parentElement.classList.add('fade-in');
             }, 10);
         }
 
-        document.getElementById('next-btn').addEventListener('click', () => {
+        nextBtn.addEventListener('click', () => {
             currentSlide = (currentSlide + 1) % totalSlides;
             updateSlider(currentSlide);
         });
 
-        document.getElementById('prev-btn').addEventListener('click', () => {
+        prevBtn.addEventListener('click', () => {
             currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
             updateSlider(currentSlide);
         });
