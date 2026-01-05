@@ -5,27 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FACET | 프리미엄 주얼리 펀딩 & 경매</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
-        /* Cinzel(로고용) 및 Noto Sans KR 폰트 추가 */
-        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300&family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300&family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap');
         
         body { font-family: 'Noto Sans KR', sans-serif; word-break: keep-all; }
-        .font-serif-luxury { font-family: 'Cormorant Garamond', serif; }
         .luxury-font { font-family: 'Cinzel', serif; }
 
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-        .banner-gradient {
-            background: linear-gradient(to right, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 60%);
+        .icon-btn {
+            width: 40px; /* 정렬을 위해 조금 더 정원형으로 보정 */
+            height: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(163, 147, 130, 0.3);
+            background: #fff;
+            color: #A39382;
+            border-radius: 9999px;
+            transition: all .25s ease;
         }
-
-        .fade-in {
-            animation: fadeIn 0.8s ease-in-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0.3; }
-            to { opacity: 1; }
+        .icon-btn:hover {
+            background: #A39382;
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(163, 147, 130, 0.2);
         }
     </style>
 </head>
@@ -36,8 +39,9 @@
             
             <div class="flex items-center space-x-12">
                 <a href="./index.html" class="flex items-center">
-                    <div class="luxury-font text-2xl font-bold tracking-[0.3em] text-[#A39382] uppercase cursor-pointer leading-none mt-[2px]">Facet</div>
+                    <div class="luxury-font text-2xl font-bold tracking-[0.3em] text-[#A39382] uppercase cursor-pointer leading-none mt-1">Facet</div>
                 </a>
+                
                 <nav class="hidden lg:flex items-center space-x-8 text-[14px] font-medium text-gray-500">
                     <a href="#" class="text-black border-b-2 border-black py-1">경매</a>
                     <a href="#" class="hover:text-black transition-colors py-1">펀딩</a>
@@ -46,19 +50,26 @@
             </div>
 
             <div class="flex-1 max-w-md mx-8 hidden md:block">
-                <div class="relative flex items-center">
+                <div class="relative w-full flex items-center">
                     <span class="absolute left-4 text-gray-400 text-xs">🔍</span>
                     <input type="text" placeholder="어떤 보석을 찾으시나요?" 
                            class="w-full bg-gray-50 border border-gray-100 rounded-full py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:border-[#A39382] transition-all placeholder:text-gray-300">
                 </div>
             </div>
 
-            <div class="flex items-center space-x-6">
-                <button class="hidden sm:block text-sm text-gray-500 hover:text-black transition-colors font-medium">로그인</button>
-                <div class="w-[1px] h-3 bg-gray-200 hidden sm:block"></div> <button class="hidden sm:block text-sm text-gray-500 hover:text-black transition-colors font-medium">회원가입</button>
+            <div class="flex items-center">
+                <a href="./mypage.html" class="icon-btn" aria-label="My Page">
+                    <i class="fa-regular fa-user text-[15px]"></i>
+                </a>
+                
+                <button class="lg:hidden ml-4 text-gray-600 flex items-center">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path d="M4 6h16M4 12h16m-7 6h7" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                </button>
             </div>
         </div>
     </header>
 
-    </body>
+</body>
 </html>
