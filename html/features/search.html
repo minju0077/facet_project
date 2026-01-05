@@ -7,6 +7,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300&family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap');
+        
         :root {
             --accent-color: #A39382;
             --accent-hover: #8E7F70;
@@ -18,8 +21,10 @@
         body {
             background-color: var(--bg-light);
             color: var(--text-main);
-            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif, 'Noto Sans KR', sans-serif; word-break: keep-all;
         }
+        .font-serif-luxury { font-family: 'Cormorant Garamond', serif; }
+        .luxury-font { font-family: 'Cinzel', serif; }
 
         .accent-text { color: var(--accent-color); }
         .accent-bg { background-color: var(--accent-color); }
@@ -57,20 +62,30 @@
 </head>
 <body class="min-h-screen">
 
-    <!-- Header -->
-    <header class="border-b border-gray-100 sticky top-0 bg-white z-50">
-        <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-            <div class="flex items-center gap-8">
-                <h1 class="text-2xl font-bold tracking-tighter accent-text">Facet</h1>
-                <nav class="hidden md:flex gap-6 text-sm font-medium">
-                    <a href="#" class="hover:accent-text">경매</a>
-                    <a href="#" class="hover:accent-text">스토어</a>
-                    <a href="#" class="hover:accent-text">매거진</a>
+    <header class="border-b border-gray-100 bg-white/95 backdrop-blur-sm sticky top-0 z-50">
+        <div class="max-w-[1440px] mx-auto px-4 md:px-10 h-20 flex justify-between items-center">
+            
+            <div class="flex items-center space-x-12">
+                <a href="/auction/main_auction.html" class="flex items-center">
+                    <div class="luxury-font text-2xl font-bold tracking-[0.3em] text-[#A39382] uppercase cursor-pointer leading-none mt-[2px]">Facet</div>
+                </a>
+                <nav class="hidden lg:flex items-center space-x-8 text-[14px] font-medium text-gray-500">
+                    <a href="/auction/main_auction.html" class="text-black border-b-2 border-black py-1">경매</a>
+                    <a href="/funding/main_funding.html" class="hover:text-black transition-colors py-1">펀딩</a>
                 </nav>
             </div>
-            <div class="flex items-center gap-4 text-gray-500">
-                <button class="hover:text-black"><i class="fa-solid fa-magnifying-glass"></i></button>
-                <button class="hover:text-black"><i class="fa-regular fa-user"></i></button>
+
+            <div class="flex-1 max-w-md mx-8 hidden md:block">
+                <div class="relative flex items-center">
+                    <span class="absolute left-4 text-gray-400 text-xs">🔍</span>
+                    <input type="text" placeholder="어떤 보석을 찾으시나요?" 
+                           class="w-full bg-gray-50 border border-gray-100 rounded-full py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:border-[#A39382] transition-all placeholder:text-gray-300">
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-6">
+                <button class="hidden sm:block text-sm text-gray-500 hover:text-black transition-colors font-medium"><a href="/users/login.html">로그인</a></button>
+                <div class="w-[1px] h-3 bg-gray-200 hidden sm:block"></div> <button class="hidden sm:block text-sm text-gray-500 hover:text-black transition-colors font-medium"><a href="/users/signup.html">회원가입</a></button>
             </div>
         </div>
     </header>
@@ -119,28 +134,48 @@
         </div>
     </main>
 
-    <footer class="mt-32 border-t border-gray-100 bg-gray-50 py-20 text-sm text-gray-500">
-        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-12">
-            <div class="col-span-1 md:col-span-2">
-                <h1 class="text-xl font-bold tracking-tighter accent-text mb-6">FACET</h1>
-                <p class="leading-relaxed max-w-sm font-light">시간이 멈춘 듯한 아름다움, 빈티지 주얼리 아카이브입니다. 엄선된 큐레이션을 통해 당신만의 고유한 스타일을 발견하세요.</p>
+    <footer class="bg-[#FBFBFB] border-t border-gray-100 pt-16 pb-10 px-6 md:px-10">
+        <div class="max-w-[1440px] mx-auto">
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 border-b border-gray-100 pb-16 mb-10">
+
+                <div class="col-span-1">
+                    <div class="text-xl font-bold tracking-[0.2em] text-[#A39382] uppercase mb-6">FACET</div>
+                    <p class="text-[12px] text-gray-400 leading-relaxed font-light">
+                        프리미엄 주얼리 펀딩 및 경매 플랫폼 Facet입니다.<br>
+                        가치 있는 아름다움을 연결하여 당신만의 빛을 찾도록 돕습니다.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="text-[11px] font-bold uppercase tracking-widest mb-6 text-gray-500">Service</h4>
+                    <ul class="text-[13px] space-y-3 text-gray-600">
+                        <li><a href="#" class="hover:text-black transition-colors">경매 가이드</a></li>
+                        <li><a href="#" class="hover:text-black transition-colors">펀딩 시작하기</a></li>
+                        <li><a href="#" class="hover:text-black transition-colors">멤버십 혜택</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-[11px] font-bold uppercase tracking-widest mb-6 text-gray-500">Support</h4>
+                    <ul class="text-[13px] space-y-3 text-gray-600">
+                        <li><a href="#" class="hover:text-black transition-colors">1:1 문의하기</a></li>
+                        <li><a href="#" class="hover:text-black transition-colors">이용약관 및 정책</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-[11px] font-bold uppercase tracking-widest mb-6 text-gray-500">Contact</h4>
+                    <p class="text-lg font-bold text-[#A39382]">1588-0000</p>
+                    <p class="text-[11px] text-gray-400 mt-2">평일 09:00 - 18:00 (점심 13:00 - 14:00)</p>
+                    <p class="text-[11px] text-gray-400">서울 동작구 보라매로 87</p>
+                </div>
             </div>
-            <div>
-                <h4 class="font-bold text-black mb-6 uppercase tracking-widest text-xs">Shop</h4>
-                <ul class="space-y-3 font-light">
-                    <li>진행중인 경매</li>
-                    <li>진행중인 펀딩</li>
-                    <li>주얼리 케어 가이드</li>
-                </ul>
+
+            <div class="text-center text-[10px] text-gray-300 tracking-[0.5em] uppercase">
+                © 2026 FACET. All Rights Reserved.
             </div>
-            <div>
-                <h4 class="font-bold text-black mb-6 uppercase tracking-widest text-xs">Info</h4>
-                <ul class="space-y-3 font-light">
-                    <li>회사소개</li>
-                    <li>이용약관</li>
-                    <li>개인정보처리방침</li>
-                </ul>
-            </div>
+
         </div>
     </footer>
 
