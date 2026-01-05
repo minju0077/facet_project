@@ -3,6 +3,7 @@
 ========================= -->
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -14,129 +15,154 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap');
 
-    :root{
-      --accent-color:#A39382;
-      --accent-hover:#8E7F70;
-      --bg-light:#ffffff;
-      --text-main:#1a1a1a;
-      --text-soft:#3a3a3a;
-      --border-color:#eeeeee;
-      --chip-bg:#FBFAF9;
+    :root {
+      --accent-color: #A39382;
+      --accent-hover: #8E7F70;
+      --bg-light: #ffffff;
+      --text-main: #1a1a1a;
+      --text-soft: #3a3a3a;
+      --border-color: #eeeeee;
+      --chip-bg: #FBFAF9;
     }
 
-    body{
-      font-family:'Noto Sans KR',sans-serif;
-      background:var(--bg-light);
-      color:var(--text-main);
-      margin:0;
-      word-break:keep-all;
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background: var(--bg-light);
+      color: var(--text-main);
+      margin: 0;
+      word-break: keep-all;
     }
 
-    .accent-text{color:var(--accent-color);}
-    .accent-bg{background:var(--accent-color);}
-    .border-accent{border-color:var(--accent-color);}
-
-    .btn-outline{
-      transition:all .35s cubic-bezier(.165,.84,.44,1);
-      border:1px solid var(--accent-color);
-      color:var(--accent-color);
-      background:transparent;
+    .accent-text {
+      color: var(--accent-color);
     }
-    .btn-outline:hover{
-      background:var(--accent-color);
-      color:#fff;
-      box-shadow:0 10px 20px rgba(163,147,130,.18);
-      transform:translateY(-2px);
+
+    .accent-bg {
+      background: var(--accent-color);
+    }
+
+    .border-accent {
+      border-color: var(--accent-color);
+    }
+
+    .btn-outline {
+      transition: all .35s cubic-bezier(.165, .84, .44, 1);
+      border: 1px solid var(--accent-color);
+      color: var(--accent-color);
+      background: transparent;
+    }
+
+    .btn-outline:hover {
+      background: var(--accent-color);
+      color: #fff;
+      box-shadow: 0 10px 20px rgba(163, 147, 130, .18);
+      transform: translateY(-2px);
     }
 
     /* ✅ 상단 네비 글자색/아이콘 톤 통일 + 더 눈에 띄게 */
-    .nav-link{
-      color:#6b7280; /* gray-500 */
-      transition:all .25s ease;
-      position:relative;
-      padding:6px 0;
-    }
-    .nav-link:hover{
-      color:var(--text-main);
-    }
-    .nav-link.active{
-      color:var(--text-main);
-    }
-    .nav-link.active::after{
-      content:"";
-      position:absolute;
-      left:0;
-      bottom:-6px;
-      width:100%;
-      height:2px;
-      background:var(--accent-color);
-      border-radius:2px;
-      box-shadow:0 6px 16px rgba(163,147,130,.25);
+    .nav-link {
+      color: #6b7280;
+      /* gray-500 */
+      transition: all .25s ease;
+      position: relative;
+      padding: 6px 0;
     }
 
-    .icon-btn{
-      width:40px;
-      height:40px;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      border:1px solid rgba(163,147,130,.35);
-      background:#fff;
-      color:var(--accent-color);
-      border-radius:9999px;
-      transition:all .25s ease;
+    .nav-link:hover {
+      color: var(--text-main);
     }
-    .icon-btn:hover{
-      background:var(--accent-color);
-      color:#fff;
-      border-color:var(--accent-color);
-      transform:translateY(-2px);
-      box-shadow:0 12px 22px rgba(163,147,130,.22);
+
+    .nav-link.active {
+      color: var(--text-main);
     }
-    .icon-badge{
-      position:absolute;
-      top:-6px;
-      right:-6px;
-      min-width:18px;
-      height:18px;
-      padding:0 6px;
-      border-radius:9999px;
-      background:var(--accent-color);
-      color:#fff;
-      font-size:10px;
-      line-height:18px;
-      text-align:center;
-      box-shadow:0 10px 18px rgba(163,147,130,.25);
+
+    .nav-link.active::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 100%;
+      height: 2px;
+      background: var(--accent-color);
+      border-radius: 2px;
+      box-shadow: 0 6px 16px rgba(163, 147, 130, .25);
+    }
+
+    .icon-btn {
+      width: 40px;
+      height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(163, 147, 130, .35);
+      background: #fff;
+      color: var(--accent-color);
+      border-radius: 9999px;
+      transition: all .25s ease;
+    }
+
+    .icon-btn:hover {
+      background: var(--accent-color);
+      color: #fff;
+      border-color: var(--accent-color);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 22px rgba(163, 147, 130, .22);
+    }
+
+    .icon-badge {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      min-width: 18px;
+      height: 18px;
+      padding: 0 6px;
+      border-radius: 9999px;
+      background: var(--accent-color);
+      color: #fff;
+      font-size: 10px;
+      line-height: 18px;
+      text-align: center;
+      box-shadow: 0 10px 18px rgba(163, 147, 130, .25);
     }
   </style>
 </head>
 
 <body>
-  <header class="border-b border-gray-100 py-6 px-10 flex justify-between items-center bg-white/90 backdrop-blur-md sticky top-0 z-50">
-    <a href="index.html" class="text-2xl font-bold tracking-[0.2em] accent-text uppercase">Facet</a>
+  <header class="border-b border-gray-100 bg-white/95 backdrop-blur-sm sticky top-0 z-50">
+    <div class="max-w-[1440px] mx-auto px-4 md:px-10 h-20 flex justify-between items-center">
 
-    <nav class="hidden md:flex space-x-10 text-[11px] uppercase tracking-[0.2em] font-medium">
-      <a href="#" class="nav-link">Shop</a>
-      <a href="./index02.html" class="nav-link">Auction</a>
-      <a href="#" class="nav-link">Support</a>
-      <a href="mypage.html" class="nav-link active">My</a>
-    </nav>
+      <div class="flex items-center space-x-12">
+        <a href="./index.html" class="flex items-center">
+          <div
+            class="luxury-font text-2xl font-bold tracking-[0.3em] text-[#A39382] uppercase cursor-pointer leading-none mt-1">
+            Facet</div>
+        </a>
 
-    <!-- ✅ 아이콘 교체 + 분위기 통일 + 눈에 띄는 버튼형 -->
-    <div class="flex items-center gap-3">
-      <a href="#" class="relative icon-btn" aria-label="Search">
-        <i class="fa-solid fa-magnifying-glass text-[15px]"></i>
-      </a>
+        <nav class="hidden lg:flex items-center space-x-8 text-[14px] font-medium text-gray-500">
+          <a href="#" class="text-black border-b-2 border-black py-1">경매</a>
+          <a href="#" class="hover:text-black transition-colors py-1">펀딩</a>
+        </nav>
+      </div>
 
-      <a href="#" class="relative icon-btn" aria-label="My page">
-        <i class="fa-regular fa-user text-[15px]"></i>
-      </a>
+      <div class="flex-1 max-w-md mx-8 hidden md:block">
+        <div class="relative w-full flex items-center">
+          <span class="absolute left-4 text-gray-400 text-xs">🔍</span>
+          <input type="text" placeholder="어떤 보석을 찾으시나요?"
+            class="w-full bg-gray-50 border border-gray-100 rounded-full py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:border-[#A39382] transition-all placeholder:text-gray-300">
+        </div>
+      </div>
 
-      <a href="#" class="relative icon-btn" aria-label="Cart">
-        <i class="fa-solid fa-bag-shopping text-[15px]"></i>
-        <!-- 장바구니 뱃지 (원하면 숫자만 바꿔줘) -->
-        <span class="icon-badge">2</span>
-      </a>
+      <div class="flex items-center">
+        <a href="./mypage.html" class="icon-btn" aria-label="My Page">
+          <i class="fa-regular fa-user text-[15px]"></i>
+        </a>
+
+        <button class="lg:hidden ml-4 text-gray-600 flex items-center">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M4 6h16M4 12h16m-7 6h7" stroke-width="1.5" stroke-linecap="round" />
+          </svg>
+        </button>
+      </div>
     </div>
   </header>
 
@@ -159,13 +185,17 @@
 
         <div class="mt-10 space-y-3 text-sm">
           <a href="mypage.html" class="block py-3 px-4 border border-gray-100 hover:border-gray-200 transition">내 정보</a>
-          <a href="orders.html" class="block py-3 px-4 border border-gray-100 hover:border-gray-200 transition">주문/배송</a>
+          <a href="orders.html"
+            class="block py-3 px-4 border border-gray-100 hover:border-gray-200 transition">주문/배송</a>
           <a href="bids.html" class="block py-3 px-4 border border-gray-100 hover:border-gray-200 transition">입찰/낙찰</a>
-          <a href="wishlist.html" class="block py-3 px-4 border border-gray-100 hover:border-gray-200 transition">위시리스트</a>
-          <a href="support.html" class="block py-3 px-4 border border-gray-100 hover:border-gray-200 transition">문의 내역</a>
+          <a href="wishlist.html"
+            class="block py-3 px-4 border border-gray-100 hover:border-gray-200 transition">위시리스트</a>
+          <a href="support.html" class="block py-3 px-4 border border-gray-100 hover:border-gray-200 transition">문의
+            내역</a>
         </div>
 
-        <button class="w-full mt-10 py-4 btn-outline font-bold text-[11px] tracking-[0.4em] uppercase">Edit Profile</button>
+        <button class="w-full mt-10 py-4 btn-outline font-bold text-[11px] tracking-[0.4em] uppercase">Edit
+          Profile</button>
       </aside>
 
       <!-- Right -->
@@ -277,4 +307,5 @@
     </div>
   </footer>
 </body>
+
 </html>
