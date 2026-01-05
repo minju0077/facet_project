@@ -7,9 +7,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300&family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap');
+        /* Cinzel(로고용) 및 Noto Sans KR 폰트 추가 */
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300&family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap');
         
         body { font-family: 'Noto Sans KR', sans-serif; word-break: keep-all; }
         .font-serif-luxury { font-family: 'Cormorant Garamond', serif; }
+        .luxury-font { font-family: 'Cinzel', serif; }
         
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -29,28 +32,30 @@
     </style>
 </head>
 <body class="bg-white text-[#1a1a1a]">
-
-    <header class="border-b border-gray-100 bg-white/95 backdrop-blur-sm sticky top-0 z-50 pt-4 pb-2"> <div class="max-w-[1440px] mx-auto px-4 md:px-10 h-16 flex justify-between items-center">
-            <div class="flex items-center space-x-10">
-                <div class="text-2xl font-bold tracking-[0.2em] text-[#A39382] uppercase cursor-pointer">Facet</div>
-                <nav class="hidden lg:flex space-x-8 text-[14px] font-medium text-gray-500">
-                    <a href="#" class="text-black border-b-2 border-black pb-1">경매</a>
-                    <a href="#" class="hover:text-black transition-colors">펀딩</a>
-                    <a href="#" class="hover:text-black transition-colors">이벤트</a>
+    <header class="border-b border-gray-100 bg-white/95 backdrop-blur-sm sticky top-0 z-50">
+        <div class="max-w-[1440px] mx-auto px-4 md:px-10 h-20 flex justify-between items-center">
+            
+            <div class="flex items-center space-x-12">
+                <a href="./index.html" class="flex items-center">
+                    <div class="luxury-font text-2xl font-bold tracking-[0.3em] text-[#A39382] uppercase cursor-pointer leading-none mt-[2px]">Facet</div>
+                </a>
+                <nav class="hidden lg:flex items-center space-x-8 text-[14px] font-medium text-gray-500">
+                    <a href="#" class="text-black border-b-2 border-black py-1">경매</a>
+                    <a href="#" class="hover:text-black transition-colors py-1">펀딩</a>
                 </nav>
             </div>
 
             <div class="flex-1 max-w-md mx-8 hidden md:block">
-                <div class="relative group">
-                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">🔍</span>
+                <div class="relative flex items-center">
+                    <span class="absolute left-4 text-gray-400 text-xs">🔍</span>
                     <input type="text" placeholder="어떤 보석을 찾으시나요?" 
-                           class="w-full bg-gray-50 border border-gray-100 rounded-full py-2 pl-10 pr-4 text-sm focus:outline-none focus:border-[#A39382] transition-all">
+                           class="w-full bg-gray-50 border border-gray-100 rounded-full py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:border-[#A39382] transition-all placeholder:text-gray-300">
                 </div>
             </div>
 
-            <div class="flex items-center space-x-4">
-                <button class="hidden sm:block text-sm text-gray-500 hover:text-black">로그인</button>
-                <button class="hidden sm:block text-sm text-gray-500 hover:text-black">회원가입</button>
+            <div class="flex items-center space-x-6">
+                <button class="hidden sm:block text-sm text-gray-500 hover:text-black transition-colors font-medium">로그인</button>
+                <div class="w-[1px] h-3 bg-gray-200 hidden sm:block"></div> <button class="hidden sm:block text-sm text-gray-500 hover:text-black transition-colors font-medium">회원가입</button>
             </div>
         </div>
     </header>
