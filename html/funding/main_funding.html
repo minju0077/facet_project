@@ -3,242 +3,359 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Facet | 프리미엄 주얼리 펀딩</title>
+    <title>Facet | Premium Jewelry Archive</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300&family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300&family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;0,600;1,300&family=Cinzel:wght@400;700&family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap');
+
+        :root {
+            --brand-gold: #A39382;
+            --brand-dark: #1a1a1a;
+            --brand-bg: #fdfcfb;
+        }
+
+        body { 
+            font-family: 'Noto Sans KR', sans-serif; 
+            word-break: keep-all; 
+            background-color: var(--brand-bg);
+            color: var(--brand-dark);
+        }
         
-        body { font-family: 'Noto Sans KR', sans-serif; word-break: keep-all; }
         .font-serif-luxury { font-family: 'Cormorant Garamond', serif; }
         .luxury-font { font-family: 'Cinzel', serif; }
-        
+
         .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-        .banner-gradient {
-            background: linear-gradient(to right, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 60%);
+        
+        .premium-gradient {
+            background: linear-gradient(135deg, rgba(26,26,26,0.9) 0%, rgba(26,26,26,0.2) 100%);
         }
 
-        .fade-in {
-            animation: fadeIn 0.8s ease-in-out;
+        .progress-bar-shine {
+            position: relative;
+            overflow: hidden;
         }
-        @keyframes fadeIn {
-            from { opacity: 0.3; }
-            to { opacity: 1; }
+        .progress-bar-shine::after {
+            content: "";
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shine 3s infinite;
+        }
+        @keyframes shine {
+            to { left: 100%; }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hover-lift {
+            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.08);
+        }
+
+        /* 탭 전환 애니메이션 */
+        #project-grid {
+            transition: opacity 0.4s ease;
+        }
+        .tab-item-enter {
+            animation: tabFadeIn 0.6s ease-out forwards;
+        }
+        @keyframes tabFadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .filter-btn.active {
+            background-color: #000;
+            color: #fff;
+        }
+
+        /* 로딩 애니메이션 (버튼용) */
+        .loading-dots::after {
+            content: '...';
+            animation: dots 1.5s steps(5, end) infinite;
+        }
+        @keyframes dots {
+            0%, 20% { color: rgba(0,0,0,0); text-shadow: .25em 0 0 rgba(0,0,0,0), .5em 0 0 rgba(0,0,0,0); }
+            40% { color: black; text-shadow: .25em 0 0 rgba(0,0,0,0), .5em 0 0 rgba(0,0,0,0); }
+            60% { text-shadow: .25em 0 0 black, .5em 0 0 rgba(0,0,0,0); }
+            80%, 100% { text-shadow: .25em 0 0 black, .5em 0 0 black; }
         }
     </style>
 </head>
-<body class="bg-white text-[#1a1a1a]">
+<body class="overflow-x-hidden">
 
-        <header class="border-b border-gray-100 bg-white/95 backdrop-blur-sm sticky top-0 z-50">
-        <div class="max-w-[1440px] mx-auto px-4 md:px-10 h-20 flex justify-between items-center">
-            
+    <!-- Header -->
+    <header class="border-b border-gray-100 bg-white/80 backdrop-blur-md sticky top-0 z-[100]">
+        <div class="max-w-[1440px] mx-auto px-6 md:px-12 h-20 flex justify-between items-center">
             <div class="flex items-center space-x-12">
-                <a href="./main_auction.html" class="flex items-center">
-                    <div class="luxury-font text-2xl font-bold tracking-[0.3em] text-[#A39382] uppercase cursor-pointer leading-none mt-[2px]">Facet</div>
+                <a href="#" class="group">
+                    <div class="luxury-font text-2xl font-bold tracking-[0.4em] text-[#A39382] uppercase leading-none transition-all group-hover:tracking-[0.5em]">Facet</div>
                 </a>
-                <nav class="hidden lg:flex items-center space-x-8 text-[14px] font-medium text-gray-500">
-                    <a href="./main_auction.html" class="hover:text-black transition-colors py-1">경매</a>
-                    <a href="./main_funding.html" class="text-black border-b-2 border-black py-1">펀딩</a>
+                <nav class="hidden lg:flex items-center space-x-10 text-[13px] font-medium tracking-widest text-gray-400 uppercase">
+                    <a href="#" class="hover:text-black transition-colors">Auction</a>
+                    <a href="#" class="text-black border-b border-black pb-1">Funding</a>
+                    <a href="#" class="hover:text-black transition-colors">Exhibition</a>
                 </nav>
             </div>
 
-            <div class="flex-1 max-w-md mx-8 hidden md:block">
-                <div class="relative flex items-center">
-                    <span class="absolute left-4 text-gray-400 text-xs">🔍</span>
-                    <input type="text" placeholder="어떤 보석을 찾으시나요?" 
-                           class="w-full bg-gray-50 border border-gray-100 rounded-full py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:border-[#A39382] transition-all placeholder:text-gray-300">
-                </div>
-            </div>
-
             <div class="flex items-center space-x-6">
-                <div class="flex items-center space-x-6">
-                <button class="hidden sm:block text-sm text-gray-500 hover:text-black transition-colors font-medium"><a
-                        href="./login.html">로그인</a></button>
-                <div class="w-[1px] h-3 bg-gray-200 hidden sm:block"></div>
-                <button class="hidden sm:block text-sm text-gray-500 hover:text-black transition-colors font-medium"><a
-                        href="./signup.html">회원가입</a></button>
-            </div>
+                <div class="flex items-center space-x-4">
+                    <button class="p-2 hover:bg-gray-100 rounded-full transition-colors"><i data-lucide="user" class="w-5 h-5 text-gray-600"></i></button>
+                    <button class="p-2 hover:bg-gray-100 rounded-full transition-colors relative">
+                        <i data-lucide="shopping-bag" class="w-5 h-5 text-gray-600"></i>
+                        <span class="absolute top-1 right-1 w-2 h-2 bg-[#A39382] rounded-full border border-white"></span>
+                    </button>
+                    <button class="lg:hidden p-2"><i data-lucide="menu" class="w-6 h-6"></i></button>
+                </div>
             </div>
         </div>
     </header>
 
-    <section class="max-w-[1440px] mx-auto px-4 md:px-10 py-6">
-        <div class="relative group h-[400px] md:h-[500px] overflow-hidden rounded-md shadow-sm bg-black">
-            <img id="funding-hero-img" src="https://images.unsplash.com/photo-1588444839138-09219e7c37f3?auto=format&fit=crop&w=1500&q=80" 
-                 class="w-full h-full object-cover opacity-80" alt="Funding Hero">
-            <div class="absolute inset-0 banner-gradient"></div>
-            <div class="absolute inset-0 flex flex-col justify-center px-10 md:px-20">
-                <span class="text-[#A39382] font-bold tracking-widest text-sm mb-4">FUNDING PICK</span>
-                <h2 class="text-white text-4xl md:text-6xl font-light font-serif-luxury italic leading-tight mb-6">Unveiling<br>Modern Heritage</h2>
-                <p class="text-gray-300 text-sm md:text-base max-w-md font-light leading-relaxed mb-8">
-                    아티스트의 철학이 담긴 첫 번째 주얼리 라인업.<br>Facet 펀딩을 통해 가장 먼저, 특별한 혜택으로 만나보세요.
+    <!-- Hero Section -->
+    <section class="relative h-[65vh] flex items-center overflow-hidden bg-black">
+        <div class="absolute inset-0 scale-105 group">
+            <img src="https://images.unsplash.com/photo-1515562141207-7a18b5ce7142?auto=format&fit=crop&w=2000&q=90" 
+                 class="w-full h-full object-cover opacity-60 transition-transform duration-[10s] ease-out scale-100 group-hover:scale-110" alt="Main Hero">
+            <div class="absolute inset-0 premium-gradient"></div>
+        </div>
+        
+        <div class="relative max-w-[1440px] mx-auto px-6 md:px-12 w-full text-white">
+            <div class="max-w-2xl reveal active">
+                <span class="inline-block text-[#A39382] font-bold tracking-[0.3em] text-xs mb-6 uppercase">Exclusive Selection</span>
+                <h1 class="text-4xl md:text-7xl font-serif-luxury italic font-light leading-[1.1] mb-6">
+                    Heritage in<br>Modern Glow
+                </h1>
+                <p class="text-gray-300 text-sm md:text-base font-light leading-relaxed mb-10 max-w-lg">
+                    시간이 흘러도 변하지 않는 가치. 아티스트의 영감이 깃든 단 하나의 주얼리를 Facet 펀딩을 통해 소유하십시오.
                 </p>
-                <button class="w-fit px-8 py-3 border border-white text-white text-[11px] tracking-[0.2em] uppercase hover:bg-white hover:text-black transition-all">View Details</button>
             </div>
         </div>
     </section>
 
-    <section class="max-w-[1440px] mx-auto px-4 md:px-10 py-10 grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div class="bg-gray-50 p-6 rounded-md border border-gray-100">
-            <p class="text-[10px] text-gray-400 uppercase tracking-widest mb-1">Total Funded</p>
-            <p class="text-xl font-bold font-serif-luxury">₩ 1,240,000,000+</p>
-        </div>
-        <div class="bg-gray-50 p-6 rounded-md border border-gray-100">
-            <p class="text-[10px] text-gray-400 uppercase tracking-widest mb-1">Active Projects</p>
-            <p class="text-xl font-bold font-serif-luxury">48 Projects</p>
-        </div>
-        <div class="bg-gray-50 p-6 rounded-md border border-gray-100">
-            <p class="text-[10px] text-gray-400 uppercase tracking-widest mb-1">Total Supporters</p>
-            <p class="text-xl font-bold font-serif-luxury">12,504 People</p>
-        </div>
-        <div class="bg-gray-50 p-6 rounded-md border border-gray-100 text-white bg-[#A39382]">
-            <p class="text-[10px] opacity-80 uppercase tracking-widest mb-1">Success Rate</p>
-            <p class="text-xl font-bold font-serif-luxury">98.2%</p>
-        </div>
-    </section>
-
-    <section class="max-w-[1440px] mx-auto py-12 px-4 md:px-10">
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-4">
-            <div>
-                <h2 class="text-2xl font-bold mb-2">진행 중인 펀딩</h2>
-                <p class="text-sm text-gray-400 font-light">지금 이 순간, 주얼리의 새로운 가치가 태어나고 있습니다.</p>
+    <!-- Project List Section -->
+    <section class="max-w-[1440px] mx-auto py-24 px-6 md:px-12">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+            <div class="reveal active">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">현재 진행 중인 펀딩</h2>
+                <div class="h-1 w-20 bg-[#A39382]"></div>
             </div>
-            <div class="flex space-x-2">
-                <button class="px-4 py-1.5 bg-black text-white text-xs rounded-full">전체</button>
-                <button class="px-4 py-1.5 bg-gray-100 text-gray-500 text-xs rounded-full hover:bg-gray-200">인기순</button>
-                <button class="px-4 py-1.5 bg-gray-100 text-gray-500 text-xs rounded-full hover:bg-gray-200">마감임박</button>
-            </div>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-16">
             
-            <div class="group cursor-pointer">
-                <div class="aspect-[4/3] overflow-hidden bg-gray-100 mb-5 relative rounded-sm">
-                    <img src="https://images.unsplash.com/photo-1596459864402-78f00f81611f?auto=format&fit=crop&w=800&q=80" 
-                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Jewelry">
-                    <div class="absolute top-4 left-4">
-                        <span class="bg-black/80 backdrop-blur-md text-white px-3 py-1 text-[10px] font-bold rounded-full tracking-tighter">42일 남음</span>
-                    </div>
-                </div>
-                <div class="space-y-3">
-                    <p class="text-[11px] text-[#A39382] font-bold tracking-widest uppercase">Artist Series</p>
-                    <h3 class="text-[15px] font-bold leading-snug line-clamp-2">윤슬: 바다의 반짝임을 담은 14K 핸드크래프트 펜던트</h3>
-                    
-                    <div class="space-y-2 pt-2">
-                        <div class="flex justify-between items-end">
-                            <span class="text-2xl font-bold text-[#A39382]">2450<span class="text-sm ml-0.5">%</span></span>
-                            <span class="text-sm font-medium text-gray-900">₩ 24,500,000</span>
+            <div class="flex space-x-2 reveal active" style="transition-delay: 0.2s">
+                <button onclick="changeTab('all')" id="btn-all" class="filter-btn active px-5 py-2 text-xs font-bold rounded-full transition-all border border-gray-100 hover:border-black">전체</button>
+                <button onclick="changeTab('popular')" id="btn-popular" class="filter-btn px-5 py-2 text-xs font-bold rounded-full transition-all border border-gray-100 text-gray-500 hover:text-black">인기순</button>
+                <button onclick="changeTab('latest')" id="btn-latest" class="filter-btn px-5 py-2 text-xs font-bold rounded-full transition-all border border-gray-100 text-gray-500 hover:text-black">최신순</button>
+                <button onclick="changeTab('closing')" id="btn-closing" class="filter-btn px-5 py-2 text-xs font-bold rounded-full transition-all border border-gray-100 text-gray-500 hover:text-black">마감임박</button>
+            </div>
+        </div>
+
+        <!-- Project Grid Container -->
+        <div id="project-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-16">
+            <!-- Content will be dynamically rendered here -->
+        </div>
+        
+        <div id="load-more-container" class="mt-24 text-center reveal active">
+            <button onclick="handleLoadMore()" id="load-more-btn" class="px-12 py-4 border border-black text-[11px] font-bold tracking-[0.3em] uppercase hover:bg-black hover:text-white transition-all duration-500 shadow-sm min-w-[240px]">
+                Load More Projects
+            </button>
+        </div>
+    </section>
+
+    <!-- Why Facet -->
+    <section class="bg-zinc-900 py-32 text-white overflow-hidden">
+        <div class="max-w-[1440px] mx-auto px-6 md:px-12">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+                <div class="reveal active">
+                    <span class="text-[#A39382] font-bold tracking-[0.3em] text-xs mb-6 inline-block uppercase">Our Commitment</span>
+                    <h2 class="text-4xl md:text-5xl font-serif-luxury italic mb-10 leading-tight">장인정신과 데이터가<br>만들어내는 신뢰</h2>
+                    <p class="text-zinc-400 font-light leading-relaxed mb-12">Facet은 단순한 판매를 넘어, 작품 하나하나가 가진 역사와 가치를 검증합니다. 전문가의 안목으로 선별된 메이커들과 함께 주얼리의 새로운 문화를 만듭니다.</p>
+                    <div class="grid grid-cols-2 gap-8">
+                        <div>
+                            <p class="text-3xl font-serif-luxury text-[#A39382] mb-2">98.2%</p>
+                            <p class="text-[10px] uppercase tracking-widest text-zinc-500">Project Success Rate</p>
                         </div>
-                        <div class="w-full h-[2px] bg-gray-100 overflow-hidden">
-                            <div class="w-[85%] h-full bg-[#A39382]"></div>
-                        </div>
-                        <div class="flex justify-between text-[11px] text-gray-400">
-                            <span>421명의 서포터</span>
-                            <span class="font-bold text-gray-900">목표 ₩ 1,000,000</span>
+                        <div>
+                            <p class="text-3xl font-serif-luxury text-[#A39382] mb-2">12,504</p>
+                            <p class="text-[10px] uppercase tracking-widest text-zinc-500">Active Collectors</p>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="group cursor-pointer">
-                <div class="aspect-[4/3] overflow-hidden bg-gray-100 mb-5 relative rounded-sm">
-                    <img src="https://images.unsplash.com/photo-1610664921890-ebad05086414?auto=format&fit=crop&w=800&q=80" 
-                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-60" alt="Jewelry">
-                    <div class="absolute inset-0 bg-black/20 flex items-center justify-center">
-                        <span class="bg-white text-black px-4 py-2 text-[11px] font-bold tracking-widest uppercase shadow-xl">Coming Soon</span>
-                    </div>
-                </div>
-                <div class="space-y-3 opacity-60">
-                    <p class="text-[11px] text-gray-500 font-bold tracking-widest uppercase">Limited Edition</p>
-                    <h3 class="text-[15px] font-bold leading-snug line-clamp-2">Vintage Re-born: 1920년대 유럽 감성 브로치 컬렉션</h3>
-                    <p class="text-xs text-gray-400">02.14 11:00 오픈 예정</p>
-                    <button class="w-full py-2 border border-gray-200 text-[11px] font-bold text-gray-500 hover:bg-gray-50 transition">알림 신청하기</button>
-                </div>
-            </div>
-
-            </div>
-    </section>
-
-    <section class="bg-gray-50 py-20 mt-10">
-        <div class="max-w-[1440px] mx-auto px-4 md:px-10">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-light font-serif-luxury italic mb-4 text-[#A39382]">Success Stories</h2>
-                <p class="text-sm text-gray-500">Facet 펀딩을 통해 탄생한 경이로운 기록들</p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                <div class="flex bg-white rounded-md overflow-hidden shadow-sm">
-                    <div class="w-1/3">
-                        <img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=500&q=80" class="w-full h-full object-cover" alt="Success">
-                    </div>
-                    <div class="p-8 flex flex-col justify-center">
-                        <span class="text-[10px] text-[#A39382] font-bold mb-2 uppercase">Best Funding</span>
-                        <h4 class="text-lg font-bold mb-2">Royal Blue Sapphire Line</h4>
-                        <p class="text-xs text-gray-400 leading-relaxed mb-4">단 3일 만에 목표 금액 5,000% 달성. 800명의 서포터가 선택한 화제의 컬렉션입니다.</p>
-                        <p class="text-sm font-bold text-black italic font-serif-luxury">Final Amount: ₩ 154,200,000</p>
-                    </div>
-                </div>
-                <div class="flex bg-white rounded-md overflow-hidden shadow-sm">
-                    <div class="w-1/3">
-                        <img src="https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&w=500&q=80" class="w-full h-full object-cover" alt="Success">
-                    </div>
-                    <div class="p-8 flex flex-col justify-center">
-                        <span class="text-[10px] text-[#A39382] font-bold mb-2 uppercase">Brand Debut</span>
-                        <h4 class="text-lg font-bold mb-2">Modernism 18K Bangle</h4>
-                        <p class="text-xs text-gray-400 leading-relaxed mb-4">신진 디자이너 'Artisan K'의 데뷔 프로젝트. 펀딩 종료 후 정식 런칭까지 성공적으로 마쳤습니다.</p>
-                        <p class="text-sm font-bold text-black italic font-serif-luxury">Final Amount: ₩ 89,000,000</p>
-                    </div>
+                <div class="relative reveal active" style="transition-delay: 0.3s">
+                    <div class="absolute -inset-10 bg-[#A39382]/10 blur-[100px] rounded-full"></div>
+                    <img src="https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&w=1000&q=80" 
+                         class="rounded-sm shadow-2xl relative z-10 w-full" alt="Craftsmanship">
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="bg-[#FBFBFB] border-t border-gray-100 pt-16 pb-10 px-6 md:px-10">
-        <div class="max-w-[1440px] mx-auto">
-            
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 border-b border-gray-100 pb-16 mb-10">
-                
-                <div class="col-span-1">
-                    <div class="text-xl font-bold tracking-[0.2em] text-[#A39382] uppercase mb-6">FACET</div>
-                    <p class="text-[12px] text-gray-400 leading-relaxed font-light">
-                        프리미엄 주얼리 펀딩 및 경매 플랫폼 FundingSea입니다.<br>
-                        가치 있는 아름다움을 연결하여 당신만의 빛을 찾도록 돕습니다.
-                    </p>
-                </div>
-
-                <div>
-                    <h4 class="text-[11px] font-bold uppercase tracking-widest mb-6 text-gray-500">Service</h4>
-                    <ul class="text-[13px] space-y-3 text-gray-600">
-                        <li><a href="#" class="hover:text-black transition-colors">경매 가이드</a></li>
-                        <li><a href="#" class="hover:text-black transition-colors">펀딩 시작하기</a></li>
-                        <li><a href="#" class="hover:text-black transition-colors">멤버십 혜택</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 class="text-[11px] font-bold uppercase tracking-widest mb-6 text-gray-500">Support</h4>
-                    <ul class="text-[13px] space-y-3 text-gray-600">
-                        <li><a href="#" class="hover:text-black transition-colors">1:1 문의하기</a></li>
-                        <li><a href="#" class="hover:text-black transition-colors">이용약관 및 정책</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 class="text-[11px] font-bold uppercase tracking-widest mb-6 text-gray-500">Contact</h4>
-                    <p class="text-lg font-bold text-[#A39382]">1588-0000</p>
-                    <p class="text-[11px] text-gray-400 mt-2">평일 09:00 - 18:00 (점심 12:00 - 13:00)</p>
-                    <p class="text-[11px] text-gray-400">주말 및 공휴일은 1:1 문의를 이용해주세요.</p>
-                </div>
-            </div>
-
-            <div class="text-center text-[10px] text-gray-300 tracking-[0.5em] uppercase">
-                © 2026 FUNDINGSEA. All Rights Reserved.
-            </div>
-            
+    <!-- Footer -->
+    <footer class="bg-white pt-24 pb-12 px-6 md:px-12 border-t border-gray-50">
+        <div class="max-w-[1440px] mx-auto text-center">
+            <div class="luxury-font text-2xl font-bold tracking-[0.4em] text-[#A39382] uppercase mb-8">Facet</div>
+            <p class="text-[10px] text-gray-300 tracking-[0.3em] uppercase">© 2026 FACET LUXURY PLATFORM. ALL RIGHTS RESERVED.</p>
         </div>
     </footer>
 
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Project Data
+        const projects = [
+            { id: 1, category: 'popular', title: "윤슬: 바다의 일렁이는 빛을 담은 14K 핸드크래프트 펜던트", tag: "Artist Series", img: "https://images.unsplash.com/photo-1596459864402-78f00f81611f?auto=format&fit=crop&w=800&q=80", percent: 2450, amount: "24,500,000", supporters: 421, days: 42, status: "Live" },
+            { id: 2, category: 'popular', title: "The Golden Hour: 24K 골드 빈티지 워치 컬렉션", tag: "Vintage Modern", img: "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&w=800&q=80", percent: 850, amount: "154,200,000", supporters: 154, days: 12, status: "Closing Soon" },
+            { id: 3, category: 'latest', title: "Celestial Glow: 18K 골드 레이어드 브레이슬릿 세트", tag: "Daily Luxe", img: "https://images.unsplash.com/photo-1610664921890-ebad05086414?auto=format&fit=crop&w=800&q=80", percent: 120, amount: "8,900,000", supporters: 32, days: 58, status: "New" },
+            { id: 4, category: 'latest', title: "Moonlight Pearl: 한여름 밤의 달빛을 닮은 바로크 진주 귀걸이", tag: "Natural Gem", img: "https://images.unsplash.com/photo-1599643478518-a744c517b203?auto=format&fit=crop&w=800&q=80", percent: 45, amount: "3,200,000", supporters: 12, days: 60, status: "New" },
+            { id: 5, category: 'closing', title: "Deep Sea Emerald: 바다의 심연을 닮은 18K 에메랄드 링", tag: "Limited Edition", img: "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&w=800&q=80", percent: 1120, amount: "89,000,000", supporters: 128, days: 1, status: "Final Call" },
+            { id: 6, category: 'closing', title: "Eternal Diamond: 하프 캐럿 다이아몬드 기념비적 펀딩", tag: "Classic High", img: "https://images.unsplash.com/photo-1598560917505-59a3ad559071?auto=format&fit=crop&w=800&q=80", percent: 3200, amount: "120,000,000", supporters: 540, days: 2, status: "Sold Out Soon" },
+            { id: 7, category: 'popular', title: "Petal Whisper: 봄의 숨결을 담은 핑크 사파이어 목걸이", tag: "Floral Motif", img: "https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=800&q=80", percent: 540, amount: "12,400,000", supporters: 89, days: 14, status: "Live" },
+            { id: 8, category: 'latest', title: "Ocean's Tear: 로열 블루 탄자나이트 리미티드 펜던트", tag: "Rare Gem", img: "https://images.unsplash.com/photo-1531995811006-35cb42e1a022?auto=format&fit=crop&w=800&q=80", percent: 15, amount: "4,500,000", supporters: 8, days: 59, status: "New" }
+        ];
+
+        // "Load More" 전용 추가 데이터 (시뮬레이션)
+        const extraProjects = [
+            { id: 101, category: 'popular', title: "Royal Crown: 루비와 화이트 골드의 정점", tag: "High Jewelry", img: "https://images.unsplash.com/photo-1512163143273-bde0e3cc7407?auto=format&fit=crop&w=800&q=80", percent: 120, amount: "250,000,000", supporters: 12, days: 15, status: "Exclusive" },
+            { id: 102, category: 'latest', title: "Starlight Chain: 은하수를 수놓은 듯한 다이아 체인", tag: "Evening Shine", img: "https://images.unsplash.com/photo-1531995811006-35cb42e1a022?auto=format&fit=crop&w=800&q=80", percent: 10, amount: "1,450,000", supporters: 5, days: 60, status: "Just In" },
+            { id: 103, category: 'latest', title: "Urban Gold: 모던 시티를 위한 기하학 브레이슬릿", tag: "Minimalist", img: "https://images.unsplash.com/photo-1588444839138-09219e7c37f3?auto=format&fit=crop&w=800&q=80", percent: 85, amount: "2,400,000", supporters: 67, days: 34, status: "Rising" },
+            { id: 104, category: 'closing', title: "Amaryllis: 단 하나뿐인 오팔 앤틱 브로치", tag: "Museum Quality", img: "https://images.unsplash.com/photo-1610664921890-ebad05086414?auto=format&fit=crop&w=800&q=80", percent: 450, amount: "18,200,000", supporters: 98, days: 0, status: "Expired" }
+        ];
+
+        let currentTab = 'all';
+        const grid = document.getElementById('project-grid');
+        const loadMoreBtn = document.getElementById('load-more-btn');
+
+        // 카드 생성 템플릿 함수
+        function createCardHTML(p, idx) {
+            const isClosing = p.category === 'closing' || p.days < 3;
+            return `
+                <div class="group cursor-pointer flex flex-col h-full tab-item-enter" style="animation-delay: ${idx * 0.1}s">
+                    <div class="relative aspect-[4/3] overflow-hidden rounded-sm bg-gray-50 mb-5">
+                        <img src="${p.img}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Jewelry">
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-black/80 backdrop-blur-md text-white px-3 py-1 text-[10px] font-bold rounded-full tracking-tighter uppercase">
+                                ${p.days}일 남음
+                            </span>
+                        </div>
+                    </div>
+                    <div class="flex flex-col flex-grow">
+                        <p class="text-[10px] text-[#A39382] font-bold tracking-[0.2em] uppercase mb-2">${p.tag}</p>
+                        <h3 class="text-[14px] font-bold leading-snug line-clamp-2 min-h-[40px] group-hover:text-[#A39382] transition-colors">${p.title}</h3>
+                        
+                        <div class="mt-auto pt-5 space-y-3">
+                            <div class="flex justify-between items-end">
+                                <span class="text-2xl font-serif-luxury font-bold ${isClosing ? 'text-red-500' : 'text-[#A39382]'}">
+                                    ${p.percent.toLocaleString()}<span class="text-xs ml-0.5">%</span>
+                                </span>
+                                <span class="text-[13px] font-medium text-gray-900">₩ ${p.amount}</span>
+                            </div>
+                            <div class="w-full h-[2px] bg-gray-100 overflow-hidden rounded-full">
+                                <div class="h-full ${isClosing ? 'bg-red-500' : 'bg-[#A39382]'} progress-bar-shine" style="width: ${Math.min(p.percent / 10, 100)}%"></div>
+                            </div>
+                            <div class="flex justify-between text-[11px] text-gray-400 font-medium">
+                                <span>${p.supporters}명의 서포터</span>
+                                <span class="${isClosing ? 'text-red-500 font-bold' : ''}">${p.status}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 초기 렌더링
+        function renderProjects(filter = 'all') {
+            currentTab = filter;
+            grid.style.opacity = '0';
+            loadMoreBtn.parentElement.classList.remove('hidden'); // 버튼 다시 보이기
+            
+            setTimeout(() => {
+                grid.innerHTML = '';
+                const filtered = filter === 'all' ? projects : projects.filter(p => p.category === filter);
+                
+                filtered.forEach((p, idx) => {
+                    grid.insertAdjacentHTML('beforeend', createCardHTML(p, idx));
+                });
+                
+                grid.style.opacity = '1';
+                lucide.createIcons();
+            }, 400);
+        }
+
+        // "Load More" 기능 구현
+        function handleLoadMore() {
+            // 버튼 상태 변경
+            loadMoreBtn.innerText = "Searching Archives";
+            loadMoreBtn.classList.add('loading-dots');
+            loadMoreBtn.disabled = true;
+
+            setTimeout(() => {
+                // 현재 탭에 맞는 추가 데이터 가져오기
+                const moreData = currentTab === 'all' 
+                    ? extraProjects 
+                    : extraProjects.filter(p => p.category === currentTab);
+
+                if (moreData.length > 0) {
+                    moreData.forEach((p, idx) => {
+                        grid.insertAdjacentHTML('beforeend', createCardHTML(p, idx));
+                    });
+                    lucide.createIcons();
+                } else {
+                    // 더 이상 상품이 없을 경우 (데모용)
+                    // 실제 서비스에선 다음 페이지 API 호출
+                    const emptyCard = projects.slice(0, 4); // 무한 루프 시뮬레이션을 위해 기존꺼 재사용
+                    emptyCard.forEach((p, idx) => {
+                        grid.insertAdjacentHTML('beforeend', createCardHTML({...p, id: Math.random()}, idx));
+                    });
+                    lucide.createIcons();
+                }
+
+                // 버튼 복구
+                loadMoreBtn.innerText = "Load More Projects";
+                loadMoreBtn.classList.remove('loading-dots');
+                loadMoreBtn.disabled = false;
+                
+                // 새로운 요소들에 대해 reveal 체크 (필요시)
+                revealOnScroll();
+            }, 1000);
+        }
+
+        function changeTab(tab) {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-black', 'text-white');
+                btn.classList.add('text-gray-500');
+            });
+            
+            const activeBtn = document.getElementById(`btn-${tab}`);
+            activeBtn.classList.add('active', 'bg-black', 'text-white');
+            activeBtn.classList.remove('text-gray-500');
+            
+            renderProjects(tab);
+        }
+
+        window.onload = () => {
+            lucide.createIcons();
+            renderProjects('all');
+        };
+
+        const revealOnScroll = () => {
+            document.querySelectorAll('.reveal').forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight * 0.95) el.classList.add('active');
+            });
+        };
+        window.addEventListener('scroll', revealOnScroll);
+    </script>
 </body>
 </html>
