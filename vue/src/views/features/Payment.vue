@@ -1,0 +1,842 @@
+<script setup>
+// 최근 배송지 데이터 예시
+const RECENT_SHIPPING = {
+  name: '홍길동',
+  phone: '010-1234-5678',
+  postcode: '12345',
+  address: '서울특별시 강남구 테헤란로 123',
+  detail: '4층',
+}
+
+/**
+ * 배송지 모드 전환 함수
+ */
+function setShippingMode(mode, event) {
+  if (event) {
+    const btns = document.querySelectorAll('.toggle-btn')
+    btns.forEach((btn) => btn.classList.remove('active'))
+    event.currentTarget.classList.add('active')
+  }
+
+  const nameField = document.getElementById('shippingName')
+  const phoneField = document.getElementById('shippingPhone')
+  const postField = document.getElementById('postcode')
+  const addrField = document.getElementById('addressMain')
+  const detailField = document.getElementById('addressDetail')
+
+  if (mode === 'recent') {
+    nameField.value = RECENT_SHIPPING.name
+    phoneField.value = RECENT_SHIPPING.phone
+    postField.value = RECENT_SHIPPING.postcode
+    addrField.value = RECENT_SHIPPING.address
+    detailField.value = RECENT_SHIPPING.detail
+  } else {
+    nameField.value = ''
+    phoneField.value = ''
+    postField.value = ''
+    addrField.value = ''
+    detailField.value = ''
+  }
+}
+
+// 초기 로드 시 최근 배송지 데이터 세팅
+window.addEventListener('load', () => {
+  setShippingMode('recent')
+})
+
+// 배송 요청사항 직접 입력 토글
+function toggleDirectInput() {
+  const select = document.getElementById('shippingRequest')
+  const direct = document.getElementById('directRequest')
+  direct.style.display = select.value === '직접 입력' ? 'block' : 'none'
+}
+
+// 가격 업데이트 로직
+const extraInput = document.getElementById('extraSupport')
+const displayExtra = document.getElementById('displayExtra')
+const displayClub = document.getElementById('displayClub')
+const totalPriceLabel = document.getElementById('totalPrice')
+const clubRadios = document.querySelectorAll('input[name="club_amount"]')
+
+const basePrice = 48000
+let extraVal = 0
+let clubVal = 0
+
+function updateTotalPrice() {
+  const total = basePrice + extraVal + clubVal
+  totalPriceLabel.innerText = total.toLocaleString() + '원'
+}
+
+extraInput.addEventListener('input', (e) => {
+  extraVal = parseInt(e.target.value) || 0
+  displayExtra.innerText = extraVal.toLocaleString() + '원'
+  updateTotalPrice()
+})
+
+clubRadios.forEach((radio) => {
+  radio.addEventListener('change', (e) => {
+    clubVal = parseInt(e.target.value)
+    displayClub.innerText = clubVal.toLocaleString() + '원'
+    updateTotalPrice()
+  })
+})
+
+// 예약 결제 방식 토글
+function togglePaymentType(type, event) {
+  if (event) {
+    const buttons = event.currentTarget.parentElement.querySelectorAll('.method-btn')
+    buttons.forEach((btn) => btn.classList.remove('active'))
+    event.currentTarget.classList.add('active')
+  }
+}
+
+// 결제 수단 버튼 이벤트 리스너
+const methodBtns = document.querySelectorAll('#payment-methods-section .method-btn')
+methodBtns.forEach((btn) => {
+  btn.addEventListener('click', () => {
+    methodBtns.forEach((b) => b.classList.remove('active'))
+    btn.classList.add('active')
+  })
+})
+
+function processFunding() {
+  const agreements = document.querySelectorAll('.agreement input[type="checkbox"]')
+  let allChecked = true
+  agreements.forEach((checkbox) => {
+    if (!checkbox.checked) allChecked = false
+  })
+
+  if (!allChecked) {
+    alert('모든 필수 약관에 동의해주세요.')
+    return
+  }
+  alert('펀딩 후원 예약이 완료되었습니다!')
+}
+</script>
+
+<template>
+  <div class="container">
+    <div class="page-header">
+      <h1>프로젝트 후원하기</h1>
+      <p>서포터님의 소중한 후원이 창작자에게 큰 힘이 됩니다.</p>
+    </div>
+
+    <div class="checkout-layout">
+      <div class="checkout-forms">
+        <div class="funding-notice">
+          <strong>💡 펀딩 결제 안내</strong>
+          현재 결제가 바로 진행되지 않습니다. 펀딩 종료일인 2026.01.20에 목표 금액이 달성될 경우에만
+          결제가 진행됩니다.
+        </div>
+
+        <!-- 리워드 섹션 -->
+        <section>
+          <h2 class="section-title">선택한 리워드</h2>
+          <div class="reward-card">
+            <span class="reward-tag">슈퍼 얼리버드</span>
+            <div class="reward-info">
+              <h3>[세트] 미니멀 라이프 스타터 키트</h3>
+              <p class="reward-desc">
+                친환경 캔버스 백 1개 + 제로웨이스트 솝 2종 + 대나무 칫솔 (구성품 포함)
+              </p>
+              <div class="reward-price-row">
+                <span>45,000원</span>
+                <span style="font-size: 14px; color: var(--text-sub); font-weight: 400"
+                  >수량 1개</span
+                >
+              </div>
+            </div>
+
+            <!-- 추가 후원금 -->
+            <div class="support-box">
+              <label class="form-label">후원금 더하기 (선택)</label>
+              <p style="font-size: 12px; color: var(--text-sub); margin-bottom: 10px">
+                창작자에게 추가 후원금을 보낼 수 있습니다.
+              </p>
+              <div class="support-input-wrapper">
+                <input type="number" class="form-input" placeholder="0" id="extraSupport" />
+                <span style="font-weight: 600">원</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 배송 정보 -->
+        <section>
+          <h2 class="section-title">배송 정보</h2>
+
+          <div class="toggle-btns">
+            <button class="toggle-btn active" onclick="setShippingMode('recent', event)">
+              최근 배송지
+            </button>
+            <button class="toggle-btn" onclick="setShippingMode('new', event)">새로 입력</button>
+          </div>
+
+          <div id="shipping-form">
+            <div class="form-group">
+              <label class="form-label">받는 분</label>
+              <input
+                type="text"
+                class="form-input"
+                id="shippingName"
+                placeholder="이름을 입력해주세요"
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label">휴대폰 번호</label>
+              <input type="tel" class="form-input" id="shippingPhone" placeholder="010-0000-0000" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">주소</label>
+              <div style="display: flex; gap: 8px; margin-bottom: 10px">
+                <input
+                  type="text"
+                  class="form-input"
+                  style="flex: 0.3"
+                  id="postcode"
+                  placeholder="우편번호"
+                  readonly
+                />
+                <button
+                  type="button"
+                  class="apply-btn"
+                  style="flex: 0.2; padding: 10px; font-size: 13px"
+                >
+                  주소찾기
+                </button>
+              </div>
+              <input
+                type="text"
+                class="form-input"
+                style="margin-bottom: 10px"
+                id="addressMain"
+                placeholder="기본 주소"
+                readonly
+              />
+              <input
+                type="text"
+                class="form-input"
+                id="addressDetail"
+                placeholder="상세 주소를 입력해주세요"
+              />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">배송 시 요청사항 (선택)</label>
+              <select class="form-input" id="shippingRequest" onchange="toggleDirectInput()">
+                <option value="">요청사항을 선택해주세요</option>
+                <option value="부재 시 경비실에 맡겨주세요">부재 시 경비실에 맡겨주세요</option>
+                <option value="부재 시 문 앞에 놓아주세요">부재 시 문 앞에 놓아주세요</option>
+                <option value="배송 전 미리 연락바랍니다">배송 전 미리 연락바랍니다</option>
+                <option value="직접 입력">직접 입력</option>
+              </select>
+              <input
+                type="text"
+                class="form-input"
+                id="directRequest"
+                placeholder="직접 입력 내용을 작성해주세요"
+                style="margin-top: 10px; display: none"
+              />
+            </div>
+          </div>
+        </section>
+
+        <!-- 예약 결제 방식 -->
+        <section>
+          <h2 class="section-title">예약 결제</h2>
+          <div class="payment-methods">
+            <button class="method-btn active" onclick="togglePaymentType('simple', event)">
+              간편결제
+            </button>
+            <button class="method-btn" onclick="togglePaymentType('manual', event)">
+              직접입력
+            </button>
+          </div>
+        </section>
+
+        <!-- 결제 수단 -->
+        <section id="payment-methods-section">
+          <h2 class="section-title">결제 수단</h2>
+          <div class="payment-methods">
+            <button class="method-btn active">신용카드</button>
+            <button class="method-btn">카카오페이</button>
+            <button class="method-btn">네이버페이</button>
+          </div>
+          <p style="font-size: 12px; color: var(--text-sub); margin-top: 15px">
+            * 결제 수단 등록 후 펀딩 성공 시에만 자동 결제됩니다.
+          </p>
+        </section>
+      </div>
+
+      <!-- 요약 -->
+      <aside class="order-summary">
+        <h2 class="summary-title">후원 요약</h2>
+
+        <div class="summary-row">
+          <span>리워드 금액</span>
+          <span>45,000원</span>
+        </div>
+        <div class="summary-row">
+          <span>추가 후원금</span>
+          <span id="displayExtra">0원</span>
+        </div>
+        <div class="summary-row">
+          <span>서포터클럽 응원금</span>
+          <span id="displayClub">0원</span>
+        </div>
+        <div class="summary-row">
+          <span>배송비</span>
+          <span>3,000원</span>
+        </div>
+        <div class="summary-row">
+          <span>할인 금액</span>
+          <span style="color: #e53e3e">0원</span>
+        </div>
+
+        <div class="summary-row total">
+          <span>최종 후원 금액</span>
+          <span class="total-price" id="totalPrice">48,000원</span>
+        </div>
+
+        <div class="agreement">
+          <label style="display: flex; gap: 8px; cursor: pointer">
+            <input type="checkbox" />
+            <span>프로젝트 성공 시 결제됨을 확인하였으며, 펀딩 참여에 동의합니다. (필수)</span>
+          </label>
+        </div>
+
+        <button type="button" class="checkout-btn" onclick="processFunding()">후원하기</button>
+      </aside>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap');
+
+:root {
+  /* 요청하신 색상 팔레트 적용 */
+  --accent-color: #a39382;
+  --accent-hover: #8e7f70;
+  --bg-light: #ffffff;
+  --text-main: #1a1a1a;
+  --text-sub: #666666;
+  --border-color: #eeeeee;
+  --bg-faint: #f9f8f7;
+  /* 배경색에 미세한 베이지 톤 가미 */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family:
+    'Pretendard',
+    -apple-system,
+    BlinkMacSystemFont,
+    system-ui,
+    Roboto,
+    sans-serif;
+  color: var(--text-main);
+  background-color: var(--bg-light);
+  line-height: 1.6;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300&family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap');
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  word-break: keep-all;
+}
+.luxury-font {
+  font-family: 'Cinzel', serif;
+}
+
+.icon-btn {
+  width: 40px; /* 정렬을 위해 조금 더 정원형으로 보정 */
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(163, 147, 130, 0.3);
+  background: #fff;
+  color: #a39382;
+  border-radius: 9999px;
+  transition: all 0.25s ease;
+}
+.icon-btn:hover {
+  background: #a39382;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 15px rgba(163, 147, 130, 0.2);
+}
+
+/* Main Container */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 60px 20px;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.page-header h1 {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: var(--text-main);
+}
+
+.page-header p {
+  color: var(--text-sub);
+  font-size: 15px;
+}
+
+.checkout-layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 60px;
+  align-items: start;
+}
+
+section {
+  margin-bottom: 50px;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 600;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--text-main);
+  margin-bottom: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--text-main);
+}
+
+/* Funding Info Box */
+.funding-notice {
+  background-color: var(--bg-faint);
+  padding: 20px;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  margin-bottom: 30px;
+  font-size: 14px;
+}
+
+.funding-notice strong {
+  color: var(--accent-color);
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* Reward Item */
+.reward-card {
+  border: 1px solid var(--border-color);
+  padding: 25px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.reward-tag {
+  display: inline-block;
+  padding: 4px 10px;
+  background-color: #f5f2ef;
+  /* 연한 베이지 배경 */
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: var(--accent-color);
+}
+
+.reward-info h3 {
+  font-size: 17px;
+  margin-bottom: 10px;
+  color: var(--text-main);
+}
+
+.reward-desc {
+  font-size: 14px;
+  color: var(--text-sub);
+  margin-bottom: 15px;
+}
+
+.reward-price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+/* Support Amount */
+.support-box {
+  margin-top: 30px;
+  padding-top: 25px;
+  border-top: 1px dashed var(--border-color);
+}
+
+.support-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+/* Form Controls */
+.form-group {
+  margin-bottom: 24px;
+}
+
+.form-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text-main);
+}
+
+.form-input {
+  width: 100%;
+  padding: 14px 15px;
+  border: 1px solid var(--border-color);
+  border-radius: 2px;
+  font-size: 14px;
+  outline: none;
+  color: var(--text-main);
+}
+
+.form-input:focus {
+  border-color: var(--accent-color);
+}
+
+/* Readonly 스타일 */
+.form-input[readonly] {
+  background-color: var(--bg-faint);
+  color: var(--text-sub);
+  cursor: not-allowed;
+  border-color: var(--border-color);
+}
+
+.flex-row {
+  display: flex;
+  gap: 10px;
+}
+
+.apply-btn {
+  padding: 0 20px;
+  border: 1px solid var(--border-color);
+  background: white;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+  color: var(--text-main);
+  transition: all 0.2s;
+}
+
+.apply-btn:hover {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+}
+
+/* Radio & Toggle Buttons */
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.radio-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.radio-item:hover {
+  border-color: var(--accent-color);
+  background-color: #faf9f8;
+}
+
+.radio-item input[type='radio'] {
+  accent-color: var(--accent-color);
+}
+
+.toggle-btns {
+  display: flex;
+  gap: 0;
+  margin-bottom: 20px;
+}
+
+.toggle-btn {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  background: white;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--text-main);
+}
+
+.toggle-btn:first-child {
+  border-radius: 4px 0 0 4px;
+  border-right: none;
+}
+
+.toggle-btn:last-child {
+  border-radius: 0 4px 4px 0;
+}
+
+.toggle-btn.active {
+  background-color: var(--accent-color);
+  color: white;
+  border-color: var(--accent-color);
+}
+
+/* Payment Methods */
+.payment-methods {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.method-btn {
+  padding: 15px;
+  border: 1px solid var(--border-color);
+  background: white;
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+  color: var(--text-main);
+}
+
+.method-btn.active {
+  border-color: var(--accent-color);
+  background-color: #fcfbf9;
+  color: var(--accent-color);
+  font-weight: 600;
+}
+
+/* Summary Side */
+.order-summary {
+  position: sticky;
+  top: 120px;
+  border: 1px solid var(--border-color);
+  padding: 30px;
+  border-radius: 4px;
+  background-color: white;
+}
+
+.summary-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-main);
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  font-size: 14px;
+  color: var(--text-sub);
+}
+
+.summary-row.total {
+  margin-top: 25px;
+  padding-top: 25px;
+  border-top: 1px solid var(--border-color);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.total-price {
+  color: var(--accent-color);
+}
+
+.checkout-btn {
+  width: 100%;
+  padding: 20px;
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: 2px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 30px;
+  transition: background-color 0.2s;
+}
+
+.checkout-btn:hover {
+  background-color: var(--accent-hover);
+}
+
+.agreement {
+  margin-top: 20px;
+  font-size: 12px;
+  color: var(--text-sub);
+}
+
+.agreement input[type='checkbox'] {
+  accent-color: var(--accent-color);
+}
+
+.icon-svg {
+  width: 22px;
+  height: 22px;
+  stroke: var(--text-main);
+  stroke-width: 1.5;
+  fill: none;
+}
+
+@media (max-width: 900px) {
+  .site-header {
+    padding: 0 20px;
+    height: 60px;
+  }
+
+  .header-nav {
+    display: none;
+  }
+
+  .checkout-layout {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .order-summary {
+    position: static;
+  }
+}
+
+/* --- 수정된 Header Style --- */
+.site-header {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+}
+
+.header-logo {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  cursor: pointer;
+  text-transform: uppercase;
+  color: var(--accent-color);
+  text-decoration: none;
+  flex: 1;
+}
+
+.header-nav {
+  display: flex;
+  gap: 40px;
+  flex: 2;
+  justify-content: center;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-weight: 500;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #6b7280; /* gray-500 */
+  font-size: 13px;
+  transition: all 0.25s ease;
+  position: relative;
+  padding: 6px 0;
+}
+
+.nav-link:hover {
+  color: var(--text-main);
+}
+
+.nav-link.active {
+  color: var(--text-main);
+}
+
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 100%;
+  height: 2px;
+  background: var(--accent-color);
+  border-radius: 2px;
+  box-shadow: 0 6px 16px rgba(163, 147, 130, 0.25);
+}
+
+.header-icons {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex: 1;
+  justify-content: flex-end;
+}
+
+.icon-btn {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(163, 147, 130, 0.35);
+  background: #fff;
+  color: var(--accent-color);
+  border-radius: 9999px;
+  transition: all 0.25s ease;
+  position: relative;
+  text-decoration: none;
+}
+
+.icon-btn:hover {
+  background: var(--accent-color);
+  color: #fff;
+  border-color: var(--accent-color);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 22px rgba(163, 147, 130, 0.22);
+}
+
+.icon-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 6px;
+  border-radius: 9999px;
+  background: var(--accent-color);
+  color: #fff;
+  font-size: 10px;
+  line-height: 18px;
+  text-align: center;
+  box-shadow: 0 10px 18px rgba(163, 147, 130, 0.25);
+}
+</style>
