@@ -1,10 +1,12 @@
-<!-- <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> -->
-
 <script setup>
-import { onMounted, reactive, ref } from 'vue'
+import { onMounted, reactive, ref, onUnmounted } from 'vue'
 import api from '@/api/auction'
 
 const auctionDesc_list = reactive([])
+const startPrice = ref('1500000')
+const inputPrice = ref('')
+const currentPrice = ref(startPrice)
+let countdown = ref('02:14:55')
 
 const getlist = async () => {
   const res = await api.auctionList()
@@ -12,16 +14,13 @@ const getlist = async () => {
 
   auctionDesc_list.push(...res.result)
 }
-getlist()
 
-  let countdown = ref('02:14:55')
+
 // 3. 카운트다운 로직
 const startCountdown = () => {
-  let hours = 2,
-    minutes = 14,
-    seconds = 55
-
-
+  let hours = 0,
+    minutes = 0,
+    seconds = 10
 
   setInterval(() => {
     seconds--
@@ -41,11 +40,50 @@ const startCountdown = () => {
   }, 1000)
 }
 
+// 시작하자마자 카운트다운 시작
 onMounted(() => {
   startCountdown()
   // loadInitialPrice()
 })
-   
+
+// 웹소켓
+let socket = null
+const messages = reactive([])
+const message = ref('')
+onMounted(() => {
+  const wsUri = 'ws://127.0.0.1:8080/ws/chat'
+  socket = new WebSocket(wsUri)
+
+  socket.addEventListener('open', () => {
+    console.log('CONNECTED')
+  })
+
+  socket.addEventListener('message', (e) => {
+    const data = JSON.parse(e.data)
+    console.log('받은 데이터:', data.payload)
+    currentPrice.value = data.payload
+  })
+  socket.addEventListener('close', (e) => {
+    console.log('CLOSED')
+  })
+})
+
+const send = () => {
+  
+
+  if (currentPrice.value < Number(inputPrice.value)) {
+    currentPrice.value = Number(inputPrice.value)
+    socket.send(inputPrice.value)
+  }else{
+    alert("현재 입찰가보다 높은 금액을 입력하세요.")
+  }
+}
+
+onUnmounted(() => {
+  if (socket) socket.close()
+
+  getlist()
+})
 </script>
 
 <template>
@@ -96,17 +134,16 @@ onMounted(() => {
               <p class="text-gray-400 text-[10px] uppercase tracking-[0.2em] mb-2 font-medium">
                 현재 입찰가
               </p>
-              <p id="currentPrice" class="text-3xl font-bold accent-text">₩ 4,250,000</p>
+              <p id="currentPrice" class="text-3xl font-bold accent-text">
+                ₩ {{ Number(currentPrice).toLocaleString() }}
+              </p>
             </div>
             <div class="text-right">
               <p class="text-gray-400 text-[10px] uppercase tracking-[0.2em] mb-2 font-medium">
                 남은 시간
               </p>
-              <p
-                class="text-xl font-mono text-gray-800 tracking-wider"
-                id="countdown"
-              >
-                {{countdown}}
+              <p class="text-xl font-mono text-gray-800 tracking-wider" id="countdown">
+                {{ countdown }}
               </p>
             </div>
           </div>
@@ -114,7 +151,9 @@ onMounted(() => {
           <div class="grid grid-cols-2 gap-y-4 gap-x-8 text-sm pt-2">
             <div class="flex justify-between border-b border-gray-50 pb-2">
               <span class="text-gray-400 font-light">시작가</span>
-              <span class="text-gray-700 font-medium">₩ 1,500,000</span>
+              <span class="text-gray-700 font-medium"
+                >₩ {{ Number(startPrice).toLocaleString() }}</span
+              >
             </div>
             <div class="flex justify-between border-b border-gray-50 pb-2">
               <span class="text-gray-400 font-light">입찰 단위</span>
@@ -133,6 +172,7 @@ onMounted(() => {
           <div class="pt-6">
             <div class="flex items-center space-x-2 mb-4">
               <input
+                v-model="inputPrice"
                 type="number"
                 placeholder="입찰 금액을 입력하세요"
                 step="50000"
@@ -142,6 +182,7 @@ onMounted(() => {
               <span class="text-gray-400 text-xs font-bold tracking-widest">KRW</span>
             </div>
             <button
+              @click="send"
               class="w-full py-4 bid-button font-bold text-xs tracking-[0.3em] uppercase"
               id="send"
             >
