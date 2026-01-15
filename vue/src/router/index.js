@@ -96,14 +96,14 @@ const router = createRouter({
         {
           name: 'main_funding',
           path: 'funding/main_funding',
-          component: () => import('../views/funding/Main_funding.vue'),
+          component: () => import('@/views/funding/Main_funding.vue'),
         },
 
         { path: 'users/add_points', component: () => import('../views/users/Add_points.vue') },
         { path: 'users/mypage', component: () => import('../views/users/Mypage.vue') },
         { path: 'users/shipping', component: () => import('../views/users/Shipping.vue') },
         {
-          path: 'users/user_information',
+          path: 'users/user_information', name:'user_information',
           component: () => import('../views/users/User_information.vue'),
         },
         { path: 'users/wish_list', component: () => import('../views/users/Wish_list.vue') },
@@ -112,8 +112,6 @@ const router = createRouter({
     },
   ],
 })
-
-export default router
 
 router.beforeEach((to, from, next) => {
   console.log('vue에서 링크를 이동할 때 매번 실행되는 함수')
@@ -135,3 +133,6 @@ router.beforeEach((to, from, next) => {
   }
   next()
 })
+
+export default router
+

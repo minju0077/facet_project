@@ -1,0 +1,29 @@
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  word-break: keep-all;
+}
+.font-serif-luxury {
+  font-family: 'Cormorant Garamond', serif;
+}
+.luxury-font {
+  font-family: 'Cinzel', serif;
+}
+
+.icon-btn {
+  width: 40px; /* 정렬을 위해 조금 더 정원형으로 보정 */
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(163, 147, 130, 0.3);
+  background: #fff;
+  color: #a39382;
+  border-radius: 9999px;
+  transition: all 0.25s ease;
+}
+.icon-btn:hover {
+  background: #a39382;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 15px rgba(163, 147, 130, 0.2);
+}
