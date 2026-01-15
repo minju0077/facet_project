@@ -1,7 +1,7 @@
 <!-- <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> -->
 
 <script setup>
-import { reactive } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 import api from '@/api/auction'
 
 const auctionDesc_list = reactive([])
@@ -14,40 +14,14 @@ const getlist = async () => {
 }
 getlist()
 
-// // 1. 가격 포맷 함수
-// function formatPrice(price) {
-//   return new Number(price).toLocaleString()
-// }
-
-// // 2. 초기 가격 로드 함수
-// async function loadInitialPrice() {
-//   try {
-//     console.log('서버에서 초기 가격 데이터를 불러오는 중...')
-//     const response = await axios.get('https://www.amo245.kro.kr/ws/price.json')
-//     const data = response.data
-
-//     if (data.price !== undefined && data.price !== null) {
-//       const priceElement = document.getElementById('currentPrice')
-//       if (priceElement) {
-//         priceElement.innerText = `₩ ${formatPrice(data.price)}`
-//         console.log('초기 가격 로드 완료:', data.price)
-//       }
-//     }
-
-//     if (data.bidCount !== undefined) {
-//       document.getElementById('bidCount').innerText = `${data.bidCount}회`
-//     }
-//   } catch (error) {
-//     console.error('초기 데이터를 가져오는데 실패했습니다:', error)
-//   }
-// }
-
+  let countdown = ref('02:14:55')
 // 3. 카운트다운 로직
-function startCountdown() {
+const startCountdown = () => {
   let hours = 2,
     minutes = 14,
     seconds = 55
-  const display = document.getElementById('countdown')
+
+
 
   setInterval(() => {
     seconds--
@@ -63,89 +37,15 @@ function startCountdown() {
     const h = hours.toString().padStart(2, '0')
     const m = minutes.toString().padStart(2, '0')
     const s = seconds.toString().padStart(2, '0')
-    display.innerText = `${h}:${m}:${s}`
+    countdown.value = `${h}:${m}:${s}`
   }, 1000)
 }
 
-window.onload = function () {
+onMounted(() => {
   startCountdown()
-  loadInitialPrice()
-}
-
-// 5. 웹소켓 설정
-// const wsUrl = 'wss://www.amo245.kro.kr/ws'
-// const websocket = new WebSocket(wsUrl)
-
-// websocket.addEventListener('open', () => {
-//   console.log('웹소켓 서버 연결됨')
-// })
-
-// websocket.addEventListener('message', (e) => {
-//   try {
-//     const result = JSON.parse(e.data)
-//     console.log('수신 데이터:', result)
-
-//     if (result.price !== undefined && result.price !== null) {
-//       const priceElement = document.getElementById('currentPrice')
-//       if (priceElement) {
-//         priceElement.innerText = `₩ ${formatPrice(result.price)}`
-//       }
-//     }
-
-//     // 서버에서 bidCount를 내려준다면 업데이트
-//     if (result.bidCount !== undefined) {
-//       document.getElementById('bidCount').innerText = `${result.bidCount}회`
-//     }
-
-//     if (result.success && result.status) {
-//       alert(result.status)
-//     }
-//   } catch (err) {
-//     console.error('데이터 파싱 에러:', err)
-//   }
-// })
-
-// // 6. 입찰 버튼 클릭 이벤트 (내 화면 즉시 업데이트 로직 포함)
-// document.getElementById('send').addEventListener('click', () => {
-//   const priceInput = document.getElementById('message')
-//   const priceValue = Number(priceInput.value)
-
-//   if (!priceValue) {
-//     alert('입찰 금액을 입력하세요.')
-//     return
-//   }
-
-//   // 현재 화면에 표시된 가격 숫자만 추출
-//   const currentPriceText = document.getElementById('currentPrice').innerText
-//   const currentPriceNum = Number(currentPriceText.replace(/[^0-9.-]+/g, ''))
-
-//   // 현재가보다 낮은 금액 입찰 방지
-//   if (priceValue <= currentPriceNum) {
-//     alert('현재 입찰가보다 높은 금액을 입력해야 합니다.')
-//     return
-//   }
-
-//   const message = {
-//     type: '입찰',
-//     price: priceValue,
-//   }
-
-//   // 서버로 데이터 전송
-//   websocket.send(JSON.stringify(message))
-
-//   // [핵심] 내 화면 즉시 업데이트
-//   // 1. 가격 업데이트
-//   document.getElementById('currentPrice').innerText = `₩ ${formatPrice(priceValue)}`
-
-//   // 2. 입찰 횟수 1 증가 (서버 응답 전 시각적 피드백)
-//   const bidCountElement = document.getElementById('bidCount')
-//   const currentCount = parseInt(bidCountElement.innerText) || 0
-//   bidCountElement.innerText = `${currentCount + 1}회`
-
-//   // 입력창 비우기
-//   priceInput.value = ''
-//   console.log('내 입찰 정보 즉시 반영:', priceValue)
-// })
+  // loadInitialPrice()
+})
+   
 </script>
 
 <template>
@@ -202,7 +102,12 @@ window.onload = function () {
               <p class="text-gray-400 text-[10px] uppercase tracking-[0.2em] mb-2 font-medium">
                 남은 시간
               </p>
-              <p class="text-xl font-mono text-gray-800 tracking-wider" id="countdown">02:14:55</p>
+              <p
+                class="text-xl font-mono text-gray-800 tracking-wider"
+                id="countdown"
+              >
+                {{countdown}}
+              </p>
             </div>
           </div>
 

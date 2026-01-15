@@ -1,15 +1,29 @@
 <script setup>
 import { reactive } from 'vue'
 import api from '@/api/user'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 const loginForm = reactive({
-  email: '',
+  name: '',
   password: '',
 })
+import useAuthStore from '@/stores/useAuthStore'
 
+const authStore = useAuthStore()
 const login = async () => {
-  const res = await api.signup(loginForm)
-  console.log('login', res.data)
+  const res = await api.login(loginForm)
+  console.log(loginForm.name, loginForm.password)
+
+  if (res.status == 200) {
+    // 보안상 안전하지 않은 방식이라 실무에서는 절대 사용 안함
+    // localStorage.setItem('ATOKEN', res.data.token)
+    authStore.login(JSON.stringify(res.data))
+    router.push({name:'wishlist'})
+  } else {
+    alert('아이디와 비밀번호를 확인해보세요.')
+  }
 }
 </script>
 
@@ -17,18 +31,17 @@ const login = async () => {
   <div class="flex items-center justify-center min-h-screen py-16 px-6">
     <div class="premium-card w-full max-w-[540px] rounded-3xl p-10 md:p-16">
       <!-- Logo & Header -->
-      <div class="text-center mb-14">
+      <RouterLink :to="{name: 'Main_auction'}" class="text-center mb-14">
         <h1
           class="text-3xl font-bold text-[#A39382] letter-spacing-huge uppercase mb-4 cursor-pointer"
-        >
-          Facet
+        >Facet
         </h1>
         <div class="h-[1px] w-12 bg-[#A39382] mx-auto mb-6"></div>
         <h2 class="text-xl font-light font-serif-luxury italic text-[#1a1a1a] mb-2">
           Welcome Back
         </h2>
         <p class="text-gray-400 text-[13px] font-light">당신의 소중한 아카이브에 접속하세요</p>
-      </div>
+      </RouterLink>
 
       <form class="space-y-7">
         <!-- Email Field -->
@@ -38,7 +51,7 @@ const login = async () => {
             >Email Address</label
           >
           <input
-            v-model="loginForm.email"
+            v-model="loginForm.name"
             type="email"
             placeholder="example@facet.com"
             class="w-full input-style rounded-lg px-5 py-4 text-sm placeholder:text-gray-300"
@@ -51,11 +64,6 @@ const login = async () => {
             <label
               class="block text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 group-focus-within:text-[#A39382] transition-colors"
               >Security Password</label
-            >
-            <a
-              href="#"
-              class="text-[10px] text-gray-300 hover:text-[#A39382] transition italic font-serif-luxury"
-              >Forgot Password?</a
             >
           </div>
           <input
@@ -81,11 +89,16 @@ const login = async () => {
         <!-- Buttons -->
         <div class="flex gap-3 mt-10">
           <RouterLink to="auction/Main_auction" class="btn-base btn-outline">
-            <button @click="login()">join</button></RouterLink
+            <button @click="login()">Login</button></RouterLink
           >
           <RouterLink to="/signup" class="btn-base btn-outline">Join Now</RouterLink>
         </div>
       </form>
+      <a
+        href="#"
+        class="text-[14px] text-gray-300 hover:text-[#A39382] transition italic font-serif-luxury"
+        >Forgot Password?</a
+      >
     </div>
   </div>
 </template>

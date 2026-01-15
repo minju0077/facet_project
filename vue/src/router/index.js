@@ -1,6 +1,8 @@
 // 하나인 것처럼 만들어주는 것
 import { createRouter, createWebHistory } from 'vue-router'
 
+import useAuthStore from '@/stores/useAuthStore'
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
 
@@ -99,14 +101,48 @@ const router = createRouter({
           component: () => import('@/views/funding/Main_funding.vue'),
         },
 
-        { path: 'users/add_points', component: () => import('../views/users/Add_points.vue') },
-        { path: 'users/mypage', component: () => import('../views/users/Mypage.vue') },
-        { path: 'users/shipping', component: () => import('../views/users/Shipping.vue') },
         {
-          path: 'users/user_information', name:'user_information',
+          path: 'users/add_points',
+          meta: {
+            title: '포인트 충전',
+            requiresAuth: true,
+          },
+          component: () => import('../views/users/Add_points.vue'),
+        },
+        {
+          path: 'users/mypage',
+          meta: {
+            title: '마이 페이지',
+            requiresAuth: true,
+          },
+          component: () => import('../views/users/Mypage.vue'),
+        },
+        {
+          path: 'users/shipping',
+          meta: {
+            title: '배송 서비스',
+            requiresAuth: true,
+          },
+          component: () => import('../views/users/Shipping.vue'),
+        },
+        {
+          path: 'users/user_information',
+          name: 'user_information',
+          meta: {
+            title: '내 정보',
+            requiresAuth: true,
+          },
           component: () => import('../views/users/User_information.vue'),
         },
-        { path: 'users/wish_list', component: () => import('../views/users/Wish_list.vue') },
+        {
+          path: 'users/wish_list',
+          name: 'wishlist',
+          meta: {
+            title: '위시리스트',
+            requiresAuth: true,
+          },
+          component: () => import('../views/users/Wish_list.vue'),
+        },
         { path: 'users/ask', component: () => import('../views/users/Ask.vue') },
       ],
     },
@@ -119,13 +155,14 @@ router.beforeEach((to, from, next) => {
   // 페이지를 이동할때, 탭에 나오는 title를 다르게 뜰 수 있게 설정
   document.title = to.meta.title
 
+  const authStore = useAuthStore()
   // meta에 있는 requiresAuth 참이면
   if (to.meta.requiresAuth) {
     // 꼭 로컬스토리지에서 확인하는 방법 말고도 백엔드에서 확인하는 방법도 있음
     // 로그인한 사람인지 확인하고 안했으면
 
     // 브라우저에 저장 되어 있는 localStorage 에 USERINFO가 없다면
-    if (localStorage.getItem('USERINFO') == null) {
+    if (!authStore.isLogin) {
       // 로그인 페이지로 이동 /
       // query는 주소에 ?를 사용해서 하는거 / {redirect : to.fullPath} 사용자를 로그인 페이지로 보내고 원래 가려고 했던 곳을 저장하여 로그인을 하면 갈 수 있도록 설정
       next({ name: 'login', query: { redirect: to.fullPath } })
@@ -135,4 +172,3 @@ router.beforeEach((to, from, next) => {
 })
 
 export default router
-
