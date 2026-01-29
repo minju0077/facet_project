@@ -1,16 +1,19 @@
 <script setup>
-import { reactive } from 'vue'
-import api from '@/api/auction'
+import { reactive, onMounted } from 'vue'
+import api from '@/api/funding'
 
 const auction_list = reactive([])
 
 const getlist = async () => {
-  const res = await api.auctionList()
+  const res = await api.fundescList()
   console.log(res.result)
 
   auction_list.push(...res.result)
 }
-getlist()
+
+onMounted(() => {
+  getlist()
+})
 </script>
 
 <template class="flex flex-col h-screen">
@@ -72,9 +75,8 @@ getlist()
           <!-- {{ item }} -->
           <RouterLink :to="`/auction/auction_desc/${item.idx}`" class="block">
             <div class="relative overflow-hidden aspect-[4/5]">
-              <
               <img
-                :src="item.image"
+                :src="item.img"
                 class="w-full h-full object-cover transition duration-700 group-hover:scale-110"
               />
               <div class="absolute top-5 right-5 status-badge px-4 py-1.5 rounded-full font-bold">
@@ -91,7 +93,7 @@ getlist()
               <div class="flex justify-between items-end pt-6 border-t border-gray-50">
                 <div>
                   <p class="text-[9px] text-gray-300 uppercase tracking-widest mb-1">Current Bid</p>
-                  <p class="text-[15px] font-bold">₩ {{ item.amount }}</p>
+                  <p class="text-[15px] font-bold">₩ {{ Number(item.price).toLocaleString() }}</p>
                 </div>
                 <div class="text-right">
                   <p class="text-[9px] text-[#A39382] font-bold mb-1 uppercase tracking-widest">

@@ -1,119 +1,83 @@
 <script setup>
-// 최근 배송지 데이터 예시
+import { reactive, ref, computed, onMounted } from 'vue'
+
+// 1. 배송 정보 입력값 관리 (v-model로 연결됨)
+const shippingForm = reactive({
+  name: '',
+  phone: '',
+  postcode: '',
+  addressMain: '',
+  addressDetail: '',
+  request: '',
+  directRequest: '',
+})
+
+// 2. 최근 배송지 데이터 예시
 const RECENT_SHIPPING = {
   name: '홍길동',
   phone: '010-1234-5678',
   postcode: '12345',
-  address: '서울특별시 강남구 테헤란로 123',
-  detail: '4층',
+  addressMain: '서울특별시 강남구 테헤란로 123',
+  addressDetail: '4층',
+}
+
+// 3. 현재 모드 및 결제 관련 상태
+const currentMode = ref('recent') // 배송지 선택 (recent / new)
+const paymentType = ref('simple') // 예약 결제 방식 (simple / manual)
+const paymentMethod = ref('card') // 결제 수단 (card / kakao / naver)
+const extraSupport = ref(0) // 추가 후원금
+const clubAmount = ref(0) // 서포터클럽 응원금 (라디오 버튼)
+const isAgreed = ref(false) // 약관 동의 체크박스
+
+const basePrice = 48000 // 기본 가격
+
+/**
+ * 기능 1: 배송지 모드 전환
+ */
+// 3. 기능: 배송지 전환
+const setShippingMode = (mode) => {
+  currentMode.value = mode
+  if (mode === 'recent') {
+    Object.assign(shippingForm, RECENT_SHIPPING)
+  } else {
+    Object.assign(shippingForm, {
+      name: '',
+      phone: '',
+      postcode: '',
+      addressMain: '',
+      addressDetail: '',
+      request: '',
+      directRequest: '',
+    })
+  }
 }
 
 /**
- * 배송지 모드 전환 함수
+ * 기능 2: 최종 가격 자동 업데이트 (Computed 사용)
+ * extraSupport나 clubAmount가 변하면 자동으로 totalPrice가 갱신됩니다.
  */
-function setShippingMode(mode, event) {
-  if (event) {
-    const btns = document.querySelectorAll('.toggle-btn')
-    btns.forEach((btn) => btn.classList.remove('active'))
-    event.currentTarget.classList.add('active')
-  }
-
-  const nameField = document.getElementById('shippingName')
-  const phoneField = document.getElementById('shippingPhone')
-  const postField = document.getElementById('postcode')
-  const addrField = document.getElementById('addressMain')
-  const detailField = document.getElementById('addressDetail')
-
-  if (mode === 'recent') {
-    nameField.value = RECENT_SHIPPING.name
-    phoneField.value = RECENT_SHIPPING.phone
-    postField.value = RECENT_SHIPPING.postcode
-    addrField.value = RECENT_SHIPPING.address
-    detailField.value = RECENT_SHIPPING.detail
-  } else {
-    nameField.value = ''
-    phoneField.value = ''
-    postField.value = ''
-    addrField.value = ''
-    detailField.value = ''
-  }
-}
-
-// 초기 로드 시 최근 배송지 데이터 세팅
-window.addEventListener('load', () => {
-  setShippingMode('recent')
+const totalPrice = computed(() => {
+  const extra = Number(extraSupport.value) || 0
+  const club = Number(clubAmount.value) || 0
+  return basePrice + extra + club
 })
 
-// 배송 요청사항 직접 입력 토글
-function toggleDirectInput() {
-  const select = document.getElementById('shippingRequest')
-  const direct = document.getElementById('directRequest')
-  direct.style.display = select.value === '직접 입력' ? 'block' : 'none'
-}
-
-// 가격 업데이트 로직
-const extraInput = document.getElementById('extraSupport')
-const displayExtra = document.getElementById('displayExtra')
-const displayClub = document.getElementById('displayClub')
-const totalPriceLabel = document.getElementById('totalPrice')
-const clubRadios = document.querySelectorAll('input[name="club_amount"]')
-
-const basePrice = 48000
-let extraVal = 0
-let clubVal = 0
-
-function updateTotalPrice() {
-  const total = basePrice + extraVal + clubVal
-  totalPriceLabel.innerText = total.toLocaleString() + '원'
-}
-
-extraInput.addEventListener('input', (e) => {
-  extraVal = parseInt(e.target.value) || 0
-  displayExtra.innerText = extraVal.toLocaleString() + '원'
-  updateTotalPrice()
-})
-
-clubRadios.forEach((radio) => {
-  radio.addEventListener('change', (e) => {
-    clubVal = parseInt(e.target.value)
-    displayClub.innerText = clubVal.toLocaleString() + '원'
-    updateTotalPrice()
-  })
-})
-
-// 예약 결제 방식 토글
-function togglePaymentType(type, event) {
-  if (event) {
-    const buttons = event.currentTarget.parentElement.querySelectorAll('.method-btn')
-    buttons.forEach((btn) => btn.classList.remove('active'))
-    event.currentTarget.classList.add('active')
-  }
-}
-
-// 결제 수단 버튼 이벤트 리스너
-const methodBtns = document.querySelectorAll('#payment-methods-section .method-btn')
-methodBtns.forEach((btn) => {
-  btn.addEventListener('click', () => {
-    methodBtns.forEach((b) => b.classList.remove('active'))
-    btn.classList.add('active')
-  })
-})
-
+/**
+ * 기능 3: 후원하기 프로세스
+ */
 function processFunding() {
-  const agreements = document.querySelectorAll('.agreement input[type="checkbox"]')
-  let allChecked = true
-  agreements.forEach((checkbox) => {
-    if (!checkbox.checked) allChecked = false
-  })
-
-  if (!allChecked) {
+  if (!isAgreed.value) {
     alert('모든 필수 약관에 동의해주세요.')
     return
   }
-  alert('펀딩 후원 예약이 완료되었습니다!')
+  alert(`총 ${totalPrice.value.toLocaleString()}원 펀딩 후원 예약이 완료되었습니다!`)
 }
-</script>
 
+// 초기 로드 시 최근 배송지 세팅
+onMounted(() => {
+  setShippingMode('recent')
+})
+</script>
 <template>
   <div class="container">
     <div class="page-header">
@@ -129,16 +93,13 @@ function processFunding() {
           결제가 진행됩니다.
         </div>
 
-        <!-- 리워드 섹션 -->
         <section>
           <h2 class="section-title">선택한 리워드</h2>
           <div class="reward-card">
             <span class="reward-tag">슈퍼 얼리버드</span>
             <div class="reward-info">
               <h3>[세트] 미니멀 라이프 스타터 키트</h3>
-              <p class="reward-desc">
-                친환경 캔버스 백 1개 + 제로웨이스트 솝 2종 + 대나무 칫솔 (구성품 포함)
-              </p>
+              <p class="reward-desc">친환경 캔버스 백 1개 + 제로웨이스트 솝 2종 + 대나무 칫솔</p>
               <div class="reward-price-row">
                 <span>45,000원</span>
                 <span style="font-size: 14px; color: var(--text-sub); font-weight: 400"
@@ -147,29 +108,33 @@ function processFunding() {
               </div>
             </div>
 
-            <!-- 추가 후원금 -->
             <div class="support-box">
               <label class="form-label">후원금 더하기 (선택)</label>
-              <p style="font-size: 12px; color: var(--text-sub); margin-bottom: 10px">
-                창작자에게 추가 후원금을 보낼 수 있습니다.
-              </p>
               <div class="support-input-wrapper">
-                <input type="number" class="form-input" placeholder="0" id="extraSupport" />
+                <input type="number" v-model="extraSupport" class="form-input" placeholder="0" />
                 <span style="font-weight: 600">원</span>
               </div>
             </div>
           </div>
         </section>
 
-        <!-- 배송 정보 -->
         <section>
           <h2 class="section-title">배송 정보</h2>
-
           <div class="toggle-btns">
-            <button class="toggle-btn active" onclick="setShippingMode('recent', event)">
+            <button
+              class="toggle-btn"
+              :class="{ active: currentMode === 'recent' }"
+              @click="setShippingMode('recent')"
+            >
               최근 배송지
             </button>
-            <button class="toggle-btn" onclick="setShippingMode('new', event)">새로 입력</button>
+            <button
+              class="toggle-btn"
+              :class="{ active: currentMode === 'new' }"
+              @click="setShippingMode('new')"
+            >
+              새로 입력
+            </button>
           </div>
 
           <div id="shipping-form">
@@ -177,23 +142,28 @@ function processFunding() {
               <label class="form-label">받는 분</label>
               <input
                 type="text"
+                v-model="shippingForm.name"
                 class="form-input"
-                id="shippingName"
                 placeholder="이름을 입력해주세요"
               />
             </div>
             <div class="form-group">
               <label class="form-label">휴대폰 번호</label>
-              <input type="tel" class="form-input" id="shippingPhone" placeholder="010-0000-0000" />
+              <input
+                type="tel"
+                v-model="shippingForm.phone"
+                class="form-input"
+                placeholder="010-0000-0000"
+              />
             </div>
             <div class="form-group">
               <label class="form-label">주소</label>
               <div style="display: flex; gap: 8px; margin-bottom: 10px">
                 <input
                   type="text"
+                  v-model="shippingForm.postcode"
                   class="form-input"
                   style="flex: 0.3"
-                  id="postcode"
                   placeholder="우편번호"
                   readonly
                 />
@@ -207,115 +177,66 @@ function processFunding() {
               </div>
               <input
                 type="text"
+                v-model="shippingForm.addressMain"
                 class="form-input"
                 style="margin-bottom: 10px"
-                id="addressMain"
                 placeholder="기본 주소"
                 readonly
               />
               <input
                 type="text"
+                v-model="shippingForm.addressDetail"
                 class="form-input"
-                id="addressDetail"
                 placeholder="상세 주소를 입력해주세요"
               />
             </div>
 
             <div class="form-group">
               <label class="form-label">배송 시 요청사항 (선택)</label>
-              <select class="form-input" id="shippingRequest" onchange="toggleDirectInput()">
+              <select v-model="shippingForm.request" class="form-input">
                 <option value="">요청사항을 선택해주세요</option>
                 <option value="부재 시 경비실에 맡겨주세요">부재 시 경비실에 맡겨주세요</option>
-                <option value="부재 시 문 앞에 놓아주세요">부재 시 문 앞에 놓아주세요</option>
-                <option value="배송 전 미리 연락바랍니다">배송 전 미리 연락바랍니다</option>
                 <option value="직접 입력">직접 입력</option>
               </select>
               <input
+                v-if="shippingForm.request === '직접 입력'"
                 type="text"
+                v-model="shippingForm.directRequest"
                 class="form-input"
-                id="directRequest"
+                style="margin-top: 10px"
                 placeholder="직접 입력 내용을 작성해주세요"
-                style="margin-top: 10px; display: none"
               />
             </div>
           </div>
         </section>
-
-        <!-- 예약 결제 방식 -->
-        <section>
-          <h2 class="section-title">예약 결제</h2>
-          <div class="payment-methods">
-            <button class="method-btn active" onclick="togglePaymentType('simple', event)">
-              간편결제
-            </button>
-            <button class="method-btn" onclick="togglePaymentType('manual', event)">
-              직접입력
-            </button>
-          </div>
-        </section>
-
-        <!-- 결제 수단 -->
-        <section id="payment-methods-section">
-          <h2 class="section-title">결제 수단</h2>
-          <div class="payment-methods">
-            <button class="method-btn active">신용카드</button>
-            <button class="method-btn">카카오페이</button>
-            <button class="method-btn">네이버페이</button>
-          </div>
-          <p style="font-size: 12px; color: var(--text-sub); margin-top: 15px">
-            * 결제 수단 등록 후 펀딩 성공 시에만 자동 결제됩니다.
-          </p>
-        </section>
       </div>
 
-      <!-- 요약 -->
       <aside class="order-summary">
         <h2 class="summary-title">후원 요약</h2>
-
+        <div class="summary-row"><span>리워드 금액</span><span>45,000원</span></div>
         <div class="summary-row">
-          <span>리워드 금액</span>
-          <span>45,000원</span>
+          <span>추가 후원금</span><span>{{ (Number(extraSupport) || 0).toLocaleString() }}원</span>
         </div>
-        <div class="summary-row">
-          <span>추가 후원금</span>
-          <span id="displayExtra">0원</span>
-        </div>
-        <div class="summary-row">
-          <span>서포터클럽 응원금</span>
-          <span id="displayClub">0원</span>
-        </div>
-        <div class="summary-row">
-          <span>배송비</span>
-          <span>3,000원</span>
-        </div>
-        <div class="summary-row">
-          <span>할인 금액</span>
-          <span style="color: #e53e3e">0원</span>
-        </div>
-
+        <div class="summary-row"><span>배송비</span><span>3,000원</span></div>
         <div class="summary-row total">
-          <span>최종 후원 금액</span>
-          <span class="total-price" id="totalPrice">48,000원</span>
+          <span>최종 후원 금액</span
+          ><span class="totalPrice total-price">{{ totalPrice.toLocaleString() }}원</span>
         </div>
 
         <div class="agreement">
           <label style="display: flex; gap: 8px; cursor: pointer">
-            <input type="checkbox" />
+            <input type="checkbox" v-model="isAgreed" />
             <span>프로젝트 성공 시 결제됨을 확인하였으며, 펀딩 참여에 동의합니다. (필수)</span>
           </label>
         </div>
-
-        <button type="button" class="checkout-btn" onclick="processFunding()">후원하기</button>
+        <button type="button" class="checkout-btn" @click="processFunding">후원하기</button>
       </aside>
     </div>
   </div>
 </template>
 
-<style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap');
-
+<style>
 :root {
-  /* 요청하신 색상 팔레트 적용 */
   --accent-color: #a39382;
   --accent-hover: #8e7f70;
   --bg-light: #ffffff;
@@ -323,7 +244,20 @@ function processFunding() {
   --text-sub: #666666;
   --border-color: #eeeeee;
   --bg-faint: #f9f8f7;
-  /* 배경색에 미세한 베이지 톤 가미 */
+}
+</style>789
+
+<style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap');
+
+:root, :host {
+  --accent-color: #a39382;
+  --accent-hover: #8e7f70;
+  --bg-light: #ffffff;
+  --text-main: #1a1a1a;
+  --text-sub: #666666;
+  --border-color: #eeeeee;
+  --bg-faint: #f9f8f7;
 }
 
 * {

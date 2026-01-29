@@ -1,13 +1,12 @@
 <script setup>
 import { RouterLink, useRoute } from 'vue-router'
-import { ref, computed } from 'vue'
+import { computed } from 'vue'
 import useAuthStore from '@/stores/useAuthStore'
 
-const route = useRoute();
-const isAuction = computed(() => route.name === 'Main_auction')
-const isFunding = computed(() => route.name === 'main_funding')
+const route = useRoute()
+const isAuction = computed(() => route.path.includes('auction'))
+const isFunding = computed(() => route.path.includes('funding'))
 const authStore = useAuthStore()
-const isActive = ref(true)
 </script>
 
 <template class="overflow-x-hidden">
@@ -26,12 +25,22 @@ const isActive = ref(true)
           <nav class="hidden lg:flex items-center space-x-8 text-[14px] font-medium text-gray-500">
             <RouterLink
               :to="{ name: 'Main_auction' }"
-              class="text-black border-b-2 border-black py-1"
+              :class="
+                isAuction
+                  ? 'text-black border-b-2 border-black' // 선택되었을 때 클래스
+                  : 'hover:text-black transition-colors' // 선택되지 않았을 때 클래스
+              " 
+              class="py-1"
               >경매</RouterLink
             >
             <RouterLink
               :to="{ name: 'main_funding' }"
-              class="hover:text-black transition-colors py-1"
+              :class="
+                isFunding
+                  ? 'text-black border-b-2 border-black' // 선택되었을 때 클래스
+                  : 'hover:text-black transition-colors' // 선택되지 않았을 때 클래스
+              "
+              class="py-1"
               >펀딩</RouterLink
             >
           </nav>

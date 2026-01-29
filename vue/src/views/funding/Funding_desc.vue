@@ -1,151 +1,37 @@
 <script setup>
-import { reactive } from 'vue'
+import { ref, onMounted, computed } from 'vue'
+import { useRoute } from 'vue-router'
 import api from '@/api/funding'
 
-const fundingDesc_list = reactive([])
+const fundingDesc = ref()
+const fundingDetail = ref()
+const route = useRoute()
+const Quantity = ref(1)
 
-const getlist = async () => {
-  const res = await api.fundescList()
+const getDetail = async () => {
+  const idx = route.params.idx
+  const res = await api.getFundingDetail(idx)
   console.log(res.result)
-
-  fundingDesc_list.push(...res.result)
+  fundingDesc.value = res.result
+  fundingDetail.value = fundingDesc.value.rewards
 }
-getlist()
 
-// // ====== Gallery (A안) ======
-// const mainImg = document.getElementById('main-img')
-// const thumbs = document.querySelectorAll('.thumb')
+const addQuantity = () => {
+  Quantity.value = Quantity.value + 1
+}
 
-// thumbs.forEach((btn) => {
-//   btn.addEventListener('click', () => {
-//     thumbs.forEach((b) => {
-//       b.classList.remove('border-[#A39382]')
-//       b.classList.add('border-gray-100')
-//     })
-//     btn.classList.remove('border-gray-100')
-//     btn.classList.add('border-[#A39382]')
-//     mainImg.src = btn.dataset.src
-//   })
-// })
+const minusQuantity = () => {
+  if(Quantity.value > 1)
+    Quantity.value = Quantity.value - 1
+}
 
-// // ====== Tabs ======
-// const tabBtns = document.querySelectorAll('.tab')
-// const panels = {
-//   story: document.getElementById('tab-story'),
-//   maker: document.getElementById('tab-maker'),
-//   process: document.getElementById('tab-process'),
-//   shipping: document.getElementById('tab-shipping'),
-// }
-
-// tabBtns.forEach((btn) => {
-//   btn.addEventListener('click', () => {
-//     tabBtns.forEach((b) => {
-//       b.classList.remove('tab-active', 'font-bold')
-//       b.classList.add('text-gray-400')
-//     })
-//     btn.classList.add('tab-active', 'font-bold')
-//     btn.classList.remove('text-gray-400')
-
-//     const key = btn.dataset.tab
-//     Object.keys(panels).forEach((k) => panels[k].classList.add('hidden'))
-//     panels[key].classList.remove('hidden')
-//   })
-// })
-
-// // ====== Rewards selection + Total ======
-// const rewardBtns = document.querySelectorAll('.reward')
-// const selectedText = document.getElementById('selected-reward-text')
-// const supportBtn = document.getElementById('support-btn')
-// const supportBtn2 = document.getElementById('support-btn-2')
-// const qtyInput = document.getElementById('qty')
-// const qtyMinus = document.getElementById('qty-minus')
-// const qtyPlus = document.getElementById('qty-plus')
-// const totalEl = document.getElementById('total')
-
-// let selectedPrice = 0
-// let selectedTitle = ''
-
-// function parseKRW(str) {
-//   return Number(String(str).replace(/[^0-9]/g, '') || 0)
-// }
-// function formatKRW(num) {
-//   return '₩ ' + Number(num).toLocaleString('ko-KR')
-// }
-// function updateTotal() {
-//   const qty = Math.max(1, Number(qtyInput.value || 1))
-//   qtyInput.value = qty
-//   totalEl.innerText = formatKRW(selectedPrice * qty)
-// }
-
-// rewardBtns.forEach((btn) => {
-//   btn.addEventListener('click', () => {
-//     rewardBtns.forEach((b) => b.classList.remove('reward-selected'))
-//     btn.classList.add('reward-selected')
-
-//     selectedTitle = btn.dataset.title
-//     selectedPrice = parseKRW(btn.dataset.price)
-
-//     selectedText.innerText = `${selectedTitle} · ${btn.dataset.price} (${btn.dataset.left})`
-//     supportBtn.disabled = false
-//     supportBtn2.disabled = false
-
-//     updateTotal()
-//   })
-// })
-
-// qtyMinus.addEventListener('click', () => {
-//   qtyInput.value = Math.max(1, Number(qtyInput.value || 1) - 1)
-//   updateTotal()
-// })
-// qtyPlus.addEventListener('click', () => {
-//   qtyInput.value = Math.max(1, Number(qtyInput.value || 1) + 1)
-//   updateTotal()
-// })
-// qtyInput.addEventListener('input', updateTotal)
-
-// // Demo action
-// function handleSupport() {
-//   if (!selectedTitle) return
-//   const qty = Math.max(1, Number(qtyInput.value || 1))
-//   alert(
-//     `후원하기(데모)\n\n리워드: ${selectedTitle}\n수량: ${qty}\n결제금액: ${formatKRW(selectedPrice * qty)}\n\n※ 실제 결제/주문 로직은 백엔드 연동 필요`,
-//   )
-// }
-// supportBtn.addEventListener('click', handleSupport)
-// supportBtn2.addEventListener('click', handleSupport)
-
-// // ====== Countdown (예시) ======
-// let days = 4,
-//   hours = 12,
-//   minutes = 34,
-//   seconds = 56
-// const display = document.getElementById('countdown')
-
-// setInterval(() => {
-//   seconds--
-//   if (seconds < 0) {
-//     seconds = 59
-//     minutes--
-//   }
-//   if (minutes < 0) {
-//     minutes = 59
-//     hours--
-//   }
-//   if (hours < 0) {
-//     hours = 23
-//     days--
-//   }
-//   if (days < 0) return
-
-//   const h = String(hours).padStart(2, '0')
-//   const m = String(minutes).padStart(2, '0')
-//   const s = String(seconds).padStart(2, '0')
-//   display.innerText = `${String(days).padStart(2, '0')}일 ${h}:${m}:${s}`
-// }, 1000)
+onMounted(() => {
+  getDetail()
+})
 </script>
 
 <template>
-  <main class="max-w-[1440px] mx-auto px-4 md:px-10 py-8">
+  <main v-if="fundingDesc" class="max-w-[1440px] mx-auto px-4 md:px-10 py-8">
     <!-- Breadcrumb -->
     <nav class="text-[10px] text-gray-400 mb-6 uppercase tracking-[0.2em]">
       Home / Funding / Handmade /
@@ -179,7 +65,7 @@ getlist()
           >
         </div>
         <h1 class="text-3xl md:text-5xl font-light font-serif-luxury italic leading-tight">
-          Celestial Rose Earring
+          {{ fundingDesc.name }}
         </h1>
         <p class="text-sm md:text-[14px] font-light text-gray-200 leading-loose mt-4 opacity-95">
           장인의 손끝에서 완성되는 수공예 주얼리. 펀딩으로 제작을 응원하고, 리워드로 당신만의 작품을
@@ -558,105 +444,39 @@ getlist()
 
           <div class="space-y-4 max-h-[420px] overflow-auto pr-1 no-scrollbar">
             <button
+              v-for="item in fundingDetail"
               class="reward reward-card w-full text-left rounded-md p-5"
-              data-title="서포터 패키지"
-              data-price="₩ 29,000"
-              data-left="무제한"
+              data-title="{{item.name}}"
+              data-price="{{item.price}}"
+              data-left="{{ item.stockQuantity }}"
             >
               <div class="flex items-start justify-between">
                 <div>
-                  <p class="text-[10px] uppercase tracking-[0.2em] text-gray-400 mb-2">Option 01</p>
-                  <p class="text-sm font-bold text-gray-900">서포터 패키지</p>
+                  <p class="text-[10px] uppercase tracking-[0.2em] text-gray-400 mb-2">
+                    Option {{ item.idx }}
+                  </p>
+                  <p class="text-sm font-bold text-gray-900">{{ item.name }}</p>
                   <p class="text-[12px] text-gray-500 mt-2 font-light leading-relaxed">
-                    감사 카드 + 제작 과정 리포트(PDF) + 스튜디오 비하인드 컷 제공
+                    {{ item.desc }}
                   </p>
                 </div>
                 <div class="text-right ml-4">
-                  <p class="text-sm font-bold accent-text">₩ 29,000</p>
-                  <p class="text-[11px] text-gray-400 mt-1">수량: 무제한</p>
-                </div>
-              </div>
-            </button>
-
-            <button
-              class="reward reward-card w-full text-left rounded-md p-5"
-              data-title="실버 귀걸이(925)"
-              data-price="₩ 149,000"
-              data-left="23개 남음"
-            >
-              <div class="flex items-start justify-between">
-                <div>
-                  <p class="text-[10px] uppercase tracking-[0.2em] text-gray-400 mb-2">Option 02</p>
-                  <p class="text-sm font-bold text-gray-900">Celestial Rose 실버 귀걸이(925)</p>
-                  <p class="text-[12px] text-gray-500 mt-2 font-light leading-relaxed">
-                    수공예 세공 + 기본 패키지(보관 파우치 포함) / 도금 미포함
+                  <p class="text-sm font-bold accent-text">
+                    ₩{{ Number(item.price).toLocaleString() }}
                   </p>
-                  <div class="flex space-x-2 mt-3">
-                    <span
-                      class="px-2 py-1 bg-gray-50 border border-gray-100 rounded-full text-[10px] text-gray-500"
-                      >핸드메이드</span
-                    >
-                    <span
-                      class="px-2 py-1 bg-[#F5F2F0] rounded-full text-[10px] accent-text font-medium"
-                      >추천</span
-                    >
-                  </div>
-                </div>
-                <div class="text-right ml-4">
-                  <p class="text-sm font-bold accent-text">₩ 149,000</p>
-                  <p class="text-[11px] text-gray-400 mt-1">수량: 23개 남음</p>
-                </div>
-              </div>
-            </button>
-
-            <button
-              class="reward reward-card w-full text-left rounded-md p-5"
-              data-title="14K 골드 도금 귀걸이"
-              data-price="₩ 189,000"
-              data-left="12개 남음"
-            >
-              <div class="flex items-start justify-between">
-                <div>
-                  <p class="text-[10px] uppercase tracking-[0.2em] text-gray-400 mb-2">Option 03</p>
-                  <p class="text-sm font-bold text-gray-900">Celestial Rose 14K 골드 도금 귀걸이</p>
-                  <p class="text-[12px] text-gray-500 mt-2 font-light leading-relaxed">
-                    925 실버 베이스 + 14K 도금 + 개별 검수 / 선물 포장 옵션 포함
-                  </p>
-                </div>
-                <div class="text-right ml-4">
-                  <p class="text-sm font-bold accent-text">₩ 189,000</p>
-                  <p class="text-[11px] text-gray-400 mt-1">수량: 12개 남음</p>
-                </div>
-              </div>
-            </button>
-
-            <button
-              class="reward reward-card w-full text-left rounded-md p-5"
-              data-title="커스텀 이니셜 각인"
-              data-price="₩ 39,000"
-              data-left="무제한"
-            >
-              <div class="flex items-start justify-between">
-                <div>
-                  <p class="text-[10px] uppercase tracking-[0.2em] text-gray-400 mb-2">Add-on</p>
-                  <p class="text-sm font-bold text-gray-900">커스텀 이니셜 각인</p>
-                  <p class="text-[12px] text-gray-500 mt-2 font-light leading-relaxed">
-                    최대 6자 이니셜 각인(영문/숫자) · 제작 공정에 포함됩니다.
-                  </p>
-                </div>
-                <div class="text-right ml-4">
-                  <p class="text-sm font-bold accent-text">₩ 39,000</p>
-                  <p class="text-[11px] text-gray-400 mt-1">수량: 무제한</p>
+                  <p class="text-[11px] text-gray-400 mt-1">수량: {{ item.stockQuantity }}</p>
                 </div>
               </div>
             </button>
           </div>
 
+          <!-- 수량 선택 부분-->
           <div class="mt-6 border-t border-gray-100 pt-6 space-y-4">
             <div class="flex items-center justify-between">
               <p class="text-[11px] uppercase tracking-[0.2em] text-gray-400">Quantity</p>
               <div class="flex items-center space-x-2">
                 <button
+                  @click="minusQuantity()"
                   id="qty-minus"
                   class="w-9 h-9 ghost-btn rounded-sm flex items-center justify-center"
                 >
@@ -665,11 +485,12 @@ getlist()
                 <input
                   id="qty"
                   type="number"
-                  min="1"
-                  value="1"
+                  :min="1"
+                  :value="Quantity"
                   class="w-14 text-center border border-gray-100 rounded-sm py-2 focus:outline-none focus:border-[#A39382]"
                 />
                 <button
+                  @click="addQuantity()"
                   id="qty-plus"
                   class="w-9 h-9 ghost-btn rounded-sm flex items-center justify-center"
                 >
@@ -698,42 +519,6 @@ getlist()
           </div>
         </div>
       </aside>
-    </section>
-
-    <!-- Related Handmade Projects (그대로 유지) -->
-    <section class="mt-24">
-      <div class="flex justify-between items-end mb-8">
-        <h2 class="text-2xl font-bold">함께 보면 좋은 수공예 펀딩</h2>
-        <button class="text-sm text-gray-400 hover:text-black transition">더보기</button>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12">
-        <div class="group cursor-pointer" v-for="item in fundingDesc_list">
-          <RouterLink :to="`/funding/funding_desc/${item.id}`" class="block">
-            <div class="aspect-video overflow-hidden bg-gray-100 mb-4 relative rounded-md">
-              <img
-                :src="item.image"
-                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                alt="Related"
-              />
-              <div class="absolute top-3 left-3">
-                <span
-                  class="bg-[#A39382] text-white px-2 py-0.5 text-[10px] font-bold rounded-sm uppercase"
-                  >Handmade</span
-                >
-              </div>
-            </div>
-            <h3
-              class="text-md font-bold leading-snug group-hover:text-[#A39382] transition-colors line-clamp-2"
-            >
-              ${{ item.title }}
-            </h3>
-            <p class="text-[12px] text-gray-400 mt-2">
-              ${{ item.maker }} | ${{ item.achievementRate }}% 달성
-            </p>
-          </RouterLink>
-        </div>
-      </div>
     </section>
   </main>
 </template>
@@ -823,7 +608,6 @@ body {
 .reward-card:hover {
   border-color: var(--accent-color);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
-  transform: translateY(-2px);
 }
 
 .reward-selected {

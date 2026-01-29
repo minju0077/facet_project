@@ -1,5 +1,5 @@
 <script setup>
-import { reactive } from 'vue'
+import { reactive, onMounted } from 'vue'
 import api from '@/api/funding'
 
 const funding_list = reactive([])
@@ -10,7 +10,10 @@ const getlist = async () => {
 
   funding_list.push(...res.result)
 }
-getlist()
+
+onMounted(() => {
+  getlist()
+})
 </script>
 
 <template>
@@ -89,7 +92,7 @@ getlist()
         v-for="item in funding_list"
         class="group cursor-pointer flex flex-col h-full tab-item-enter"
       >
-        <RouterLink :to="`/funding/funding_desc/${item.id}`" class="block">
+        <RouterLink :to="`/funding/funding_desc/${item.idx}`" class="block">
           <div class="relative aspect-[4/3] overflow-hidden rounded-sm bg-gray-50 mb-5">
             <img
               :src="item.img"
@@ -100,28 +103,28 @@ getlist()
               <span
                 class="bg-black/80 backdrop-blur-md text-white px-3 py-1 text-[10px] font-bold rounded-full tracking-tighter uppercase"
               >
-                ${{ item.days }}일 남음
+                {{ item.days }}일 남음
               </span>
             </div>
           </div>
           <div class="flex flex-col flex-grow">
             <p class="text-[10px] text-[#A39382] font-bold tracking-[0.2em] uppercase mb-2">
-              ${{ item.tag }}
+              {{ item.tag }}
             </p>
             <h3
-              class="text-[14px] font-bold leading-snug line-clamp-2 min-h-[40px] group-hover:text-[#A39382] transition-colors"
+              class=" font-bold leading-snug line-clamp-2 min-h-[40px] group-hover:text-[#A39382] transition-colors"
             >
-              ${{ item.title }}
+              {{ item.name }}
             </h3>
 
             <div class="mt-auto pt-5 space-y-3">
               <div class="flex justify-between items-end">
                 <span
-                  class="text-2xl font-serif-luxury font-bold ${isClosing ? 'text-red-500' : 'text-[#A39382]'}"
+                  :class="`text-2xl font-serif-luxury font-bold ${isClosing ? 'text-red-500' : 'text-[#A39382]'}`"
                 >
-                  ${{ item.percent.toLocaleString() }}<span class="text-xs ml-0.5">%</span>
+                  {{ item.percent.toLocaleString() }}<span class="text-xs ml-0.5">%</span>
                 </span>
-                <span class="text-[13px] font-medium text-gray-900">₩ ${{ item.amount }}</span>
+                <span class="text-[13px] font-medium text-gray-900">₩{{ Number(item.price).toLocaleString() }}</span>
               </div>
               <div class="w-full h-[2px] bg-gray-100 overflow-hidden rounded-full">
                 <div
@@ -130,8 +133,8 @@ getlist()
                 ></div>
               </div>
               <div class="flex justify-between text-[11px] text-gray-400 font-medium">
-                <span>${{ item.supporters }}명의 서포터</span>
-                <span class="${isClosing ? 'text-red-500 font-bold' : ''}">${{ item.status }}</span>
+                <span>{{ item.supporters }}명의 서포터</span>
+                <span class="${isClosing ? 'text-red-500 font-bold' : ''}">{{ item.status }}</span>
               </div>
             </div>
           </div>

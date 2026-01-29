@@ -1,6 +1,7 @@
 <script setup></script>
 
 <template>
+  <!-- 경매가 종료되었을 때 화면 -->
   <div id="auctionStatus" class="bg-[#2B2B2B] text-white border-b border-black">
     <div
       class="max-w-7xl mx-auto px-6 py-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2"
@@ -14,7 +15,6 @@
       <div class="text-sm font-medium accent-text">Final Price ₩ 4,250,000</div>
     </div>
   </div>
-
   <main class="max-w-7xl mx-auto py-16 px-6 lg:px-10 pb-40">
     <nav class="text-[10px] text-gray-400 mb-8 uppercase tracking-[0.2em]">
       Home / Auction / Ring / <span class="text-gray-600">Midnight Sapphire Ring</span>

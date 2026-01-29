@@ -51,7 +51,7 @@ const router = createRouter({
           name: 'auction_end',
           path: 'auction/auction_end',
           meta: {
-            title: '경매 end',
+            title: '경매 종료',
             requiresAuth: false,
           },
           component: () => import('../views/auction/Auction_end.vue'),
@@ -71,9 +71,9 @@ const router = createRouter({
           path: 'features/payment',
           meta: {
             title: '결제',
-            requiresAuth: true,
+            requiresAuth: false,
           },
-          component: () => import('../views/features/Payment.vue'),
+          component: () => import('../views/features/payment2.vue'),
         },
         {
           name: 'serch',
@@ -87,17 +87,29 @@ const router = createRouter({
 
         {
           name: 'funding_desc',
-          path: 'funding/funding_desc/:num',
+          path: 'funding/funding_desc/:idx',
+          meta: {
+            title: '펀딩 상세 페이지',
+            requiresAuth: true,
+          },
           component: () => import('../views/funding/Funding_desc.vue'),
         },
         {
           name: 'funding_list',
           path: 'funding/funding_list',
+          meta: {
+            title: '펀딩 리스트 페이지',
+            requiresAuth: true,
+          },
           component: () => import('../views/funding/Funding_list.vue'),
         },
         {
           name: 'main_funding',
           path: 'funding/main_funding',
+          meta: {
+            title: '펀딩 메인 페이지',
+            requiresAuth: true,
+          },
           component: () => import('@/views/funding/Main_funding.vue'),
         },
 
